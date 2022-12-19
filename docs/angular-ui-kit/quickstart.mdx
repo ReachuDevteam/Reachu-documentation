@@ -1,0 +1,44 @@
+---
+sidebar_position: 3
+---
+
+# Quickstart
+
+Quickly get started with Angular UI Kit, with just a few lines of code!
+
+Put the dyte component in `component.html` file
+
+```html
+<dyte-meeting #myid></dyte-meeting>
+```
+
+Then in the `component.ts` or `component.js` file initialize the meeting
+
+```ts
+class AppComponent {
+  title = 'MyProject';
+  @ViewChild('myid') meetingComponent: DyteMeeting;
+  dyteMeeting: DyteClient;
+
+  async ngAfterViewInit() {
+    const meeting = await DyteClient.init({
+      roomName: '<room-name>',
+      authToken: '<auth-token>',
+    });
+    meeting.joinRoom();
+    this.dyteMeeting = meeting;
+    if (this.meetingComponent) this.meetingComponent.meeting = meeting;
+  }
+}
+```
+
+:::tip
+
+Try adding `show-setup-screen="true"` prop on `<dyte-meeting />` to enable the
+Setup Screen.
+
+:::
+
+<head>
+  <title>Quickstart - Angular UI Kit | Dyte</title>
+</head>
