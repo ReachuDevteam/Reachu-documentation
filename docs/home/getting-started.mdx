@@ -1,79 +1,164 @@
 ---
 sidebar_position: 1
-description:
-  A short guide on how to integrate dyte and how dyte works with your
-  application
 ---
 
-# Getting Started With Dyte
+# Overview
 
-Dyte offers solutions for integrating high-quality video/voice calls into your
-web, mobile, and desktop applications.
+### Infrastructure
 
-This topic introduces you to the components of Dyte and gives a quick
-walkthrough of the steps involved in integrating high-quality real-time
-communication features into your app using Dyte.
+**Outshifter is the API for product data access**. Our infrastructure pulls product data from different sources, standardizes it so it can be made available in one universal format and easily distributed across multiple channels.
 
-### Components of Dyte
+**Outshifter bi-directionally synchronizes and updates:**
 
-- **Backend HTTP REST APIs**: Your backend uses Dyte REST APIs to perform
-  actions such as, create meetings, add participants to a meeting etc
-- **Frontend SDKs**: Your applications bundle Dyte Core SDKs (and UI Kits) to
-  acquire, transmit and play media, and manage network connections.
-- **Developer Portal**: Your one-stop shop for all meeting logs, API keys,
-  billing and more
+- Product data
 
-### Integrate Dyte
+- Order information
 
-1. To get started with Dyte, you must first register in the
-   [Developer portal](https://dev.dyte.io)
+- Customer information
 
-2. Copy the [API Keys](https://dev.dyte.io/apikeys) for your organization from
-   the Developer portal. These API Keys are unique to your organization and are
-   required to use Dyte REST APIs such as when instantiating a meeting
+- Fulfillment information
 
-![APIKeys](/static/home/api-keys.png)
+### User types
 
-3. [Create presets](https://dev.dyte.io/roles-presets) using the Developer
-   portal. A preset is a set of permissions and UI configurations that would be
-   applied to a participant
+You can use Outshifter to give or get access to product data, and manage it all in one universal format.
 
-![PresetEditor](/static/home/create-preset.png)
+We distinguish between two key user types, determined by how Outshifter is utilized:
 
-4. Create a Dyte meeting using the
-   [Create Meeting API](https://docs.dyte.io/api#/operations/create_meeting).
+- **Supplier** - Managing and sharing access to my product data with multiple Channels.
 
-   This API returns you an unique identifier for your meeting `roomName`<br/>
-   Note: You may need to persist this in your database.
+- **Channel** - Getting access to work with product data from multiple Suppliers.
 
-![Diagram explaining how Dyte works](/static/home/how-dyte-works-v1.png)
-_Diagram explaining how Dyte works_
+You can also apply to become a **Partner** and build an Outshifter extension for both companies' mutual benefit.
 
-5. After you've created the meeting, add each participant to the meeting using
-   the
-   [Add Participant API](https://docs.dyte.io/api#/operations/add_participant)
-   (The `presetName` created earlier must be passed in the body of the Add
-   Participant API request)
+## APIs
 
-   The API response contains the user authentication token `authToken`.
+Outshifter offers two different types of API solutions: 
 
-6. Use the `roomName` and `authToken` to initialize any of the frontend SDKs.
+- **GraphQL APIs**
 
-Dyte meetings do not have a date or time associated with them, so you can create
-them ahead of time in advance or when users need to join the meeting. The idea
-is that your backend controls when to distribute 'roomName' and 'authToken,' and
-thus you can share the tokens with the users only at the scheduled time.
+- **REST APIs**
 
-## Glossary
+:::info **BETA disclaimer**
 
-| Name              | Description                                                                                                                 |
-| :---------------- | :-------------------------------------------------------------------------------------------------------------------------- |
-| **Meeting**       | A communication channel created on Dyte is termed as a `meeting`.                                                           |
-| **Participant**   | Anyone who joins the `meeting`, whether as an actual user or a machine user                                                 |
-| **Permission**    | A specific action allowed or not for a `participant`.                                                                       |
-| **Preset**        | Set of permissions and UI configurations to be applied at the `participant` level                                           |
-| **Recording**     | You can record the `meeting`, and get a video / audio file.                                                                 |
-| **Livestreaming** | You can livestream the `meeting` to other streaming platforms that support RTMP, like YouTube, Twitch, etc.                 |
-| **Analytics**     | Get analytics data around your `meetings`, like number of minutes, number of recorded minutes, number of participants, etc. |
+Please note that you are accessing the BETA versions of Outshifter's APIs which are in the process of being tested before their official release.
 
-<!-- For a guided tutorial on how to start from scratch, pick from one of the [client SDKs](/#web-sdks) that suits you best! -->
+This being so, Outshifter does not give any warranties, whether express or implied, as to the suitability or usability of the APIs, its services, or any of its content. The sole purpose of the BETA versions is to conduct testing and obtain feedback. Should you encounter any bugs, glitches, lack of functionality, or other problems in the BETA versions, please email us at devs@outshifter.com
+:::
+
+### Channel APIs
+
+The Channel APIs give developers full creative control to access and import product data to their channels.
+
+You'll find introductions to all features, as well as resources, guides, and reference documentation for the APIs data structure. Outshifter also provides SDK client libraries to make implementation swifter.
+
+<div class="homepage-section two-cols">
+ <div class="section-content"> 
+ <a class="homepage-card1" >
+ <div class="card-content">
+ <div class="title">GraphQL API</div>
+ </div></a></div></div>
+
+<div class="homepage-section two-cols">
+ <div class="section-content"> 
+ <a class="homepage-card1" >
+ <div class="card-content">
+ <div class="title">REST API</div>
+ </div></a></div></div>
+
+
+### Supplier API
+
+
+:::info
+The Supplier APIs are currently under development. Fill out this form to be notified once they become available
+:::
+
+### Partner API 
+
+:::info
+The Partner APIs are currently under development. Fill out this form to be notified once they become available.
+:::
+
+## Extensions
+
+Outshifter provides a number of plug-and-play applications and integrations to third party services. Making it possible for both Suppliers and Channels to get started without needing development, or easily extend Outshifter to fit their scope.
+
+<div class="homepage-section two-cols">
+ <div class="section-content"> 
+ <a class="homepage-card1" >
+ <div class="card-content">
+ <div class="title">Extensions</div>
+ </div></a></div></div>
+
+
+:::info
+Outshifter is continuously building new integrations. Can't find the extension you're looking for? Please reach out to us.
+:::
+
+### Extensions for Channels
+
+**Storefronts**
+
+Integrate with Outshifter and import products to your Storefront in minutes. Our apps and integrations for Channels auto-updates product information, orders and inventory in real-time.
+
+<div class="homepage-section two-cols">
+ <div class="section-content"> 
+ <a class="homepage-card1" >
+ <div class="card-content">
+ <div class="title">Shopify App</div>
+ <div class="description">Extensions</div>
+ </div></a></div></div>
+
+<div class="homepage-section two-cols">
+ <div class="section-content"> 
+ <a class="homepage-card1" >
+ <div class="card-content">
+ <div class="title">WooCommerce Plugin</div>
+ <div class="description">Extensions</div>
+ </div></a></div></div>
+
+ <div class="homepage-section two-cols">
+ <div class="section-content"> 
+ <a class="homepage-card1" >
+ <div class="card-content">
+ <div class="title">WordPress Plugin</div>
+ <div class="description">Extensions</div>
+ </div></a></div></div>
+
+## Extensions for Suppliers
+
+**eCommerce systems**
+
+Our Supplier extensions lets you connect your eCommerce system directly with Outshifter. Thus enabling you to automatically export products to Outshifter and give Channels access to your product data. Outshifter synchronizes all orders, inventory and other product information in real-time.
+
+<div class="homepage-section two-cols">
+ <div class="section-content"> 
+ <a class="homepage-card1" >
+ <div class="card-content">
+ <div class="title">Magento Plugin</div>
+ <div class="description">Extensions</div>
+ </div></a></div></div>
+
+<div class="homepage-section two-cols">
+ <div class="section-content"> 
+ <a class="homepage-card1" >
+ <div class="card-content">
+ <div class="title">Shopify App</div>
+ <div class="description">Extensions</div>
+ </div></a></div></div>
+
+<div class="homepage-section two-cols">
+ <div class="section-content"> 
+ <a class="homepage-card1" >
+ <div class="card-content">
+ <div class="title">Squarespace App</div>
+ <div class="description">Extensions</div>
+ </div></a></div></div>
+
+<div class="homepage-section two-cols">
+ <div class="section-content"> 
+ <a class="homepage-card1" >
+ <div class="card-content">
+ <div class="title">WooCommerce Plugin</div>
+ <div class="description">Extensions</div>
+ </div></a></div></div>
