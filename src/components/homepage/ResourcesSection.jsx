@@ -6,11 +6,11 @@ export default function ResourcesSection() {
   return (
     <section className="my-20 px-6">
       <div className="mx-auto max-w-5xl">
-        <span className="dyte-badge">RESOURCES</span>
-        <h2 className="lg:text-3xl">Want to know more?</h2>
+        <span className="dyte-badge"></span>
+        <h2 className="lg:text-3xl"></h2>
         <p className="text-text-400">
-          Explore a curated set of resources to help you get started with Dyte
-          quickly. <br />
+          {' '}
+          <br />
         </p>
 
         <div className="mt-10 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
