@@ -15,13 +15,11 @@ export default function HeroSection() {
       <div className="mx-auto flex max-w-7xl flex-col items-center lg:flex-row">
         <div className="flex-1 text-center lg:text-left">
           <h1 className="mb-6 font-jakarta text-4xl font-bold lg:text-6xl">
-            Build with Dyte
+            ReachU
           </h1>
           <p className="text-sm text-text-400 lg:max-w-lg lg:text-base">
-            At Dyte, we&apos;re building the future of real-time communication.
-            Integrate high-quality, programmable, and customizable live video
-            and voice into your web, mobile, and desktop applications with just
-            a few lines of code.
+            Get fast access to standardized product data and bi-directionally
+            sync your platform with any eCommerce system.
           </p>
           <div className="mt-8 flex flex-col gap-4 lg:flex-row">
             <Link
@@ -40,8 +38,8 @@ export default function HeroSection() {
         </div>
         <div className="">
           <img
-            src={`/static/landing-page/hero-${colorMode}.png`}
-            alt="Preview of using Dyte SDKs"
+          //src={`/static/landing-page/hero-${colorMode}.png`}
+          //alt="Preview of using Dyte SDKs"
           />
         </div>
       </div>

@@ -7,7 +7,6 @@ import SDKsSection from '../components/homepage/SDKsSection';
 import APIReferenceSection from '../components/homepage/APIReferenceSection';
 import CommunitySection from '../components/homepage/CommunitySection';
 import HomeFooter from '../components/homepage/HomeFooter';
-import ResourcesSection from '../components/homepage/ResourcesSection';
 
 export default function Homepage() {
   return (
@@ -26,8 +25,6 @@ export default function Homepage() {
       </div>
 
       <div className="z-0 bg-secondary-800 dark:bg-secondary-900">
-        <ResourcesSection />
-
         <section className="px-4 pt-16">
           <div className="mx-auto -mb-48 max-w-7xl rounded-3xl bg-white p-4 py-10 text-black dark:bg-black dark:text-white lg:p-24 lg:py-20">
             <h2 className="mb-12 text-center lg:text-3xl">
