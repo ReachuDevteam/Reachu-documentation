@@ -1,12 +1,17 @@
 # DataDog Integrations
 
-<font color="grey" size="5" >Guide to implement Datadog in Outshifter's platforms</font>
+<font color="grey" size="5">
+  Guide to implement Datadog in Outshifter's platforms
+</font>
 
 ## AWS ACS
 
-For integrate Datadog in the cluster is necessary add a new container using the image "**datadog/agent:latest**" and configure it with the corrects variables, volumes and mount points.
+For integrate Datadog in the cluster is necessary add a new container using the
+image "**datadog/agent:latest**" and configure it with the corrects variables,
+volumes and mount points.
 
 **Variables**:
+
 - DD_API_KEY
 - DD_ENV
 - DD_SERVICE
@@ -18,16 +23,20 @@ In the cluster:
 
 **Volumes**:
 
-- Name: docker_sock 
-- Volume type: Bind Mount 
+- Name: docker_sock
+- Volume type: Bind Mount
 - Source path: /var/run/docker.sock
---------------------------------------------
-- Name: proc 
-- Volume type: Bind Mount 
+
+---
+
+- Name: proc
+- Volume type: Bind Mount
 - Source: path /proc/
---------------------------------------------
-- Name: cgroup 
-- Volume type: Bind Mount 
+
+---
+
+- Name: cgroup
+- Volume type: Bind Mount
 - Source: path /sys/fs/cgroup/
 
 In the cluster:
@@ -46,7 +55,8 @@ In the cluster:
 
 ![mount-points](/static/home/mount-points.png)
 
-With this configuration now we can monitor the cluster and its containers in the Datadog Portal.
+With this configuration now we can monitor the cluster and its containers in the
+Datadog Portal.
 
 ![infraestructure1](/static/home/infraestructure1.png)
 
@@ -54,16 +64,19 @@ With this configuration now we can monitor the cluster and its containers in the
 
 ## Gitlab Pipelines
 
-For add a Pipeline integration we need configure the repository in Gitlab, in the menu bar click settings -> integrations and search Datadog and then click it.
+For add a Pipeline integration we need configure the repository in Gitlab, in
+the menu bar click settings -> integrations and search Datadog and then click
+it.
 
-​
-![addintegration](/static/home/addintegration.png)
+​ ![addintegration](/static/home/addintegration.png)
 
-Inside of the settings we need to modified the Datadog site to "datadoghq.eu", the API Key and add a tag if is necessary.
+Inside of the settings we need to modified the Datadog site to "datadoghq.eu",
+the API Key and add a tag if is necessary.
 
 ![activeintegrations](/static/home/activeintegrations.png)
 
-If is the configuration it's ok, the Datatog's portal show the pipelines when they are triggered.
+If is the configuration it's ok, the Datatog's portal show the pipelines when
+they are triggered.
 
 ![activeintegrations2](/static/home/activeintegrations2.png)
 
@@ -71,15 +84,19 @@ If is the configuration it's ok, the Datatog's portal show the pipelines when th
 
 ### Setup DataDog Portal
 
-To implement the Tests in Datadog we need to go to the portal and do click in the menu bar section CI -> Settings and then Test Service Setup.
+To implement the Tests in Datadog we need to go to the portal and do click in
+the menu bar section CI -> Settings and then Test Service Setup.
 
 ![testingvisibility](/static/home/testingvisibility.png)
 
-Now in the portal, we're going to configure the Test, first step is select the language, in this case Javascript with the Framework Jest.
+Now in the portal, we're going to configure the Test, first step is select the
+language, in this case Javascript with the Framework Jest.
 
 ![testenviroment](/static/home/testenviroment.png)
 
-Then we choose the provider, for us is Cloud, the variables that the portal says that we need to add, we will configure in Gitlab after to setup all up on this page.
+Then we choose the provider, for us is Cloud, the variables that the portal says
+that we need to add, we will configure in Gitlab after to setup all up on this
+page.
 
 ![ci](/static/home/ci.png)
 
@@ -88,19 +105,24 @@ After the provider we need to install a package in our project with the command:
 ```
 npm install --save-dev dd-trace
 ```
+
 ```
 yarn add dd-trace --dev
 ```
 
-Finally we need to set the field DD_SERVICE with the name of the app, this point is very important, because Datadog is listening the app with the same name.
+Finally we need to set the field DD_SERVICE with the name of the app, this point
+is very important, because Datadog is listening the app with the same name.
 
 ![runtest](/static/home/runtest.png)
 
-we need to leave that tab listening in the browser until it finds the Pipeline running with the test, don't close it.
+we need to leave that tab listening in the browser until it finds the Pipeline
+running with the test, don't close it.
 
 ### Setup Variables in Gitlab
 
-Now is time to setup our variables in the Gitlab portal, search your repository and go to menu bar setting -> CI/CD ,  the variables were mentioned in the previous step, they are:
+Now is time to setup our variables in the Gitlab portal, search your repository
+and go to menu bar setting -> CI/CD , the variables were mentioned in the
+previous step, they are:
 
 - DD_CIVISIBILITY_AGENTLESS_ENABLED = true
 
@@ -114,12 +136,17 @@ Now is time to setup our variables in the Gitlab portal, search your repository 
 
 ### Setup file .gitlab-ci.yml
 
-We need setup your file that use to execute the pipeline in Gitlab, in the stage of tests we need to use the image from Datadog "datadog/agent:latest".
+We need setup your file that use to execute the pipeline in Gitlab, in the stage
+of tests we need to use the image from Datadog "datadog/agent:latest".
 
-Example: In the next case, in the block of scripts, we create a file to can use our packages and install all the dependencies and in the last line we use the command that Datadog give us, look that the DD_SERVICE needs be the same that you seted in the Datadog portal.
+Example: In the next case, in the block of scripts, we create a file to can use
+our packages and install all the dependencies and in the last line we use the
+command that Datadog give us, look that the DD_SERVICE needs be the same that
+you seted in the Datadog portal.
 
 ![packagejson](/static/home/packagejson.png)
 
-Finally done all these, we can run the Pipeline in Gitlab and then the Datadog portal find our test and add it to the dashboard and review the details.
+Finally done all these, we can run the Pipeline in Gitlab and then the Datadog
+portal find our test and add it to the dashboard and review the details.
 
 ![testservice](/static/home/testservice.png)
