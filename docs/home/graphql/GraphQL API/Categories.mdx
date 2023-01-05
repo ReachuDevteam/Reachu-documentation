@@ -1,0 +1,104 @@
+---
+sidebar_position: 2
+---
+
+# Categories
+
+Each product has a category assigned and minimum one subcategory, but it can have several.
+
+Suppliers can adjust global categories to all its products.
+
+## Get all categories
+
+```json
+query Categories {
+  Categories {
+    id
+    name
+    subcategories {
+      id
+      name
+    }
+  }
+}
+```
+Response:
+```json
+{
+  "data": {
+    "Categories": [
+      {
+        "id": "1",
+        "name": "Fitness",
+        "subcategories": [
+          {
+            "id": "1",
+            "name": "Gym"
+          },
+          {
+            "id": "2",
+            "name": "Food"
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "name": "Fashion",
+        "subcategories": [
+          {
+            "id": "3",
+            "name": "Clothes"
+          },
+          {
+            "id": "4",
+            "name": "Shoes"
+          }
+        ]
+      },
+      ...
+    ]
+  }         
+}
+```
+
+## Get one category
+
+It is also possible to get a category along with all its related subcategories.
+
+The query will require only one input field as an argument:
+
+- `categorybyIdId`: the unique category ID.
+
+```json
+query CategorybyID($categorybyIdId: ID!) {
+  CategorybyID(id: $categorybyIdId) {
+    id
+    name
+    subcategories {
+      id
+      name
+    }
+  }
+}
+```
+Response:
+```json
+{
+  "data": {
+    "Category": {
+      "id": "1",
+      "name": "Fitness",
+      "subcategories": [
+        {
+          "id": "1",
+          "name": "Gym"
+        },
+        {
+          "id": "2",
+          "name": "Food"
+        }
+      ]
+    }
+  }         
+}
+```
