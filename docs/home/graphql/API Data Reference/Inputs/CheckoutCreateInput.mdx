@@ -1,0 +1,31 @@
+---
+sidebar_position: 3
+---
+
+```javascript
+type CheckoutCreateInput {
+  channel: String
+  email: String
+  items: [CheckoutItem]
+  shippingAddress: AddressCustomer
+  billingAddress: AddressCustomer
+}
+```
+
+#### Fields
+
+**`channel (String)`**
+
+Slug of a channel in which to create a checkout.
+
+**`email (String)`**
+
+The customer's email address.
+
+**`shippingAddress (Address)`**
+
+The mailing address to where the checkout will be shipped. Note: the address will be ignored if the checkout doesn't contain shippable items.
+
+**`billingAddress (Address)`**
+
+Billing address of the customer.

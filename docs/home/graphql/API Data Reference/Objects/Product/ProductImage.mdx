@@ -1,0 +1,32 @@
+```javascript
+class ProductImage {
+  id: ID
+  url: String
+  order: Int
+  alt: String
+  width: Int
+  height: Int
+}
+```
+
+#### Fields
+
+**`id (ID)`**
+
+**`url (String)`**
+
+**`order (Int)`**
+
+Outshifter saves the product images is a defined sorting order:
+
+- order: 0 is related to the main product image
+- order: 1 is related to the cover product image
+- order >= 2 is related to the remaining gallery images
+
+**`alt (String)`**
+
+The required alt attribute specifies an alternate text for an image, if the image cannot be displayed.
+
+**`width (Int), height (Int)`**
+
+The image can be retrieved in 3 sizes (small, medium, large). Depending on your selection and the image scale, you will get the related proportions.

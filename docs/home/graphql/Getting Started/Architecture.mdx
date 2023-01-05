@@ -1,0 +1,15 @@
+---
+sidebar_position: 2
+---
+
+<font color="grey" size="5" >How the main solution is organized and structured, and where the GraphQL API finds its place.</font>
+
+---
+
+Outshifter consists of three distinct components that communicate using GraphQL over HTTPS:
+
+1. The **Outshifter Core**, which is the backend server that exposes the GraphQL API.
+
+2. The **Outshifter Dashboard** implements the user interface that administration members use to manage a Channel. The dashboard is a React application that runs in the browser and talks to the core server. It's a static website so it does not have any backend code of its own.
+
+3. The **kick-start storefront template** which is an example storefront implemented in React. You can customize its code to suit your needs or you can build a custom storefront using the underlying **Outshifter SDK**.
