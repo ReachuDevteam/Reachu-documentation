@@ -10,29 +10,44 @@ Flow from adding an item to the cart to completing the order.
 
 </font>
 
-The below process describes the key milestones in the checkout process flow in Outshifter. There are also additional steps that may occur along the way; however, the purpose of this instruction is to deliver a base reference for the user to work with. We assume that at this stage, you have already completed the steps included in the  section of this chapter and that you are familiar with the basic setup of the Outshifter GraphQL API.
+The below process describes the key milestones in the checkout process flow in
+Outshifter. There are also additional steps that may occur along the way;
+however, the purpose of this instruction is to deliver a base reference for the
+user to work with. We assume that at this stage, you have already completed the
+steps included in the section of this chapter and that you are familiar with the
+basic setup of the Outshifter GraphQL API.
 
 Our order creation flow is as follows:
 
-- **Cart**: an object will all the items added to the cart by a potential buyer. This has to be handled on the frontend. Alternatively
-- **Checkout Initiation**: an object which groups all the data needed for the checkout process. You can still update at this time so it can be used as an alternative cart if wanted to. 
-- **Shipping Methods**: the way orders will be sent. E.g. postal service, click & collect.
+- **Cart**: an object will all the items added to the cart by a potential buyer.
+  This has to be handled on the frontend. Alternatively
+- **Checkout Initiation**: an object which groups all the data needed for the
+  checkout process. You can still update at this time so it can be used as an
+  alternative cart if wanted to.
+- **Shipping Methods**: the way orders will be sent. E.g. postal service, click
+  & collect.
 - **Payment Method**: a payment provider. E.g., Stripe, Klarna.
-- **Payments**: this object contains status and additional data about payment. Payments are processed and stocks reserved.
-- **Checkout Completion**: once the payment succeeds, the checkout is finished. 
-- **Order Creation**: When all the above is completed, the order will be created internally in Outshifter.
+- **Payments**: this object contains status and additional data about payment.
+  Payments are processed and stocks reserved.
+- **Checkout Completion**: once the payment succeeds, the checkout is finished.
+- **Order Creation**: When all the above is completed, the order will be created
+  internally in Outshifter.
 
 ## Cart
 
-If you are not using Outshifter's storefront SDK, the shopping cart has to be handled by the partner's built frontend.
+If you are not using Outshifter's storefront SDK, the shopping cart has to be
+handled by the partner's built frontend.
 
-You may also use the checkout as a cart. If you check the "Updating the checkout items" section below, you can see how to manage the items in the checkout once initiated.
+You may also use the checkout as a cart. If you check the "Updating the checkout
+items" section below, you can see how to manage the items in the checkout once
+initiated.
 
 ## Checkout initiation
 
 ### Checkout permissions
 
-A Checkout initiation object can only be created for logged in partner users, who can then query the created checkout data.
+A Checkout initiation object can only be created for logged in partner users,
+who can then query the created checkout data.
 
 ### Checkout creation
 
@@ -44,18 +59,24 @@ This mutation takes the following input:
 - `email`: the final customer's email address.
 - `shippingAddress`: the shipping address (if needed).
 - `billingAddress`: the billing address.
-- `items`: a list of checkout items (products), each item contains the product ID, a product variant ID and its quantity.
+- `items`: a list of checkout items (products), each item contains the product
+  ID, a product variant ID and its quantity.
 
 The resulting `Checkout` object contains the following fields:
 
 - `id`: a unique checkout ID.
 - `totalPrice`: the total price of the checkout items and shipping costs.
-- `availableShippingMethods`: a list of available shipping methods for this checkout. If the items in the cart require shipment.
-- `availablePaymentGateways`: a list of payment gateways that are currently configured on your partner Outshifter account and can be used to pay for the checkout. Only gateways which support the checkout currency are returned. For each gateway, API returns an ID, a name, and a config object, which for some gateways may return additional information required to process the payment in the frontend.
+- `availableShippingMethods`: a list of available shipping methods for this
+  checkout. If the items in the cart require shipment.
+- `availablePaymentGateways`: a list of payment gateways that are currently
+  configured on your partner Outshifter account and can be used to pay for the
+  checkout. Only gateways which support the checkout currency are returned. For
+  each gateway, API returns an ID, a name, and a config object, which for some
+  gateways may return additional information required to process the payment in
+  the frontend.
 
-:::info
-In case there was an error after the mutation was sent, you will receive an error object in the result.
-:::
+:::info In case there was an error after the mutation was sent, you will receive
+an error object in the result. :::
 
 **Example**
 
@@ -119,6 +140,7 @@ mutation {
   }
 }
 ```
+
 And in the response you get the requested information for the checkout:
 
 ```json
@@ -144,11 +166,11 @@ And in the response you get the requested information for the checkout:
         "availablePaymentGateways": [
           {
             "id": "1",
-            "name": "Klarna",
+            "name": "Klarna"
           },
           {
             "id": "2",
-            "name": "Stripe",
+            "name": "Stripe"
           }
         ]
       },
@@ -160,7 +182,8 @@ And in the response you get the requested information for the checkout:
 
 ## Updating items
 
-You may add, update or remove a product from the checkout. This allows you to treat the checkout as a shopping cart if you want to.
+You may add, update or remove a product from the checkout. This allows you to
+treat the checkout as a shopping cart if you want to.
 
 ### Adding a product
 
@@ -194,6 +217,7 @@ mutation {
   }
 }
 ```
+
 ```json
 {
   "data": {
@@ -217,13 +241,15 @@ mutation {
   }
 }
 ```
+
 ### Updating a product
 
 ### Removing a product
 
 ## Shipping
 
-The user must select a specific shipping method to create shipping for the checkout.
+The user must select a specific shipping method to create shipping for the
+checkout.
 
 You have simple options for shipments:
 
@@ -233,9 +259,11 @@ You have simple options for shipments:
 
 **Available shipping methods**
 
-Based on the shipping address provided, you can query the available shipping methods.
+Based on the shipping address provided, you can query the available shipping
+methods.
 
-Outshifter has a standardised shipping solution that is dynamic depending on the provided shipping address.
+Outshifter has a standardised shipping solution that is dynamic depending on the
+provided shipping address.
 
 - **Click & Collect - Outshifter Warehouse Oslo**
 
@@ -243,11 +271,13 @@ The customer can pick up the package
 
 - **Picking point**
 
-Based on the zip code, you will receive available picking points on the customer's area.
+Based on the zip code, you will receive available picking points on the
+customer's area.
 
 - **Home delivery - Standard**
 
-Deliver the products at the customer's home. Standard shipping may take between 1 to 3 days.
+Deliver the products at the customer's home. Standard shipping may take between
+1 to 3 days.
 
 - **Home delivery - Express**
 
@@ -268,7 +298,9 @@ query {
   }
 }
 ```
+
 Response:
+
 ```json
 {
   "data": {
@@ -315,9 +347,11 @@ Response:
   }
 }
 ```
+
 ### Select a shipping method
 
-You must provide a delivery method before submitting the checkout. If you have not provided it when creating the checkout, you can add it later.
+You must provide a delivery method before submitting the checkout. If you have
+not provided it when creating the checkout, you can add it later.
 
 ```json
 mutation {
@@ -343,6 +377,7 @@ mutation {
   }
 }
 ```
+
 Response:
 
 ```json
@@ -364,9 +399,11 @@ Response:
   }
 }
 ```
+
 ### Update shipping address
 
-In case needed, shipping address can be updated using the `checkoutShippingAddressUpdate` mutation.
+In case needed, shipping address can be updated using the
+`checkoutShippingAddressUpdate` mutation.
 
 ```json
 mutation {
@@ -397,7 +434,8 @@ mutation {
     }
   }
 }
-````
+```
+
 Response:
 
 ```json
@@ -418,21 +456,26 @@ Response:
   }
 }
 ```
+
 ## Payment
 
-Depending on the selected payment gateway, you will need to use the JavaScript form which will be then integrated to Outshifter.
+Depending on the selected payment gateway, you will need to use the JavaScript
+form which will be then integrated to Outshifter.
 
 - Partner requests for available payment methods.
 
 - Outshifer sends available payment methods.
 
-- After the payment is successful, the partner sends this information to confirm the order creation.
+- After the payment is successful, the partner sends this information to confirm
+  the order creation.
 
 - Outshifter returns an object with the created order.
 
 ### Available payment gateways
 
-Available payment gateways can be listed from the Checkout.availablePaymentGateways field. Depending on the chosen gateway, you may need additional configuration.
+Available payment gateways can be listed from the
+Checkout.availablePaymentGateways field. Depending on the chosen gateway, you
+may need additional configuration.
 
 ```json
 query {
@@ -443,52 +486,60 @@ query {
     }
   }
 }
-````
-Outshifter works with the following payment methods. You as a partner will need to implement them on the frontend. Follow instructions from their official documentation:
+```
+
+Outshifter works with the following payment methods. You as a partner will need
+to implement them on the frontend. Follow instructions from their official
+documentation:
 
 - Klarna
 
 <div class="homepage-section two-cols">
- <div class="section-content"> 
-  <a class="homepage-card2" >
-  <div class="card-content"> 
-  <a href="https://docs.klarna.com/klarna-payments/in-depth-knowledge/klarna-payments-sdk-reference/">Klarna Docs - Klarna Payments JavaScript SDK</a>
+  <div class="section-content">
+    <a class="homepage-card2">
+      <div class="card-content">
+        <a href="https://docs.klarna.com/klarna-payments/in-depth-knowledge/klarna-payments-sdk-reference/">
+          Klarna Docs - Klarna Payments JavaScript SDK
+        </a>
+      </div>
+    </a>
   </div>
-  </a>
- </div>
 </div>
 
 - Stripe
 
 <div class="homepage-section two-cols">
- <div class="section-content"> 
-  <a class="homepage-card2" >
-  <div class="card-content">
-  <a href="https://stripe.com/docs/payments/elements">Stripe Elements</a> 
+  <div class="section-content">
+    <a class="homepage-card2">
+      <div class="card-content">
+        <a href="https://stripe.com/docs/payments/elements">Stripe Elements</a>
+      </div>
+    </a>
   </div>
-  </a>
- </div>
 </div>
 
 ## Checkout completion
 
-After the payment is successful, you will be able to trigger the internal order creation.
+After the payment is successful, you will be able to trigger the internal order
+creation.
 
 Go to the next section to learn more about order creation:
 
 <div class="homepage-section two-cols">
- <div class="section-content"> 
-  <a class="homepage-card2" >
-  <div class="card-content">
-   <div class="title">Orders</div>
+  <div class="section-content">
+    <a class="homepage-card2">
+      <div class="card-content">
+        <div class="title">Orders</div>
+      </div>
+    </a>
   </div>
-  </a>
- </div>
 </div>
 
 ## Removing old checkouts
 
-In order not to overflow the database, unfinished checkouts are deleted. Anonymous and unfinished checkouts are deleted after a specified period of time from the last modification:
+In order not to overflow the database, unfinished checkouts are deleted.
+Anonymous and unfinished checkouts are deleted after a specified period of time
+from the last modification:
 
 - created checkouts with items, after 30 days
 - checkouts without items, after 6 hours

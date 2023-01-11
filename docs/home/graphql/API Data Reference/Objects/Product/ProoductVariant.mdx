@@ -1,6 +1,7 @@
 <font color="grey" size="4">
 
-Represents a version of the product that varies is a defined category, such as Size or Color.
+Represents a version of the product that varies is a defined category, such as
+Size or Color.
 
 </font>
 
@@ -8,9 +9,9 @@ Each variant may have a different price or quantity.
 
 ```javascript
 class ProductOption {
-  title: String
-  price: ProductPrice
-  quantity: Int
+  title: String;
+  price: ProductPrice;
+  quantity: Int;
 }
 ```
 
@@ -18,13 +19,16 @@ class ProductOption {
 
 **`title (String)`**
 
-The name of the variant. It is generated as a combination of the option names and option values.
+The name of the variant. It is generated as a combination of the option names
+and option values.
 
 **`price (ProductPrice)`**
 
 **`quantity (Int)`**
 
-Stock updated of the variant. This has to be taken into account at the moment of displaying the products, specially on the checkout before an order to check the stock availability of the product.
+Stock updated of the variant. This has to be taken into account at the moment of
+displaying the products, specially on the checkout before an order to check the
+stock availability of the product.
 
 #### Example
 
@@ -35,4 +39,3 @@ Stock updated of the variant. This has to be taken into account at the moment of
     "quantity": 432
 }
 ```
-

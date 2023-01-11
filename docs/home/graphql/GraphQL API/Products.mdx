@@ -8,28 +8,39 @@ This guide describes how to obtain products from the Outshifter GraphQL API.
 
 You can either retrieve a single product or a list of products.
 
-- ```List of Products```: You may require a list of products in many situations, for example, when you need to simply display the catalog in your storefront, or to provide a third party service with a list of products available in your store.
+- `List of Products`: You may require a list of products in many situations, for
+  example, when you need to simply display the catalog in your storefront, or to
+  provide a third party service with a list of products available in your store.
 
-- ```Single Product```: You may require a single product when you need more information of a particular product, for example when you need to show full listing data before to trigger purchase decision.
+- `Single Product`: You may require a single product when you need more
+  information of a particular product, for example when you need to show full
+  listing data before to trigger purchase decision.
 
-Besides from these two main options, there are additional features to look into, such as filtering of products, sorting, how we manage pricing and how we deal with stocks.
+Besides from these two main options, there are additional features to look into,
+such as filtering of products, sorting, how we manage pricing and how we deal
+with stocks.
 
 ## Product Catalog
 
-Working with Outshifter gives you the possibility to get products from multiple suppliers.
+Working with Outshifter gives you the possibility to get products from multiple
+suppliers.
 
-When fetching product data, you can choose from the following parameters from the ```Product Catalog```.
+When fetching product data, you can choose from the following parameters from
+the `Product Catalog`.
 
-- ``id``: the unique product identifier
-- ``title``: the title of the product
+- `id`: the unique product identifier
+- `title`: the title of the product
 - `description`: it provides commercial information about the product.
 - `price`: the price of the product. You can choose the currency it comes in.
 - `currency`: it can be USD, EUR or NOK
 - `images`
-- `quantity`: the available stock. This field is updated each time you receive product information. It is an important field to validate at the moment of the purchase to check for possibles out of stock.
+- `quantity`: the available stock. This field is updated each time you receive
+  product information. It is an important field to validate at the moment of the
+  purchase to check for possibles out of stock.
 - `supplier`: it contains an object with key user information
 
-If the product has variants, check both the `ProductOption` and the `ProductVariant` objects.
+If the product has variants, check both the `ProductOption` and the
+`ProductVariant` objects.
 
 Each option contains:
 
@@ -40,11 +51,16 @@ Each option contains:
 
 ## Retrieving a list of products
 
-By retrieving saved products from a seller, you as a partner can get products from a wide range of suppliers.
+By retrieving saved products from a seller, you as a partner can get products
+from a wide range of suppliers.
 
-This endpoint is designed with displaying a list of products on the frontend of your solution in mind. You will get general information about the product. If you want additional and more detailed data, see the other endpoint (Ref. single product).
+This endpoint is designed with displaying a list of products on the frontend of
+your solution in mind. You will get general information about the product. If
+you want additional and more detailed data, see the other endpoint (Ref. single
+product).
 
-To fetch a product list, you need to run the products query. Let's take a look at an example to fetch a list of products:
+To fetch a product list, you need to run the products query. Let's take a look
+at an example to fetch a list of products:
 
 ```json
 query ExampleQuery {
@@ -68,7 +84,9 @@ query ExampleQuery {
   }
 }
 ```
+
 Response:
+
 ```json
 {
   "data": {
@@ -98,15 +116,21 @@ Response:
   }
 }
 ```
-You can work with the data provided, just continue to the next sections to learn how to:
 
-- paginate: The products field is a paginated collection, see Pagination for more information.
-- filter: By default the response will provide all saved products. You may include in the body pre defined filters and get a more refined response.
-- sort: Define the order you want to receive the products in the array. Only some fields are available here.
+You can work with the data provided, just continue to the next sections to learn
+how to:
+
+- paginate: The products field is a paginated collection, see Pagination for
+  more information.
+- filter: By default the response will provide all saved products. You may
+  include in the body pre defined filters and get a more refined response.
+- sort: Define the order you want to receive the products in the array. Only
+  some fields are available here.
 
 ## Retrieving a single product
 
-Get single product information by id. You will receive detailed information of a product from the Outshifter database.
+Get single product information by id. You will receive detailed information of a
+product from the Outshifter database.
 
 Use the product query, which requires only one input field as an argument:
 
@@ -117,6 +141,7 @@ Use the product query, which requires only one input field as an argument:
   "catalogId": 920
 }
 ```
+
 Here is the example query that fetches a single product:
 
 ```json
@@ -133,7 +158,9 @@ query ExampleQuery($catalogId: Int!) {
   }
 }
 ```
+
 Response:
+
 ```json
 {
   "data": {
@@ -145,7 +172,7 @@ Response:
       "images": [
         {
           "url": "https://cdn.shopify.com/s/files/1/0532/0717/1247/products/young-hip-woman-at-carnival_925x_5922501b-0a6b-48f3-84ce-db1f3ae3cb99.jpg?v=1611671752",
-          "order": 0,
+          "order": 0
         }
       ]
     }
@@ -155,7 +182,8 @@ Response:
 
 ## Filtering
 
-The products query gives the ability to filter the results. Use the optional filter argument. Some of the filters that are available here are:
+The products query gives the ability to filter the results. Use the optional
+filter argument. Some of the filters that are available here are:
 
 · `search: String`: search by name or part of the description.
 
@@ -177,15 +205,17 @@ The products query gives the ability to filter the results. Use the optional fil
 
 · `stockAvailability`: OUT_OF_STOCK: only out-of-stock products.
 
-Here is an example query that looks for the first 3 products containing the term "juice" in the title or description:
+Here is an example query that looks for the first 3 products containing the term
+"juice" in the title or description:
 
 ## Sorting
 
 In products you can also sort the results using two sortBy arguments:
 
-- `field`: the field to use for sorting the results from several predefined choices:
+- `field`: the field to use for sorting the results from several predefined
+  choices:
 
-· `DATE`: sort products by last update. 
+· `DATE`: sort products by last update.
 
 · `MINIMAL_PRICE`: sort products by minimal variant price.
 
@@ -207,7 +237,8 @@ In products you can also sort the results using two sortBy arguments:
 
 · `DESC`: sort descending.
 
-This example shows how to sort the products list by the minimal variant price, lowest to highest:
+This example shows how to sort the products list by the minimal variant price,
+lowest to highest:
 
 Response:
 
@@ -231,7 +262,8 @@ Here are the available fields for product pricing:
 
 And similar fields for product variants:
 
-The main difference is that products don't have a price point. Instead they offer a price range that includes all of their variant prices.
+The main difference is that products don't have a price point. Instead they
+offer a price range that includes all of their variant prices.
 
 Here are the money types returned by the above:
 
@@ -239,53 +271,72 @@ See Prices for more information about money types.
 
 ## Fetching prices with tax rates specific to a country
 
-When using Outshifter with tax, you can fetch prices including taxes specific to a country. To do that, pass the `address` parameter in the `pricing` field including a country code, for which the tax should be calculated. The `address` parameter is available in `Product.pricing` and `ProductVariant.pricing` fields.
+When using Outshifter with tax, you can fetch prices including taxes specific to
+a country. To do that, pass the `address` parameter in the `pricing` field
+including a country code, for which the tax should be calculated. The `address`
+parameter is available in `Product.pricing` and `ProductVariant.pricing` fields.
 
-In the example below we fetch a price of a product variant for Norway, where the standard VAT rate is 25%:
+In the example below we fetch a price of a product variant for Norway, where the
+standard VAT rate is 25%:
 
 Result:
 
-The tax equals 100 which is 25% of the net price. Gross price is the sum of net price and the tax.
+The tax equals 100 which is 25% of the net price. Gross price is the sum of net
+price and the tax.
 
 ## Stock availability for customers
 
-Stock availability of products is defined for each variant and warehouse (see Warehouses and Checking inventory sections to see how to configure it in the Dashboard). There are two fields that allows you to fetch the stock information in the public API.
+Stock availability of products is defined for each variant and warehouse (see
+Warehouses and Checking inventory sections to see how to configure it in the
+Dashboard). There are two fields that allows you to fetch the stock information
+in the public API.
 
 To fetch the stock availability, use the `Product.isAvailable` field:
 
 Result:
 
-The `address` parameter is used to check the quantity in a warehouse that is connected with a shipping zone that includes the given address. If not provided, Outshifter will use a warehouse with the highest available quantity.
+The `address` parameter is used to check the quantity in a warehouse that is
+connected with a shipping zone that includes the given address. If not provided,
+Outshifter will use a warehouse with the highest available quantity.
 
 The `isAvailable` field is True when:
 
-· There is at least one variant for which the stock quantity minus the allocated quantity is above zero (in a warehouse matched for the given address).
+· There is at least one variant for which the stock quantity minus the allocated
+quantity is above zero (in a warehouse matched for the given address).
 
-· The product is published in the given channel and available for purchase (see Make your product available section in the Dashboard docs).
+· The product is published in the given channel and available for purchase (see
+Make your product available section in the Dashboard docs).
 
-To fetch the available quantity, use the `ProductVariant.quantityAvailable` field:
+To fetch the available quantity, use the `ProductVariant.quantityAvailable`
+field:
 
 Response:
 
-A warehouse is chosen based on the argument `address`. If the argument is omitted, API will return the highest available quantity.
+A warehouse is chosen based on the argument `address`. If the argument is
+omitted, API will return the highest available quantity.
 
 ## Stock quantities
 
-For creating integrations with an external stock management system, you will need to use stock values not restricted by `MAX_CHECKOUT_LINE_QUANTITY`.
+For creating integrations with an external stock management system, you will
+need to use stock values not restricted by `MAX_CHECKOUT_LINE_QUANTITY`.
 
-To clarify the difference between `quantityAvailable` and stocks, we will query both for the product variant:
+To clarify the difference between `quantityAvailable` and stocks, we will query
+both for the product variant:
 
 Request:
 
 Response:
 
-· `"quantityAvailable": 50`: customers only see maximum of 50 pcs available to buy
+· `"quantityAvailable": 50`: customers only see maximum of 50 pcs available to
+buy
 
 · `stocks` contain full list of stock quantities in every of the warehouses
 
 Media
 
-Product media are images that can be associated with products and used to render product galleries. Outshifter saves the product images is a defined sorting order:
+Product media are images that can be associated with products and used to render
+product galleries. Outshifter saves the product images is a defined sorting
+order:
 
 - order: 0 is related to the main product image
 
@@ -295,7 +346,8 @@ Product media are images that can be associated with products and used to render
 
 `The Product` type contains the following fields that refer to its media:
 
-· `images: Image`: the product's images come in an array. An optional width and height parameters specifies the desired size in pixels.
+· `images: Image`: the product's images come in an array. An optional width and
+height parameters specifies the desired size in pixels.
 
 Available fields:
 
@@ -309,4 +361,5 @@ Available fields:
 
 · `height: Int`: the height of the image to display.
 
-Here's a query that asks for both the thumbnail and all media of the first product, optimized for display at 100×100px
+Here's a query that asks for both the thumbnail and all media of the first
+product, optimized for display at 100×100px
