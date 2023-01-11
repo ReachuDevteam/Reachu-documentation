@@ -6,15 +6,19 @@ Outshifter has 3 types of users:
 
 - **`suppliers`**: The brands. They list and ship the products.
 - **`sellers`**: The sales channels. They sell the products in our storefronts.
-- **`customers`**: The final consumer. They buy and receive the purchased products.
+- **`customers`**: The final consumer. They buy and receive the purchased
+  products.
 
-Suppliers and sellers management is performed through our Core Api Solution, so it is not on the scope of this GraphQL Sales Channel Api.
+Suppliers and sellers management is performed through our Core Api Solution, so
+it is not on the scope of this GraphQL Sales Channel Api.
 
-If you have not created your seller yet, please refer to [User Creation](https://app.gitbook.com/o/I1VOeCf1Kk9QYomzSAiO/s/z9iM6vbFkU4ylWcyVMCY/getting-started/api-key-authentication).
+If you have not created your seller yet, please refer to
+[User Creation](https://app.gitbook.com/o/I1VOeCf1Kk9QYomzSAiO/s/z9iM6vbFkU4ylWcyVMCY/getting-started/api-key-authentication).
 
 ## Customers
 
-As a sales channel, you will be dealing with the creation and management of the final customer. You can create your own sign up or just use it for  purposes.
+As a sales channel, you will be dealing with the creation and management of the
+final customer. You can create your own sign up or just use it for purposes.
 
 Every customer must have these fields:
 
@@ -65,6 +69,7 @@ mutation {
   }
 }
 ```
+
 Response:
 
 ```javascript
@@ -83,7 +88,8 @@ Response:
 
 Targeting one created customer, update any of the fields listed above.
 
-The mutation customerUpdate will update customer information. In the example below, we update the shipping address.
+The mutation customerUpdate will update customer information. In the example
+below, we update the shipping address.
 
 ```javascript
 mutation {
@@ -113,6 +119,7 @@ mutation {
   }
 }
 ```
+
 Response:
 
 ```javascript

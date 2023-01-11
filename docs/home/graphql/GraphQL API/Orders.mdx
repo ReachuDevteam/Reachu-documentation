@@ -10,17 +10,20 @@ Create, update and get an order in the Outshifter Platform.
 
 ## Create new order
 
-Once the payment was successful, this means that the checkout is finished and the order can be created.
+Once the payment was successful, this means that the checkout is finished and
+the order can be created.
 
-An order mutation will transform the checkout data into an order. It should include:
+An order mutation will transform the checkout data into an order. It should
+include:
 
 - channel
 - final customer
-- purchased products 
+- purchased products
 - shipping costs
 - payment processor
 
-Example of required fields in a checkout object before the checkoutComplete mutation activates the order creation:
+Example of required fields in a checkout object before the checkoutComplete
+mutation activates the order creation:
 
 ```json
 {
@@ -73,7 +76,8 @@ The checkoutComplete mutation just needs as an input:
 
 - `checkoutId`: the unique id of the previously created checkout
 
-This action will create the order and it will take data from the checkout object.
+This action will create the order and it will take data from the checkout
+object.
 
 ```json
 mutation {
@@ -91,9 +95,12 @@ mutation {
   }
 }
 ```
+
 ## Get orders
 
-You can retrieve all orders from a seller that have been processed throughout the partners specific storefront. You will not receive all seller orders but just the ones of that channel.
+You can retrieve all orders from a seller that have been processed throughout
+the partners specific storefront. You will not receive all seller orders but
+just the ones of that channel.
 
 You can query the orders and select the fields you are interested in receiving.
 
@@ -130,6 +137,7 @@ query {
   }
 }
 ```
+
 Response:
 
 ```json
@@ -175,19 +183,22 @@ Response:
   }
 }
 ```
+
 ## Cancel an order item
 
 This endpoint allows a customer to update the order item status to “CANCELED”.
 
-Take into account, that the cancellation is item based, and not order based. So if the order has only one product, the whole order will be cancelled, but if it has several products, you will need to cancel each one individually if it corresponds.
+Take into account, that the cancellation is item based, and not order based. So
+if the order has only one product, the whole order will be cancelled, but if it
+has several products, you will need to cancel each one individually if it
+corresponds.
 
-:::info
-Order cancellation is available only before shipping. If the customer has already received the items or they have already been shipped, then a return form must be completed in the Outshifter's return solution.
-:::
+:::info Order cancellation is available only before shipping. If the customer
+has already received the items or they have already been shipped, then a return
+form must be completed in the Outshifter's return solution. :::
 
-:::info
-Item cancellation will also trigger an intern email to the supplier, the seller and the customer.
-:::
+:::info Item cancellation will also trigger an intern email to the supplier, the
+seller and the customer. :::
 
 Use the ordeItemCancel mutation to update the status of the item to cancelled.
 
@@ -211,6 +222,7 @@ mutation {
   }
 }
 ```
+
 Response:
 
 ```javascript
