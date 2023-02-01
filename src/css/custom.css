@@ -955,3 +955,71 @@ img[alt='APIKeys'] {
 .navbar-book-demo svg {
   display: none;
 }
+
+.homepage-card1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 400px;
+  gap: 10px;
+  padding: 20px;
+  text-decoration: none;
+  color: var(--docs-color-text);
+
+  --ifm-link-hover-decoration: none;
+  --ifm-link-hover-color: inherit;
+  cursor: pointer;
+
+  transition-property: background-color, color;
+
+  border: 1px solid var(--docs-color-border);
+  border-radius: 4px;
+}
+
+.homepage-card2 {
+  display: block;
+  flex-direction: row;
+  align-items: center;
+  width: 800px;
+  gap: 10px;
+  padding: 15px;
+  text-decoration: none;
+  color: var(--docs-color-text);
+
+  --ifm-link-hover-decoration: none;
+  --ifm-link-hover-color: inherit;
+  cursor: pointer;
+
+  transition-property: background-color, color;
+
+  border: 1px solid var(--docs-color-border);
+  border-radius: 4px;
+}
+
+.homepage-card3 {
+  display: block;
+  flex-direction: row;
+  align-items: center;
+  width: 800px;
+  gap: 10px;
+  padding: 15px;
+  text-decoration: none;
+  color: var(--docs-color-text);
+
+  --ifm-link-hover-decoration: none;
+  --ifm-link-hover-color: inherit;
+  cursor: pointer;
+
+  transition-property: background-color, color;
+
+  border: 1px solid var(--docs-color-border);
+  border-radius: 4px;
+}
+
+.homepage-card:hover {
+  background-color: var(--docs-color-background-100);
+}
+
+.homepage-card1:hover {
+  background-color: var(--docs-color-background-100);
+}
