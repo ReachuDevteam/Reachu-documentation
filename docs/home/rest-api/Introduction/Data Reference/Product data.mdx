@@ -4,11 +4,14 @@ Product data and object explanations.
 
 </font>
 
-We´ve divided product data into general commercial information regarding a product and Outshifter's internal information designed to be interacted with.
+We´ve divided product data into general commercial information regarding a
+product and Outshifter's internal information designed to be interacted with.
 
 ### Commercial Information
 
-Commercial information is used for being displayed on your frontend such as your storefront, or through one of Outshifter's integrations or extensions. All commercial information is provided by the supplier.
+Commercial information is used for being displayed on your frontend such as your
+storefront, or through one of Outshifter's integrations or extensions. All
+commercial information is provided by the supplier.
 
 #### Product core
 
@@ -24,13 +27,20 @@ Commercial information is used for being displayed on your frontend such as your
     }
 }
 ```
-- **`amount`** (number): The product price amount. Should be in decimals. If no decimals, .00 will be added by default.
-- **`currency`** (string): The product currency price. We use the ISO 4217 standard for defining currencies. Examples are USD, GBP, EUR or SEK.
-- **`quantity`** (number): The available stock. This field is updated each time you receive product information. It is an important field to validate at the moment of the purchase to check for possibles out of stock.
+
+- **`amount`** (number): The product price amount. Should be in decimals. If no
+  decimals, .00 will be added by default.
+- **`currency`** (string): The product currency price. We use the ISO 4217
+  standard for defining currencies. Examples are USD, GBP, EUR or SEK.
+- **`quantity`** (number): The available stock. This field is updated each time
+  you receive product information. It is an important field to validate at the
+  moment of the purchase to check for possibles out of stock.
 
 #### Images
 
-Images are associated with products and can be used to render product galleries. All product images are uploaded into our database. Images are fetched with the following order:
+Images are associated with products and can be used to render product galleries.
+All product images are uploaded into our database. Images are fetched with the
+following order:
 
 - order: 0 means cover image. It should be 4:5 ratio.
 - order: 1 means main product image
@@ -54,6 +64,7 @@ Images are associated with products and can be used to render product galleries.
     ]
 }
 ```
+
 #### Supplier
 
 - **`supplier`** (object): All key information about the supplier.
@@ -67,6 +78,7 @@ Images are associated with products and can be used to render product galleries.
     }
 }
 ```
+
 - supplier -> id (number): The unique id of the user
 - supplier -> name (string): The name the user
 - supplier -> avatar (string): The logo of the user
@@ -91,10 +103,13 @@ Options & Variations
   ]
 }
 ```
+
 - variations (array): Each variation displayed
   - -> title: The combination of the different variation options.
-  - -> price: The price for that particular variation. It is generally the same, but there are cases where it may vary.
-  - -> quantity: The inventory level of the variation. This is an important and dynamic field as it can be updated between each new request.
+  - -> price: The price for that particular variation. It is generally the same,
+    but there are cases where it may vary.
+  - -> quantity: The inventory level of the variation. This is an important and
+    dynamic field as it can be updated between each new request.
 
 ```javascript
 {
@@ -132,7 +147,3 @@ Options & Variations
     ]
 }
 ```
-  
-
-
-

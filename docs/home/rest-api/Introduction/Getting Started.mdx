@@ -10,13 +10,14 @@ What you need in order to start using our REST API.
 
 ## API URLs
 
-To access the Outshifter API, combine the base URL + endpoint. For instance, in order to "retrieve an order" construct the URL to call as follows: BASE URL for environment + /users/me/orders/ → https://api.outshifter.com/users/me/orders/
+To access the Outshifter API, combine the base URL + endpoint. For instance, in
+order to "retrieve an order" construct the URL to call as follows: BASE URL for
+environment + /users/me/orders/ → https://api.outshifter.com/users/me/orders/
 
-Use the testing environments to familiarize yourself with the API and to try new things; use the live environments to start real transactions with Outshifter.
+Use the testing environments to familiarize yourself with the API and to try new
+things; use the live environments to start real transactions with Outshifter.
 
-:::info
-Use HTTPS for all your interactions with the Outshifter API.
-:::
+:::info Use HTTPS for all your interactions with the Outshifter API. :::
 
 Base URL Live (production) = https://api.outshifter.com/
 
@@ -24,15 +25,22 @@ Base URL Testing (playground) = https://api-qa.outshifter.com/
 
 ## API Key (Authentication)
 
-The Outshifter API Key is used as authentication for all your Outshifter API requests. You need access to your Outshifter Account in order to generate the API Key.
+The Outshifter API Key is used as authentication for all your Outshifter API
+requests. You need access to your Outshifter Account in order to generate the
+API Key.
 
-If you haven't already set up an Outshifter Account you need to [register](https://app.outshifter.com/register-merchant) for one in order to continue.
+If you haven't already set up an Outshifter Account you need to
+[register](https://app.outshifter.com/register-merchant) for one in order to
+continue.
 
 ### Generate Api key
 
-- Log in to your Outshifter Account, go to settings (available in the top right hand corner) and select [Sales Channels](https://app.outshifter.com/settings/integrations).
+- Log in to your Outshifter Account, go to settings (available in the top right
+  hand corner) and select
+  [Sales Channels](https://app.outshifter.com/settings/integrations).
 
-- Click on the create button. This will automatically generate the API Key for your user.
+- Click on the create button. This will automatically generate the API Key for
+  your user.
 
 ![create_api_key](/static/home/create_api_key.png)
 
@@ -40,15 +48,18 @@ If you haven't already set up an Outshifter Account you need to [register](https
 
 ![get_api_key](/static/home/get_api_key.png)
 
-- The Key can be used as an authentication method for all your Outshifter API requests.
+- The Key can be used as an authentication method for all your Outshifter API
+  requests.
 
 ## Authentification
 
-In order to send requests to the Outshifter API, you need to be authenticated and supply a token for all requests. Every user in the Outshifter platform has an authorisation token or API Key.
+In order to send requests to the Outshifter API, you need to be authenticated
+and supply a token for all requests. Every user in the Outshifter platform has
+an authorisation token or API Key.
 
-:::info
-Your API requests will not work unless you include the API token. Make sure you add the API token to the request in the headers as an authorisation key.
-:::
+:::info Your API requests will not work unless you include the API token. Make
+sure you add the API token to the request in the headers as an authorisation
+key. :::
 
 #### Example
 
@@ -56,6 +67,6 @@ Outshifter API Key example: RPMEQ4W-BXA44VW-Q6TVA8X-K12RVGJ
 
 ```javascript
 headers: {
-    authorization: RPMEQ4W-BXA44VW-Q6TVA8X-K12RVGJ
+  authorization: RPMEQ4W - BXA44VW - Q6TVA8X - K12RVGJ;
 }
 ```
