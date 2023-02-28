@@ -8,46 +8,17 @@ export default function GuidesSection({ title, className }) {
   return (
     <Section title={title} className={className}>
       <Card
-        title="Dyte Embed"
-        description="Embed a dyte meeting easily"
-        to="/guides/embed"
+        title="Getting Started"
+        description="Getting Started"
+        to="/sdk/getting-started"
       />
       <Card
-        title="Integrating with Webhooks"
-        description="Use webhooks to keep track of meeting events"
-        to="/guides/integrating-with-webhooks"
+        title="Documentation"
+        description="Documentation"
+        to="/sdk/documentation"
       />
-      <Card
-        title="Recording your meetings"
-        description="Record meetings easily and store in the cloud"
-        to="/guides/recording-your-meetings"
-      />
-
-      <Card
-        title="Livestreaming to other platforms"
-        description="Livestream to platforms like YouTube, Twitch etc."
-        to="/guides/livestreaming-other-platforms"
-      />
-      <Card
-        title="Livestreaming API Integration Guide"
-        description="Livestream to HLS using REST APIs"
-        to="/guides/livestreaming-api-integration"
-      />
-      <Card
-        title="Livestreaming any RTMP input"
-        description="Dyte allows livestreaming, via RTMP as well as HLS, for all Dyte meetings."
-        to="/guides/integrating-with-webhooks"
-      />
-      <Card
-        title="Controlling an Active Session"
-        description="Control an active meeting with REST APIs"
-        to="/guides/controlling-an-active-session"
-      />
-      <Card
-        title="Exporting Chat Dump"
-        description="Programmatically retrieve all chat messages of a session using Chat Replay API."
-        to="/guides/exporting-chat-dump"
-      />
+      <Card title="Tutorials" description="Tutorials" to="/sdk/tutorials" />
+      <Card title="Resources" description="Resources" to="/sdk/resources" />
     </Section>
   );
 }
