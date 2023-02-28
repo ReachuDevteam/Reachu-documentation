@@ -54,7 +54,7 @@ const latestVersions = {
 };
 
 const SECTIONS = [
-  defineSection('guides'),
+  defineSection('sdk'),
   defineSection('cli'),
 
   defineSection('react', { label: '0.x.x' }),
@@ -113,14 +113,14 @@ const resourcesHTML = fs.readFileSync('./src/snippets/resources.html', 'utf-8');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Dyte Docs',
+  title: 'Reachu Docs',
   tagline: 'Real-time audio & video SDKs, ready to launch 🚀',
   // TODO: Update base url
   url: 'https://docs.dyte.io',
   baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
-  favicon: '/favicon.ico',
+  favicon: '/favicon.svg',
   trailingSlash: false,
   stylesheets: [
     { href: 'https://fonts.googleapis.com', rel: 'preconnect' },
@@ -208,12 +208,12 @@ const config = {
           href: '/',
           src: '/logo/light.svg',
           srcDark: '/logo/dark.svg',
-          alt: 'Dyte Docs',
+          alt: 'Reachu Docs',
           height: '40px',
           width: '101px',
         },
         items: [
-          {
+          /*{
             label: 'SDKs',
             type: 'dropdown',
             className: 'dyte-dropdown',
@@ -224,17 +224,17 @@ const config = {
                 className: 'dyte-dropdown',
               },
             ],
+          },*/
+          {
+            label: 'SDK',
+            to: 'sdk',
           },
           {
-            label: 'Guides',
-            to: 'guides',
-          },
-          {
-            label: 'API Reference',
+            label: 'API',
             to: '/api/',
           },
           {
-            label: 'Resources',
+            label: 'Integrations',
             type: 'dropdown',
             className: 'dyte-dropdown resources-dropdown',
             items: [
@@ -273,8 +273,8 @@ const config = {
           href: '/',
           src: '/logo/light.svg',
           srcDark: '/logo/dark.svg',
-          alt: 'Dyte Docs',
-          height: '36px',
+          alt: 'Reachu Docs',
+          height: '24px',
         },
         links: [
           {

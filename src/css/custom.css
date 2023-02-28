@@ -849,6 +849,10 @@ img[src$='#terminal'] {
   gap: 12px;
 }
 
+.one-col .section-content {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
 .two-cols .section-content {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
