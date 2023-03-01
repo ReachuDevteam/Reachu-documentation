@@ -113,8 +113,9 @@ const resourcesHTML = fs.readFileSync('./src/snippets/resources.html', 'utf-8');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Reachu Docs',
-  tagline: 'Real-time audio & video SDKs, ready to launch 🚀',
+  title: 'Reachu.io — e-commerce where you are',
+  tagline:
+    'Direct purchases where consumers spend their time is the next evolution of online commerce.',
   // TODO: Update base url
   url: 'https://docs.dyte.io',
   baseUrl: '/',
@@ -192,7 +193,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      image: '/img/dyte-docs-card.png',
+      image: '/img/rechu-docs-card.png',
       colorMode: {
         defaultMode: 'dark',
       },
