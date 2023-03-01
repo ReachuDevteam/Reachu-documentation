@@ -193,7 +193,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      image: '/img/rechu-docs-card.png',
+      image: '/img/reachu-docs-card.png',
       colorMode: {
         defaultMode: 'dark',
       },

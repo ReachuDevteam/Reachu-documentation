@@ -11,7 +11,7 @@ import HomeFooter from '../components/homepage/HomeFooter';
 export default function Homepage() {
   return (
     <Layout
-      description="Real-time audio & video SDKs, ready to launch 🚀"
+      description="Direct purchases where consumers spend their time is the next evolution of online commerce."
       wrapperClassName="homepage flex flex-col"
       noFooter
     >
