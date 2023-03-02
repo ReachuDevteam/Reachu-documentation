@@ -1,0 +1,48 @@
+---
+title: Product
+sidebar_position: 1
+---
+
+# Product
+
+In order to get product information you need to interact with the channel
+endpoint. You can choose to get all products at once or individual product
+information by using the product id.
+
+## Get products
+
+Retrieve an array of the products added to your channel.
+
+```js
+  async function fetchAllProducts() => {
+    const sdk = getSDK();
+    const products = await sdk.channel.item.getAll(CHANNEL_ID);
+    return products;
+  });
+```
+
+:::info
+
+This feature is designed to display a list of products on the frontend of your
+solution. It provides you with general product information. If you want
+additional more detailed data, see the below in the “Get detailed product
+information by id” section below.
+
+:::
+
+## Get products by ids
+
+Retrieve an array of the products added to your channel.
+
+```js
+const productIds = [ID1, ID2, ID3];
+
+async function fetchProductsByIds(ids) {
+  const sdk = getSDK();
+  const products = await sdk.channel.item.getAllByProductList(
+    CHANNEL_ID,
+    ids: productIds
+  );
+  return products;
+}
+```

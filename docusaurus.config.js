@@ -117,7 +117,7 @@ const config = {
   tagline:
     'Direct purchases where consumers spend their time is the next evolution of online commerce.',
   // TODO: Update base url
-  url: 'https://docs.dyte.io',
+  url: 'https://d6ccf1b5ffa2.ngrok.io',
   baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',

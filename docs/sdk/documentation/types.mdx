@@ -1,0 +1,47 @@
+---
+title: Types
+sidebar_position: 4
+---
+
+# Types
+
+## Product types
+
+```js
+type Product = {
+  id: number,
+  title: string,
+  description: string,
+  sku?: string,
+  qty: number,
+  images?: { url: string }[],
+  publicPrice?: string,
+  optionsEnabled?: boolean,
+  options?: ProductOption[],
+  variants?: ProductVariant[],
+  price: {
+    amount: string,
+    currencyCode: string,
+  },
+};
+
+type ProductOption = {
+  id: number,
+  deletedAt: string,
+  name: string,
+  order: 1,
+  values: string,
+};
+
+type ProductVariant = {
+  barcode: string,
+  deletedAt: string,
+  id: number,
+  originId: string,
+  originalPrice: { amount: string, currencyCode: string },
+  price: string,
+  quantity: number,
+  sku: string,
+  title: string,
+};
+```
