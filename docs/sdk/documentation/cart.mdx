@@ -5,43 +5,192 @@ sidebar_position: 2
 
 # Cart
 
-In order to get product information you need to interact with the channel
-endpoint. You can choose to get all products at once or individual product
-information by using the product id.
+Store on our database the items added to the cart by a potential buyer.
 
-## Get products
+## Create cart
+
+You can initiate the cart even before adding products to it, so you decide when
+it's more convenient for you to do it. You need to provide us though with the
+reference to the customer's session id that is created by you in the frontend.
 
 Retrieve an array of the products added to your channel.
 
 ```js
-  async function fetchAllProducts() => {
+  async function createCart() => {
     const sdk = getSDK();
-    const products = await sdk.channel.item.getAll(CHANNEL_ID);
-    return products;
+    let newCart = await sdk.shopCart.cart.create({
+      currency: STORE_CURRENCY,
+      customer_session_id: SESSION_ID,
+    });
   });
+```
+
+Response:
+
+```json
+{
+  "cart_id": "dd961398-e3de-4204-9404-450b6170ddf3",
+  "customer_session_id": "92sdj37257",
+  "created_at": "2022-10-07T10:17:31.675Z",
+  "updated_at": "2022-10-07T10:17:31.675Z",
+  "line_items": [],
+  "total_amount": 0,
+  "currency": "EUR"
+}
+```
+
+You may want to interact with a created cart in the following ways:
+
+- add an additional item o multiple items to the cart object
+- update the quantity of an added item
+- remove an item or multiple items from the cart object
+
+### Add an item
+
+```js
+async (cart_id, product, variant) => {
+  const sdk = getSDK();
+
+  await sdk.shopCart.cartItem.create({
+    cartId: string,
+    line_items: [
+      {
+        product_id: number,
+        quantity: number,
+        variant_id: string,
+        price_data: {
+          currency: string,
+          tax: number,
+          unit_price: string,
+        },
+      },
+    ],
+  });
+};
+```
+
+```json
+{
+  "line_items": [
+    {
+      "id": "c383e935-38d6-4cee-8c50-30506e3476c3",
+      "product_id": 0,
+      "product_title": "",
+      "product_image": [],
+      "variant_id": null,
+      "quantity": 1,
+      "price_data": {
+        "unit_price": 200,
+        "tax": 12,
+        "currency": "NOK"
+      }
+    }
+  ]
+}
 ```
 
 :::info
 
-This feature is designed to display a list of products on the frontend of your
-solution. It provides you with general product information. If you want
-additional more detailed data, see the below in the “Get detailed product
-information by id” section below.
+It is possible to add more than one item on this endpoint.
 
 :::
 
-## Get products by ids
-
-Retrieve an array of the products added to your channel.
+### Update an item
 
 ```js
-const productIds = [ID1, ID2, ID3];
-async function fetchProductsByIds(ids) {
+async (cart_id, product, variant) => {
   const sdk = getSDK();
-  const products = await sdk.channel.item.getAllByProductList(
-    CHANNEL_ID,
-    ids: productIds
-  );
-  return products;
+  await sdk.shopCart.cartItem.update(CART_ID, CART_ITEM_ID, { qty: quantity });
+};
+```
+
+Response:
+
+```json
+{
+  "message": "The item was updated successfully"
+}
+```
+
+### Remove an item
+
+```js
+async (cart_id, product, variant) => {
+  const sdk = getSDK();
+  await sdk.shopCart.cartItem.delete(CART_ID, CART_ITEM_ID);
+};
+```
+
+Response:
+
+```json
+{
+  "message": "The item was removed successfully"
+}
+```
+
+## Get cart information
+
+At any time you can retrieve cart information with all the added items.
+
+```js
+async (CART_ID) => {
+  const sdk = getSDK();
+  const cart = await sdk.shopCart.cart.getById(CART_ID);
+  return cart;
+};
+```
+
+Response:
+
+```json
+{
+  "cart_id": 112321203,
+  "customer_session_id": "92sdj34234",
+  "created_at": "2022-04-05T13:20:16-04:00",
+  "updated_at": "2022-04-05T13:20:16-04:00",
+  "line_items": [
+    {
+      "product_id": 112232,
+      "variant_id": 231,
+      "quantity": 2,
+      "price_data": {
+        "unit_price": "323.13",
+        "tax": "12",
+        "currency": "EUR"
+      }
+    },
+    {
+      "product_id": 112000,
+      "variant_id": null,
+      "quantity": 1,
+      "price_data": {
+        "unit_price": "100.00",
+        "tax": "12",
+        "currency": "EUR"
+      }
+    }
+  ],
+  "total_amount": "1200.20",
+  "currency": "EUR"
+}
+```
+
+## Delete cart
+
+In case you need to delete a cart, it is also possible via the SDK.
+
+```js
+async (CART_ID) => {
+  const sdk = getSDK();
+  await sdk.shopCart.cart.delete(CART_ID);
+};
+```
+
+Response
+
+```json
+{
+  "message": "The cart was deleted successfully"
 }
 ```

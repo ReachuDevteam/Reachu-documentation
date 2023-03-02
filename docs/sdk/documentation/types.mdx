@@ -45,3 +45,24 @@ type ProductVariant = {
   title: string,
 };
 ```
+
+```js
+interface Cart {
+  cart_id: string;
+  customer_session_id: string;
+  created_at: Date;
+  updated_at: Date;
+  line_items: {
+    product_id: number,
+    variant_id: number | null | undefined,
+    quantity: number,
+    price_data: {
+      unit_price: number,
+      tax: number,
+      currency: string,
+    },
+  }[];
+  total_amount: number;
+  currency: string;
+}
+```

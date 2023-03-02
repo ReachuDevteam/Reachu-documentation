@@ -9,16 +9,48 @@ In order to get product information you need to interact with the channel
 endpoint. You can choose to get all products at once or individual product
 information by using the product id.
 
-## Get products
+## Get all products
 
-Retrieve an array of the products added to your channel.
+Retrieve an array of all the products to added to your channels.
 
 ```js
-  async function fetchAllProducts() => {
-    const sdk = getSDK();
-    const products = await sdk.channel.item.getAll(CHANNEL_ID);
-    return products;
-  });
+async function fetchAllProducts() => {
+  const sdk = getSDK();
+  const products = await sdk.channel.item.getAll();
+  return products;
+});
+```
+
+Response:
+
+```json
+[
+  {
+    "id": 8,
+    "channel": "Vev",
+    "list_products": [
+      {
+        "createdAt": "2023-03-02T09:27:03.383Z",
+        "id": 5797,
+        "title": "T-shirt",
+        "status": 1,
+        "description": "<p>T-shirt description</p>"
+      }
+    ],
+    "totalProducts": 2,
+    "collections": [],
+    "variants": [],
+    "products": [
+      {
+        "createdAt": "2023-03-02T09:27:03.383Z",
+        "id": 5797,
+        "title": "T-shirt",
+        "description": "<p>T-shirt description</p>"
+      }
+    ],
+    "collectionsShared": []
+  }
+]
 ```
 
 :::info
@@ -30,12 +62,42 @@ information by id” section below.
 
 :::
 
+The getAll() also accepts as an optional parameter the id of your channel. You
+will get an array of just the products of that channel:
+
+```js
+async function fetchAllProductsByChannel() => {
+  const sdk = getSDK();
+  const products = await sdk.channel.item.getAll(CHANNEL_ID);
+  return products;
+});
+```
+
+Response:
+
+```json
+[
+  {
+    "createdAt": "2023-03-02T09:27:03.383Z",
+    "id": 5797,
+    "title": "T-shirt",
+    "description": "<p>T-shirt description</p>"
+  },
+  {
+    "createdAt": "2023-03-02T09:27:03.383Z",
+    "id": 5798,
+    "title": "Pants",
+    "description": "<p>Pants description</p>"
+  }
+]
+```
+
 ## Get products by ids
 
 Retrieve an array of the products added to your channel.
 
 ```js
-const productIds = [ID1, ID2, ID3];
+const productIds = [ID1, ID2];
 
 async function fetchProductsByIds(ids) {
   const sdk = getSDK();
@@ -45,4 +107,23 @@ async function fetchProductsByIds(ids) {
   );
   return products;
 }
+```
+
+Response:
+
+```json
+[
+  {
+    "createdAt": "2023-03-02T09:27:03.383Z",
+    "id": 5797,
+    "title": "T-shirt",
+    "description": "<p>T-shirt description</p>"
+  },
+  {
+    "createdAt": "2023-03-02T09:27:03.383Z",
+    "id": 5798,
+    "title": "Pants",
+    "description": "<p>Pants description</p>"
+  }
+]
 ```
