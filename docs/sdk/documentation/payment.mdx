@@ -1,0 +1,24 @@
+---
+title: Payment
+sidebar_position: 4
+---
+
+# Payment
+
+## Initiate payment
+
+You will not be able to proceed to payment without the following information:
+
+- personal information (name, email)
+- shipping information
+- billing information
+- payment method
+- shipping rate
+
+```js
+async function initiatePayment(CHECKOUT_ID) => {
+  const sdk = getSDK();
+  const checkout = await sdk.shopCart.payment.create(CHECKOUT_ID);
+  return checkout;
+});
+```
