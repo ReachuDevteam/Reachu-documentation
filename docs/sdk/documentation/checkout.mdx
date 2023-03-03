@@ -5,43 +5,293 @@ sidebar_position: 3
 
 # Checkout
 
-In order to get product information you need to interact with the channel
-endpoint. You can choose to get all products at once or individual product
-information by using the product id.
+The below process describes the key milestones in the checkout process flow in
+Reachu. There are also additional steps that may occur along the way; however,
+the purpose of this instruction is to deliver a base reference for the user to
+work with.
 
-## Get products
+| Step                | Description                                                                                                                                                          |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Checkout Initiation | Once the final customer is ready to initiate the order, an object with the cart data is needed for the checkout process. You can still update the cart at this time. |
+| Shipping Methods    | The way orders will be sent. E.g. postal service, click & collect.                                                                                                   |
+| Payment Method      | A payment provider. E.g., Stripe, Klarna.                                                                                                                            |
+| Payment             | This object contains status and additional data about payment. Payments are processed by third parties.                                                              |
+| Checkout Completion | Once the payment succeeds, the checkout is finished.                                                                                                                 |
+
+## Initiate the checkout
 
 Retrieve an array of the products added to your channel.
 
 ```js
-  async function fetchAllProducts() => {
+  async function createCheckout(CART_ID) => {
     const sdk = getSDK();
-    const products = await sdk.channel.item.getAll(CHANNEL_ID);
-    return products;
+    const checkout = await sdk.shopCart.checkout.create({
+      cart_id: CART_ID,
+    });
+    return checkout;
   });
 ```
 
-:::info
+Response:
 
-This feature is designed to display a list of products on the frontend of your
-solution. It provides you with general product information. If you want
-additional more detailed data, see the below in the “Get detailed product
-information by id” section below.
+```json
+{
+  "cart": {
+    "createdAt": "2022-10-07T10:17:31.675Z",
+    "updatedAt": "2022-10-07T11:15:56.000Z",
+    "id": "dd961398-e3de-4204-9404-450b6170ddf3",
+    "customer_session_id": "92sdj37257",
+    "currency": "NOK",
+    "total_amount": "200.00",
+    "deletedAt": null,
+    "line_items": [
+      {
+        "createdAt": "2022-10-07T10:35:15.189Z",
+        "updatedAt": "2022-10-07T10:35:15.189Z",
+        "id": "c383e935-38d6-4cee-8c50-30506e3476c3",
+        "deletedAt": null,
+        "variantId": null,
+        "quantity": 1,
+        "priceData": {
+          "id": "004b5ec6-edb8-4004-8d34-9e7769a91b46",
+          "unitPrice": "200.00",
+          "tax": "12.00",
+          "currency": "NOK"
+        }
+      }
+    ]
+  },
+  "status": "ACTIVE",
+  "total_price": "200.00",
+  "total_tax": "12.00",
+  "total_line_items_price": 200,
+  "deletedAt": null,
+  "success_url": null,
+  "cancel_url": null,
+  "payment_method": null,
+  "email": null,
+  "checkout_url": null,
+  "createdAt": "2022-10-07T11:44:53.666Z",
+  "updatedAt": "2022-10-07T11:44:53.666Z",
+  "id": "67954a7d-7bb4-49ef-82a6-bbe491d949a6",
+  "availablePaymentMethods": []
+}
+```
 
-:::
+## Payment Methods
 
-## Get products by ids
-
-Retrieve an array of the products added to your channel.
+Get available payment methods.
 
 ```js
-const productIds = [ID1, ID2, ID3];
-async function fetchProductsByIds(ids) {
+async function createCheckout(CART_ID) => {
   const sdk = getSDK();
-  const products = await sdk.channel.item.getAllByProductList(
-    CHANNEL_ID,
-    ids: productIds
-  );
-  return products;
+  const paymentMethods = await sdk.shopCart.paymentMethod.getAllByUser();
+  return paymentMethods;
+});
+```
+
+```json
+{
+  "availablePaymentMethods": [
+    {
+      "name": "Stripe"
+    },
+    {
+      "name": "Klarna"
+    }
+  ]
 }
+```
+
+## Shipping rates
+
+## Interacting with a created checkout
+
+### Update the checkout
+
+After creation, you can update the following information from the checkout:
+
+- billing_address
+- shipping_address
+- after payment urls
+  - return_url
+  - success_url
+  - cancel_url
+
+```js
+async function createCheckout(CHECKOUT_ID) => {
+  const sdk = getSDK();
+  const checkout = await sdk.shopCart.checkout.update(CHECKOUT_ID, {
+      shipping_address: {
+        first_name: "John",
+        last_name: "Johnson",
+        email: "johnjohnson@example.com",
+        address1: "Address 1",
+        city: "Oslo",
+        country: "Norway",
+        zip: "0672"
+      }
+  });
+  return checkout;
+});
+```
+
+Response:
+
+```json
+{
+  "createdAt": "2023-03-03T11:37:57.773Z",
+  "updatedAt": "2023-03-03T12:29:13.000Z",
+  "id": "ae02680b-4699-4670-accd-fbf7c4ccac42",
+  "deletedAt": null,
+  "success_url": null,
+  "cancel_url": null,
+  "payment_method": null,
+  "email": null,
+  "status": "ACTIVE",
+  "checkout_url": null,
+  "origin_payment_id": null,
+  "total_price": "0.00",
+  "total_tax": "0.00",
+  "total_line_items_price": 0,
+  "cart": {
+    "cart_id": "7fd747b6-dd73-462c-b579-7773f273a98c",
+    "customer_session_id": "768166",
+    "created_at": "2023-03-03T11:18:53.906Z",
+    "updated_at": "2023-03-03T12:07:15.000Z",
+    "line_items": [
+      {
+        "id": "d0136ca8-76d3-4d65-8fb7-c9cc4960e418",
+        "product_id": 5797,
+        "product_title": "T-shirt",
+        "product_image": [
+          {
+            "id": 18724,
+            "deletedAt": null,
+            "url": "https://outshifter-uploads-qa.s3.amazonaws.com/product-images/5797-0af14ec7-a3cf-438d-928f-0caffbd8fc4b.jpeg",
+            "width": 810,
+            "height": 1168,
+            "order": 0
+          },
+          {
+            "id": 18725,
+            "deletedAt": null,
+            "url": "https://outshifter-uploads-qa.s3.amazonaws.com/product-images/5797-88e5f764-e927-4a87-b466-82b816ab5d95.jpeg",
+            "width": 762,
+            "height": 1016,
+            "order": 1
+          }
+        ],
+        "variant_id": null,
+        "variant_title": null,
+        "quantity": 1,
+        "price_data": {
+          "unit_price": 100,
+          "tax": 25,
+          "currency": "EUR"
+        }
+      }
+    ],
+    "total_amount": 100,
+    "currency": "EUR"
+  },
+  "billing_address": null,
+  "shipping_address": {
+    "id": "6fa90bd2-6fc3-422b-a2cd-e4330be23de7",
+    "first_name": "John",
+    "last_name": "Johnson",
+    "phone_code": null,
+    "phone": null,
+    "company": null,
+    "address1": "Address 1",
+    "address2": null,
+    "city": "Oslo",
+    "province": null,
+    "province_code": null,
+    "country": "Norway",
+    "country_code": null,
+    "zip": "0672"
+  }
+}
+```
+
+### Get the checkout
+
+```js
+async function getCheckout(CHECKOUT_ID) => {
+  const sdk = getSDK();
+  const checkout = await sdk.shopCart.checkout.getById(CHECKOUT_ID);
+  return checkout;
+});
+```
+
+```json
+{
+  "createdAt": "2022-10-07T11:44:53.666Z",
+  "updatedAt": "2022-10-07T11:52:56.000Z",
+  "id": "67954a7d-7bb4-49ef-82a6-bbe491d949a6",
+  "deletedAt": null,
+  "success_url": null,
+  "cancel_url": null,
+  "payment_method": null,
+  "email": null,
+  "status": "ACTIVE",
+  "checkout_url": null,
+  "total_price": "200.00",
+  "total_tax": "12.00",
+  "total_line_items_price": 200,
+  "cart": {
+    "createdAt": "2022-10-07T10:17:31.675Z",
+    "updatedAt": "2022-10-07T11:15:56.000Z",
+    "id": "dd961398-e3de-4204-9404-450b6170ddf3",
+    "customer_session_id": "92sdj37257",
+    "currency": "NOK",
+    "total_amount": "200.00",
+    "deletedAt": null,
+    "line_items": [
+      {
+        "createdAt": "2022-10-07T10:35:15.189Z",
+        "updatedAt": "2022-10-07T10:35:15.189Z",
+        "id": "c383e935-38d6-4cee-8c50-30506e3476c3",
+        "deletedAt": null,
+        "variantId": null,
+        "quantity": 1,
+        "product": null,
+        "priceData": {
+          "id": "004b5ec6-edb8-4004-8d34-9e7769a91b46",
+          "unitPrice": "200.00",
+          "tax": "12.00",
+          "currency": "NOK"
+        }
+      }
+    ]
+  },
+  "billing_address": null,
+  "shipping_address": {
+    "id": "12f13194-0501-47c3-ab67-1c980f5a8a4b",
+    "first_name": "John",
+    "last_name": "Johnson",
+    "phone_code": null,
+    "phone": null,
+    "company": null,
+    "address1": null,
+    "address2": null,
+    "city": null,
+    "province": null,
+    "province_code": null,
+    "country": null,
+    "country_code": null,
+    "zip": null
+  }
+}
+```
+
+### Delete a checkout
+
+```js
+async function getCheckout(CHECKOUT_ID) => {
+  const sdk = getSDK();
+  const checkout = await sdk.shopCart.checkout.delete(CHECKOUT_ID);
+  return checkout;
+});
 ```

@@ -5,7 +5,8 @@ sidebar_position: 2
 
 # Cart
 
-Store on our database the items added to the cart by a potential buyer.
+An object with all the items added to the cart by a potential buyer. The
+frontend can interact with our API to add, update or remove items.
 
 ## Create cart
 
@@ -48,7 +49,7 @@ You may want to interact with a created cart in the following ways:
 ### Add an item
 
 ```js
-async (cart_id, product, variant) => {
+async () => {
   const sdk = getSDK();
 
   await sdk.shopCart.cartItem.create({
@@ -73,16 +74,34 @@ async (cart_id, product, variant) => {
 {
   "line_items": [
     {
-      "id": "c383e935-38d6-4cee-8c50-30506e3476c3",
-      "product_id": 0,
-      "product_title": "",
-      "product_image": [],
+      "id": "d0136ca8-76d3-4d65-8fb7-c9cc4960e418",
+      "product_id": 5797,
+      "product_title": "T-shirt",
+      "product_image": [
+        {
+          "id": 18724,
+          "deletedAt": null,
+          "url": "https://reachu-uploads-qa.s3.amazonaws.com/product-images/5797-0af14ec7-a3cf-438d-928f-0caffbd8fc4b.jpeg",
+          "width": 810,
+          "height": 1168,
+          "order": 0
+        },
+        {
+          "id": 18725,
+          "deletedAt": null,
+          "url": "https://reachu-uploads-qa.s3.amazonaws.com/product-images/5797-88e5f764-e927-4a87-b466-82b816ab5d95.jpeg",
+          "width": 762,
+          "height": 1016,
+          "order": 1
+        }
+      ],
       "variant_id": null,
+      "variant_title": null,
       "quantity": 1,
       "price_data": {
-        "unit_price": 200,
-        "tax": 12,
-        "currency": "NOK"
+        "unit_price": 100,
+        "tax": 25,
+        "currency": "EUR"
       }
     }
   ]
@@ -115,7 +134,7 @@ Response:
 ### Remove an item
 
 ```js
-async (cart_id, product, variant) => {
+async (CART_ID, CART_ITEM_ID) => {
   const sdk = getSDK();
   await sdk.shopCart.cartItem.delete(CART_ID, CART_ITEM_ID);
 };
