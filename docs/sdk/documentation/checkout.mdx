@@ -23,13 +23,13 @@ work with.
 Retrieve an array of the products added to your channel.
 
 ```js
-  async function createCheckout(CART_ID) => {
-    const sdk = getSDK();
-    const checkout = await sdk.shopCart.checkout.create({
-      cart_id: CART_ID,
-    });
-    return checkout;
+async function createCheckout(CART_ID) => {
+  const sdk = getSDK();
+  const checkout = await sdk.shopCart.checkout.create({
+    cart_id: CART_ID,
   });
+  return checkout;
+});
 ```
 
 Response:
@@ -105,6 +105,31 @@ async function createCheckout(CART_ID) => {
 
 ## Shipping rates
 
+Get the shipping rate for the selected products on the checkout.
+
+```js
+
+getFlatRate
+
+async function getFlateRate() => {
+  const sdk = getSDK();
+  const body = {
+    items: [{
+      productId: 5797;
+      quantity: 1;
+    ]
+    destination: {
+      country: "Norway",
+    },
+    currency: "EUR"
+  };
+
+  const checkout = await sdk.shopCart.checkout.update(CHECKOUT_ID, body);
+
+  return checkout;
+});
+```
+
 ## Interacting with a created checkout
 
 ### Update the checkout
@@ -113,7 +138,7 @@ After creation, you can update the following information from the checkout:
 
 - billing_address
 - shipping_address
-- after payment urls
+- after payment redirect urls
   - return_url
   - success_url
   - cancel_url
@@ -121,17 +146,20 @@ After creation, you can update the following information from the checkout:
 ```js
 async function createCheckout(CHECKOUT_ID) => {
   const sdk = getSDK();
-  const checkout = await sdk.shopCart.checkout.update(CHECKOUT_ID, {
-      shipping_address: {
-        first_name: "John",
-        last_name: "Johnson",
-        email: "johnjohnson@example.com",
-        address1: "Address 1",
-        city: "Oslo",
-        country: "Norway",
-        zip: "0672"
-      }
-  });
+  const body = {
+    shipping_address: {
+      first_name: "John",
+      last_name: "Johnson",
+      email: "johnjohnson@example.com",
+      address1: "Address 1",
+      city: "Oslo",
+      country: "Norway",
+      zip: "0672"
+    }
+  };
+
+  const checkout = await sdk.shopCart.checkout.update(CHECKOUT_ID, body);
+
   return checkout;
 });
 ```

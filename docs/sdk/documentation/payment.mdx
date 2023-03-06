@@ -7,7 +7,8 @@ sidebar_position: 4
 
 ## Initiate payment
 
-You will not be able to proceed to payment without the following information:
+You will not be able to proceed to payment if you have not added the following
+information to the checkout:
 
 - personal information (name, email)
 - shipping information
@@ -15,10 +16,76 @@ You will not be able to proceed to payment without the following information:
 - payment method
 - shipping rate
 
+Once the customer has selected the payment method and completed the required
+personal and shipping information, the next step is to proceed with the payment.
+There are two return URLs parameters you should add:
+
+- "success_url": where to redirect the final customer after the payment is
+  fulfilled on the checkout.
+- "cancel_url": where to redirect the final customer if the checkout is not
+  completed or the go back button is pressed.
+
+In case no return URLs are provided, Outshifter creates as default its own
+success and cancels URL where the final customer is redirected and shown the
+corresponding information.
+
+The body included below is assuming the checkout has not been updated with the
+information.
+
 ```js
 async function initiatePayment(CHECKOUT_ID) => {
   const sdk = getSDK();
-  const checkout = await sdk.shopCart.payment.create(CHECKOUT_ID);
-  return checkout;
+  const body = {
+    success_url: "https://yourdomain.com?success=true",
+    cancel_url: "https://yourdomain.com?canceled=true",
+    payment_method: "Stripe",
+    email: "admin@outshifter.com",
+    first_name: "Outshifter",
+    last_name: "Test",
+    phone_code: "+47",
+    phone: 99999999,
+    address1: "Møllergata 6",
+    city: "Oslo",
+    province: "Oslo",
+    country: "Norway",
+    country_code: "NO",
+    zip: 123
+  }
+
+  const payment = await sdk.shopCart.payment.create(CHECKOUT_ID, body);
+
+  return payment;
 });
 ```
+
+As a response, you get the checkout URL. You should redirect the user to this
+url and allow them to complete the payment. An order id is also created with
+pending status.
+
+```json
+{
+  "checkout_url": "https://checkout.stripe.com/pay/cs_test_b1VMRSqjnNbLRfT58rDbfId4annlCVwHy8caxZJcquValgOVZIO8MZ2H99#fidkdWxOYHwnPyd1blpxYHZxWjA0SVNSbjRDa3N8bkBQRnFSQ3Y9c0sxYm1mRnRtUWlSPHV2QjB0djJ9VGpDdUx0TEt%2FRjFsQzQwRDdmRmY0XWhMVTBocTxLfGBycjddU39VNDFWN1VdXHBdNTVGQGJoc2o1QicpJ2N3amhWYHdzYHcnP3F3cGApJ2lkfGpwcVF8dWAnPydocGlxbFpscWBoJyknYGtkZ2lgVWlkZmBtamlhYHd2Jz9xd3BgeCUl",
+  "order_id": 3232
+}
+```
+
+## Initiate payment with Klarna
+
+```js
+async function initiatePaymentWithKlarna(CART_ID) => {
+  const sdk = getSDK();
+  const body = {
+    email: "email@test.com",
+    country_code: "NO",
+    href: `https://www.reachu.io/`, //the url you want to be redirected after the payment
+  };
+
+  const klarna = await sdk.klarna.payment.init(body, CART_ID);
+
+  return klarna;
+}
+```
+
+As a response you will receive a snippet to display the Klarna solution on your
+store. If you need assistance implementing this solution, in our
+[tutorial section](/sdk/tutorials/) we show you an example.

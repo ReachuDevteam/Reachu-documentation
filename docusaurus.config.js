@@ -334,7 +334,7 @@ const config = {
             ],
           },
         ],
-        copyright: 'Copyright © Dyte since 2020. All rights reserved.',
+        copyright: 'Copyright © Reachu. All rights reserved.',
       },
       prism: {
         theme: lightCodeTheme,

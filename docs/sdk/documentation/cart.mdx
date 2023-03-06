@@ -153,7 +153,7 @@ Response:
 At any time you can retrieve cart information with all the added items.
 
 ```js
-async (CART_ID) => {
+async getCart(CART_ID) => {
   const sdk = getSDK();
   const cart = await sdk.shopCart.cart.getById(CART_ID);
   return cart;

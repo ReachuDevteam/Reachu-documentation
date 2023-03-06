@@ -15,7 +15,7 @@ export default function GuidesSection({ title, className }) {
       <Card
         title="Documentation"
         description="Documentation"
-        to="/sdk/documentation"
+        to="/sdk/documentation/product"
       />
       <Card title="Tutorials" description="Tutorials" to="/sdk/tutorials" />
       <Card title="Resources" description="Resources" to="/sdk/resources" />

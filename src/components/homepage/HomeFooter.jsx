@@ -15,21 +15,18 @@ export default function HomeFooter() {
     <footer>
       <div className="mx-auto flex max-w-7xl flex-col gap-4 px-10 py-8 lg:flex-row lg:items-center lg:gap-8">
         <div>
-          <img src={`/logo/${colorMode}.svg`} alt="Logo" className="h-10" />
+          <img src={`/logo/${colorMode}.svg`} alt="Logo" className="h-8" />
         </div>
         <div className="flex items-center gap-3">
-          <Link href="">
-            <DiscordLogoIcon className="h-6 w-6 text-zinc-400 hover:text-primary" />
+          <Link href="https://twitter.com/">
+            <TwitterLogoIcon className="flex h-6 w-6 items-center text-zinc-400 hover:text-primary" />
           </Link>
-          <Link href="https://twitter.com/dyte_io">
-            <TwitterLogoIcon className="h-6 w-6 text-zinc-400 hover:text-primary" />
-          </Link>
-          <Link href="https://www.linkedin.com/company/dyteio">
-            <LinkedInLogoIcon className="h-6 w-6 text-zinc-400 hover:text-primary" />
+          <Link href="https://www.linkedin.com/company/">
+            <LinkedInLogoIcon className="flex h-6 w-6 items-center text-zinc-400 hover:text-primary" />
           </Link>
         </div>
         <div className="flex-1 text-zinc-400 lg:text-right">
-          Copyright &copy; Dyte since 2020. All rights reserved.
+          Copyright &copy; Reachu. All rights reserved.
         </div>
       </div>
     </footer>
