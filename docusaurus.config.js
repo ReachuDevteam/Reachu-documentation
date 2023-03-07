@@ -55,6 +55,9 @@ const latestVersions = {
 
 const SECTIONS = [
   defineSection('sdk'),
+  defineSection('shopify'),
+  defineSection('woocommerce'),
+  defineSection('wordpress'),
   defineSection('cli'),
 
   defineSection('react', { label: '0.x.x' }),
@@ -108,7 +111,6 @@ const SECTIONS = [
   }),
 ];
 
-const sdksHTML = fs.readFileSync('./src/snippets/sdks.html', 'utf-8');
 const resourcesHTML = fs.readFileSync('./src/snippets/resources.html', 'utf-8');
 
 /** @type {import('@docusaurus/types').Config} */
@@ -247,8 +249,8 @@ const config = {
             ],
           },
           {
-            label: 'Support',
-            to: 'https://dyte.io/contact',
+            label: 'FAQ',
+            to: '/faq',
           },
 
           {

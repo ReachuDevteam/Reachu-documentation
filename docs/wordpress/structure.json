@@ -1,0 +1,26 @@
+[
+  {
+    "id": 0,
+    "title": "Getting Started",
+    "description": "Getting Started",
+    "to": "/wordpress/getting-started"
+  },
+  {
+    "id": 1,
+    "title": "Setup",
+    "description": "Setup",
+    "to": "/wordpress/setup"
+  },
+  {
+    "id": 2,
+    "title": "Tutorials",
+    "description": "Tutorials",
+    "to": "/wordpress/tutorials"
+  },
+  {
+    "id": 3,
+    "title": "Resources",
+    "description": "Resources",
+    "to": "/wordpress/resources"
+  }
+]

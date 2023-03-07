@@ -4,21 +4,17 @@ import {
   HomepageSection as Section,
 } from './HomepageComponents';
 
-export default function GuidesSection({ title, className }) {
+export default function GuidesSection({ title, className, elements }) {
   return (
     <Section title={title} className={className}>
-      <Card
-        title="Getting Started"
-        description="Getting Started"
-        to="/sdk/getting-started"
-      />
-      <Card
-        title="Documentation"
-        description="Documentation"
-        to="/sdk/documentation/product"
-      />
-      <Card title="Tutorials" description="Tutorials" to="/sdk/tutorials" />
-      <Card title="Resources" description="Resources" to="/sdk/resources" />
+      {elements?.map((element) => (
+        <Card
+          title={element.title}
+          description={element.description}
+          to={element.to}
+          key={element.id}
+        />
+      ))}
     </Section>
   );
 }
