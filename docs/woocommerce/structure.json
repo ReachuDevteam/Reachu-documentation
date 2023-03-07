@@ -1,0 +1,26 @@
+[
+  {
+    "id": 0,
+    "title": "Getting Started",
+    "description": "Getting Started",
+    "to": "/woocommerce/getting-started"
+  },
+  {
+    "id": 1,
+    "title": "Setup",
+    "description": "Setup",
+    "to": "/woocommerce/setup"
+  },
+  {
+    "id": 2,
+    "title": "Tutorials",
+    "description": "Tutorials",
+    "to": "/woocommerce/tutorials"
+  },
+  {
+    "id": 3,
+    "title": "Resources",
+    "description": "Resources",
+    "to": "/woocommerce/resources"
+  }
+]

@@ -46,6 +46,8 @@ type ProductVariant = {
 };
 ```
 
+## Cart types
+
 ```js
 interface Cart {
   cart_id: string;
@@ -64,5 +66,29 @@ interface Cart {
   }[];
   total_amount: number;
   currency: string;
+}
+```
+
+## Checkout types
+
+```js
+interface Checkout {
+  id: string;
+  status: status;
+  total_price: number;
+  total_tax: number;
+  total_line_items_price: number;
+  deletedAt: string;
+  success_url: string;
+  cancel_url: string;
+  payment_method: string;
+  email: string;
+  checkout_url: string;
+  createdAt: string;
+  updatedAt: string;
+  cart: Cart;
+  availablePaymentMethods: {
+    name: string,
+  }[];
 }
 ```

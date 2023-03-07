@@ -23,13 +23,13 @@ work with.
 Retrieve an array of the products added to your channel.
 
 ```js
-  async function createCheckout(CART_ID) => {
-    const sdk = getSDK();
-    const checkout = await sdk.shopCart.checkout.create({
-      cart_id: CART_ID,
-    });
-    return checkout;
+async function createCheckout(CART_ID) => {
+  const sdk = getSDK();
+  const checkout = await sdk.shopCart.checkout.create({
+    cart_id: CART_ID,
   });
+  return checkout;
+});
 ```
 
 Response:
@@ -74,13 +74,22 @@ Response:
   "createdAt": "2022-10-07T11:44:53.666Z",
   "updatedAt": "2022-10-07T11:44:53.666Z",
   "id": "67954a7d-7bb4-49ef-82a6-bbe491d949a6",
-  "availablePaymentMethods": []
+  "availablePaymentMethods": [
+    {
+      "name": "Stripe"
+    },
+    {
+      "name": "Klarna"
+    }
+  ]
 }
 ```
 
 ## Payment Methods
 
-Get available payment methods.
+When you initiate the checkout, you will get the available payment methods in
+the response as part of the checkout object. You can still get them by using the
+method below.
 
 ```js
 async function createCheckout(CART_ID) => {
@@ -105,6 +114,47 @@ async function createCheckout(CART_ID) => {
 
 ## Shipping rates
 
+Get the shipping rate for the selected products on the checkout.
+
+```js
+async function getShipping(PRODUCT_ID) => {
+  const sdk = getSDK();
+  const shipping = await sdk.shopCart.shipping.getShippingByProductId(PRODUCT_ID);
+  return shipping;
+});
+```
+
+As a response, you will get an array of the selected shipping classes for that
+specific product:
+
+```json
+[
+  {
+    "createdAt": "2023-03-02T11:34:50.237Z",
+    "updatedAt": "2023-03-02T11:34:50.237Z",
+    "id": "6532eda8-cc5e-405b-b13a-4a6f63549d3a",
+    "amount": "50.00",
+    "customPriceEnabled": false,
+    "name": "Default Shipping",
+    "description": "Shipping wow",
+    "deletedAt": null,
+    "currencyCode": "EUR",
+    "default": false,
+    "shippingCountry": [
+      {
+        "createdAt": "2023-03-02T11:34:50.282Z",
+        "updatedAt": "2023-03-02T11:34:50.282Z",
+        "id": "b924a960-9584-4b58-8da0-ebd48e878d8d",
+        "amount": "50.00",
+        "country": "NO",
+        "deletedAt": null,
+        "currencyCode": "EUR"
+      }
+    ]
+  }
+]
+```
+
 ## Interacting with a created checkout
 
 ### Update the checkout
@@ -113,7 +163,7 @@ After creation, you can update the following information from the checkout:
 
 - billing_address
 - shipping_address
-- after payment urls
+- after payment redirect urls
   - return_url
   - success_url
   - cancel_url
@@ -121,17 +171,20 @@ After creation, you can update the following information from the checkout:
 ```js
 async function createCheckout(CHECKOUT_ID) => {
   const sdk = getSDK();
-  const checkout = await sdk.shopCart.checkout.update(CHECKOUT_ID, {
-      shipping_address: {
-        first_name: "John",
-        last_name: "Johnson",
-        email: "johnjohnson@example.com",
-        address1: "Address 1",
-        city: "Oslo",
-        country: "Norway",
-        zip: "0672"
-      }
-  });
+  const body = {
+    shipping_address: {
+      first_name: "John",
+      last_name: "Johnson",
+      email: "johnjohnson@example.com",
+      address1: "Address 1",
+      city: "Oslo",
+      country: "Norway",
+      zip: "0672"
+    }
+  };
+
+  const checkout = await sdk.shopCart.checkout.update(CHECKOUT_ID, body);
+
   return checkout;
 });
 ```
