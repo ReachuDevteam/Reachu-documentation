@@ -14,3 +14,7 @@ export { default as ElectronIcon } from './ElectronIcon';
 export { default as TerminalIcon } from './TerminalIcon';
 export { default as APIReferenceIcon } from './APIReferenceIcon';
 export { default as DisconnectedPlugIcon } from './DisconnectedPlugIcon';
+
+export { default as ShopifyIcon } from './ShopifyIcon';
+export { default as WooIcon } from './WooIcon';
+export { default as WordPressIcon } from './WordPressIcon';

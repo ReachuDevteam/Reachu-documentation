@@ -4,39 +4,4 @@ sidebar_position: 3
 
 # Setup
 
-You can easily integrate Reach to your project with our SDK!
-
-It's fast, flexible, and reliable — with zero-runtime.
-
-## Installation
-
-Install Reachu's sdk via npm
-
-```shell
-npm i @reachu/sdk
-```
-
-## Initialization
-
-The SdkClient is the root class of the SDK. It is the main entry point of the
-SDK. It is the only class that you need to instantiate in order to use the SDK.
-To instantiate SdkClient, you can run the following command:
-
-```js
-const sdk = new SdkClient('YOUR_API_KEY', 'https://api.reachu.io');
-```
-
-It is recommended that the new SdkClient method is called prior to any other SDK
-operations. You can then call the getSDK function every time you need to use an
-SDK operation.
-
-```js
-import { SdkClient } from '@reachu/sdk';
-
-let sdk: SdkClient;
-
-export function getSDK(): SdkClient {
-  if (!sdk) sdk = new SdkClient('YOUR_API_KEY', 'https://api.reachu.io');
-  return sdk;
-}
-```
+This section is under development and will be coming soon.

@@ -2,17 +2,7 @@ import React from 'react';
 import Link from '@docusaurus/Link';
 import clsx from 'clsx';
 import { useColorMode } from '@docusaurus/theme-common';
-import {
-  AngularIcon,
-  // ElectronIcon,
-  FlutterIcon,
-  HTMLIcon,
-  JSIcon,
-  KotlinIcon,
-  ReactIcon,
-  SwiftIcon,
-  VueIcon,
-} from '../../icons';
+import { ShopifyIcon, WooIcon, WordPressIcon } from '../../icons';
 import Head from '@docusaurus/Head';
 import { useState } from 'react';
 
@@ -72,11 +62,9 @@ export default function SDKsSection() {
         <link rel="prefetch" href="/static/landing-page/plugin-sdk-dark.png" />
       </Head>
       <div className="mx-auto max-w-7xl">
-        <div className="dyte-badge mb-4">SDKs</div>
-
         <div className="sticky top-14 mb-20 flex flex-col items-center gap-6 bg-secondary-1000 py-6 lg:flex-row lg:justify-between">
           <h2 className="my-0 font-jakarta lg:text-3xl">
-            We support your tech stack!
+            Reachu is the API for product data access
           </h2>
           <div className="mx-auto flex h-20 w-full flex-1 items-center justify-center self-start lg:w-auto lg:justify-end">
             <div className="flex max-w-sm flex-1 items-center rounded-full border border-solid border-text-400 text-sm lg:text-base">
@@ -92,9 +80,9 @@ export default function SDKsSection() {
                     .scrollIntoView({ block: 'center' });
                 }}
               >
-                Web
+                Integrations
               </div>
-              <div
+              {/*<div
                 className={clsx(
                   'flex-1 cursor-pointer py-1 text-center',
                   visibleSection === 'mobile' &&
@@ -107,7 +95,7 @@ export default function SDKsSection() {
                 }}
               >
                 Mobile
-              </div>
+              </div>*/}
               <div
                 className={clsx(
                   'flex-1 cursor-pointer py-1 text-center',
@@ -120,7 +108,7 @@ export default function SDKsSection() {
                     .scrollIntoView({ block: 'center' });
                 }}
               >
-                Plugin
+                SDK
               </div>
             </div>
           </div>
@@ -132,68 +120,92 @@ export default function SDKsSection() {
           id="web"
         >
           <div className="flex flex-[2] flex-col justify-center p-6 text-center lg:pl-16 lg:text-left">
-            <h3 className="text-3xl">Web</h3>
+            <h3 className="text-3xl">Integrations</h3>
             <p className="text-sm leading-relaxed text-text-400 lg:max-w-sm">
-              Interested to build using JavaScript, React, Angular, or Vue, this
-              section covers everything you need to know for creating live video
-              and voice solutions for web applications.
+              Reachu provides a number of plug-and-play applications and
+              integrations to third party services. Making it possible for both
+              Suppliers and Channels to get started without needing development,
+              or easily extend Reachu to fit their scope.
             </p>
             {/* <Link className="text-sm">Learn More &rarr;</Link> */}
           </div>
           <div className="flex-1 bg-secondary-800 p-6 px-8 lg:rounded-l-3xl">
-            <h4>UI Kit</h4>
+            <h4>Extensions for Channels</h4>
+            <h5>Storefronts</h5>
             <p className="text-sm leading-relaxed text-text-400">
-              Integrate video and voice calls to your app or website in minutes
-              using Dyte&apos;s prebuilt design library of UI components.
+              Integrate with Outshifter and import products to your Storefront
+              in minutes. Our apps and integrations for Channels auto-updates
+              product information, orders and inventory in real-time.
             </p>
             <div>
               <ul className="mb-0 flex list-none flex-col gap-2 pl-0">
                 <li>
-                  <SDKLink href="react-ui-kit" Icon={ReactIcon} label="React" />
-                </li>
-                <li>
                   <SDKLink
-                    href="angular-ui-kit"
-                    Icon={AngularIcon}
-                    label="Angular"
+                    href="shopify"
+                    Icon={ShopifyIcon}
+                    label="Shopify App"
                   />
                 </li>
                 <li>
-                  <SDKLink href="vue-ui-kit" Icon={VueIcon} label="Vue" />
+                  <SDKLink
+                    href="woocommerce"
+                    Icon={WooIcon}
+                    label="WooCommerce Plugin"
+                  />
                 </li>
                 <li>
                   <SDKLink
-                    href="ui-kit"
-                    Icon={HTMLIcon}
-                    label="Web Components"
+                    href="wordpress"
+                    Icon={WordPressIcon}
+                    label="WordPress Plugin"
                   />
                 </li>
               </ul>
             </div>
           </div>
           <div className="flex-1 rounded-b-3xl bg-secondary-800 p-6 px-8 lg:rounded-r-3xl lg:rounded-bl-none">
-            <h4>Core SDK</h4>
+            <h4>Extensions for Suppliers</h4>
+            <h5>eCommerce systems</h5>
             <p className="text-sm leading-relaxed text-text-400">
-              Build high-quality custom video and voice calls with real-time
-              communication using fully customizable and easy to integrate Core
-              SDKs.
+              Connect your eCommerce system directly with Reachu and
+              automatically export products give Channels access to your product
+              data. Reachu synchronizes all orders, inventory and other product
+              information in real-time.
             </p>
             <ul className="mb-0 flex list-none flex-col gap-2 pl-0">
               <li>
-                <SDKLink href="web-core" Icon={JSIcon} label="JavaScript" />
+                <SDKLink
+                  href="shopify"
+                  Icon={ShopifyIcon}
+                  label="Shopify App"
+                />
+              </li>
+              <li>
+                <SDKLink
+                  href="woocommerce"
+                  Icon={WooIcon}
+                  label="WooCommerce Plugin"
+                />
+              </li>
+              {/*<li>
+                <SDKLink
+                  href="react-ui-kit/basics/using-hooks"
+                  Icon={ReactIcon}
+                  label="Magento Extension"
+                />
               </li>
               <li>
                 <SDKLink
                   href="react-ui-kit/basics/using-hooks"
                   Icon={ReactIcon}
-                  label="React"
+                  label="Squarespace App"
                 />
-              </li>
+              </li>*/}
             </ul>
           </div>
         </div>
 
-        <div
+        {/*<div
           className="sdk-section mb-16 flex flex-col rounded-3xl bg-secondary-900 lg:flex-row"
           data-section="mobile"
           id="mobile"
@@ -206,9 +218,9 @@ export default function SDKsSection() {
               help you deliver best-in-class real-time communication experience
               for your mobile applications.
             </p>
-            {/* <Link className="text-sm" href="#">
+            <Link className="text-sm" href="#">
               Learn More &rarr;
-            </Link> */}
+            </Link>
           </div>
           <div className="flex flex-1 flex-col bg-secondary-800 p-6 px-8 lg:rounded-l-3xl">
             <h4>UI Kit</h4>
@@ -280,7 +292,7 @@ export default function SDKsSection() {
               </ul>
             </div>
           </div>
-        </div>
+        </div>*/}
 
         <div
           className="sdk-section mb-16 flex flex-col rounded-3xl bg-secondary-900 lg:flex-row"
@@ -288,20 +300,22 @@ export default function SDKsSection() {
           id="plugin"
         >
           <div className="flex flex-1 flex-col justify-center p-6 text-center lg:pl-16 lg:text-left">
-            <h3 className="text-3xl">Plugin SDK</h3>
+            <h3 className="text-3xl">SDK</h3>
             <p className="text-sm leading-relaxed text-text-400 lg:max-w-sm">
-              Add the most immersive, collaborative, and more human interaction
-              right in your video and voice calls using Dyte&apos;s
-              out-of-the-box plugins. Dive into the resources here to get
-              started with building your own plugins for your applications.
+              The SDK lets Channels connect their stores or platforms with
+              Reachu to start selling products. It enables Channels to select
+              and automatically import products from Reachu to their platforms
+              with one click. Reachu ensures that product data, stock,
+              fulfillment, and shipping information is synchronized with each of
+              the Suppliers eCommerce systems.
             </p>
-            <Link className="text-sm" href="/plugin-sdk">
+            <Link className="text-sm" href="/sdk">
               Learn More &rarr;
             </Link>
           </div>
           <div className="flex flex-[3] items-center justify-center rounded-3xl p-6 px-8 lg:justify-end">
             <img
-              src={`/static/landing-page/plugin-sdk-${colorMode}.png`}
+              src={`/static/landing-page/sdk.png`}
               alt="Plugin SDK Usage Preview"
             />
           </div>
@@ -363,12 +377,12 @@ export default function SDKsSection() {
           </div>
         </div> */}
 
-        <div className="text-center">
+        {/* <div className="text-center">
           <p>
             Don&apos;t see your tech stack here?{' '}
             <Link href="https://dyte.io/contact">Contact Us</Link>
           </p>
-        </div>
+        </div>*/}
       </div>
     </section>
   );

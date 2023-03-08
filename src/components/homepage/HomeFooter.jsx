@@ -17,14 +17,14 @@ export default function HomeFooter() {
         <div>
           <img src={`/logo/${colorMode}.svg`} alt="Logo" className="h-8" />
         </div>
-        <div className="flex items-center gap-3">
+        {/*<div className="flex items-center gap-3">
           <Link href="https://twitter.com/">
             <TwitterLogoIcon className="flex h-6 w-6 items-center text-zinc-400 hover:text-primary" />
           </Link>
           <Link href="https://www.linkedin.com/company/">
             <LinkedInLogoIcon className="flex h-6 w-6 items-center text-zinc-400 hover:text-primary" />
           </Link>
-        </div>
+        </div>*/}
         <div className="flex-1 text-zinc-400 lg:text-right">
           Copyright &copy; Reachu. All rights reserved.
         </div>
