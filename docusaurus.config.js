@@ -248,16 +248,16 @@ const config = {
               },
             ],
           },
-          {
+          /*{
             label: 'FAQ',
             to: '/faq',
-          },
+          },*/
 
           {
             type: 'search',
             position: 'right',
           },
-          {
+          /*{
             label: 'Book a demo',
             href: 'https://dyte.io/schedule-demo',
             position: 'right',
@@ -268,7 +268,7 @@ const config = {
             href: 'https://dev.dyte.io/register',
             position: 'right',
             className: 'dev-portal-signup dev-portal-link',
-          },
+          },*/
         ],
       },
       footer: {

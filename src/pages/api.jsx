@@ -74,7 +74,14 @@ export default function Home() {
         <link rel="preload" href="/assets/css/elements.min.css" as="style" />
         <link rel="stylesheet" href="/assets/css/elements.min.css" />
       </Head>
-      <div className="header">
+
+      <div className="mx-auto flex h-96 w-fit items-center">
+        <h1 className="text-3xl font-bold">
+          The Reachu APIs section is coming soon.
+        </h1>
+      </div>
+
+      {/*<div className="header">
         <h1 style={{ fontSize: '1rem', fontWeight: '600' }}>
           Dyte Backend API {currentVersion}
         </h1>
@@ -114,7 +121,7 @@ export default function Home() {
       <APIElement
         layout={size === 'sm' ? 'stacked' : 'sidebar'}
         currentVersion={currentVersion}
-      />
+      />*/}
     </Layout>
   );
 }

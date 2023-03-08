@@ -24,7 +24,7 @@ export default function Homepage() {
         <div className="absolute top-0 bottom-1/2 -z-10 w-full bg-secondary-1000"></div>
       </div>
 
-      <div className="z-0 bg-secondary-800 dark:bg-secondary-900">
+      {/*<div className="z-0 bg-secondary-800 dark:bg-secondary-900">
         <section className="px-4 pt-16">
           <div className="mx-auto -mb-48 max-w-7xl rounded-3xl bg-white p-4 py-10 text-black dark:bg-black dark:text-white lg:p-24 lg:py-20">
             <h2 className="mb-12 text-center lg:text-3xl">
@@ -87,9 +87,9 @@ export default function Homepage() {
             </div>
           </div>
         </section>
-      </div>
+      </div>*/}
 
-      <CommunitySection />
+      {/*<CommunitySection />*/}
 
       <HomeFooter />
     </Layout>

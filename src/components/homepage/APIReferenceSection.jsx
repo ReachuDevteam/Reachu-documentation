@@ -24,54 +24,57 @@ export default function APIReferenceSection() {
         <div className="flex-1">
           <h2 className="text-4xl">API Reference</h2>
           <p className="text-zinc-400">
-            Don&apos;t worry, they are&apos;t complex. Use our
-            developer-friendly APIs and integrate video and voice communication
-            into your web, mobile, or desktop applications programmatically.
+            This API allows you to fetch product data from your Reachu catalog
+            and use it on your own surface. For instance in order to sell
+            products natively within your own application, game, or webpage.
+            Here you will find introductions to all features, as well as
+            resources, guides, and reference documentation for the APIs data
+            structure.
           </p>
           <Link href="/api" className="text-primary-100 dark:text-primary">
-            Get started with Dyte APIs &rarr;
+            Get started with Reachu APIs &rarr;
           </Link>
           <ul className="mt-10 flex list-none flex-col gap-4 text-left lg:pl-0">
             <li className="flex flex-col gap-2">
               <Link
-                href="/api/#/operations/createMeeting"
+                href="/api/"
                 className="group font-jakarta font-semibold text-current"
               >
-                Create a meeting
+                Create a product
                 <span className="ml-2 opacity-0 transition group-hover:translate-x-2 group-hover:opacity-100">
                   &rarr;
                 </span>
               </Link>
               <div className="text-zinc-400">
-                Create a meeting for your organization
+                Create a product for one of your suppliers
               </div>
             </li>
             <li className="flex flex-col gap-2">
               <Link
-                href="/api/#/operations/addPreset"
+                href="/api/"
                 className="group font-jakarta font-semibold text-current"
               >
-                Add a preset
+                Create a collection
                 <span className="ml-2 opacity-0 transition group-hover:translate-x-2 group-hover:opacity-100">
                   &rarr;
                 </span>
               </Link>
               <div className="text-zinc-400">
-                Add a preset for the given organization ID
+                Add a collection and asign a title, image and products
               </div>
             </li>
             <li className="flex flex-col gap-2">
               <Link
-                href="/api/#/operations/deleteParticipant"
+                href="/api/"
                 className="group font-jakarta font-semibold text-current"
               >
-                Delete a participant
+                Add a shopping class
                 <span className="ml-2 opacity-0 transition group-hover:translate-x-2 group-hover:opacity-100">
                   &rarr;
                 </span>
               </Link>
               <div className="text-zinc-400">
-                Delete a particpant from the meeting
+                Associate one or more shipping classes to a product
               </div>
             </li>
           </ul>

@@ -14,9 +14,11 @@ export default function HeroSection() {
       </Head>
       <div className="mx-auto flex max-w-7xl flex-col items-center lg:flex-row">
         <div className="flex-1 text-center lg:text-left">
-          <h1 className="mb-6 font-jakarta text-4xl font-bold lg:text-6xl">
-            ReachU
-          </h1>
+          <img
+            src={`/logo/${colorMode}.svg`}
+            alt="Reachu"
+            style={{ maxWidth: 300, marginBottom: 15 }}
+          />
           <p className="text-sm text-text-400 lg:max-w-lg lg:text-base">
             Get fast access to standardized product data and bi-directionally
             sync your platform with any eCommerce system.
@@ -28,12 +30,12 @@ export default function HeroSection() {
             >
               Start building
             </Link>
-            <Link
+            {/*<Link
               href="/getting-started"
               className="rounded-sm border border-solid border-primary bg-primary/10 px-12 py-2.5 text-center font-semibold text-primary hover:text-primary dark:border-primary-100 dark:text-primary-100"
             >
               Getting started
-            </Link>
+            </Link>*/}
           </div>
         </div>
         <div className="">
