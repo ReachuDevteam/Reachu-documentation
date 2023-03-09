@@ -233,10 +233,6 @@ html[data-theme='dark'] {
   --docusaurus-highlighted-code-line-bg: rgba(105, 105, 105, 0.3);
 }
 
-nav.navbar {
-  border-bottom: 1px solid var(--ifm-toc-border-color);
-}
-
 pre.prism-code {
   border: 1px solid var(--code-border-color);
 }

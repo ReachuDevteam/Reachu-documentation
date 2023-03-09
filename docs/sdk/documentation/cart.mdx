@@ -28,8 +28,8 @@ Retrieve an array of the products added to your channel.
   async function createCart() => {
     const sdk = getSDK();
     let newCart = await sdk.shopCart.cart.create({
-      currency: STORE_CURRENCY,
-      customer_session_id: SESSION_ID,
+      currency: string, // "EUR", "USD", "NOK", "DDK", "SEK", "CHF"
+      customer_session_id: string, // We recommend an alphanumeric id
     });
   });
 ```
@@ -56,6 +56,15 @@ You may want to interact with a created cart in the following ways:
 
 ### Add an item
 
+From the SDKs product operation, you get all information
+
+:::info
+
+It is possible to add more than one item on this endpoint, just add additional
+objects to the line_items array.
+
+:::
+
 ```js
 async () => {
   const sdk = getSDK();
@@ -71,7 +80,7 @@ async () => {
         price_data: {
           currency: string,
           tax: number,
-          unit_price: string,
+          unit_price: number,
         },
       },
     ],
@@ -116,12 +125,6 @@ async () => {
   ]
 }
 ```
-
-:::info
-
-It is possible to add more than one item on this endpoint.
-
-:::
 
 ### Update an item
 
