@@ -6,8 +6,11 @@ sidebar_position: 1
 # Product
 
 In order to get product information you need to interact with the channel
-endpoint. You can choose to get all products at once or individual product
-information by using the product id.
+endpoint. You can choose to get:
+
+- all products from all your channels
+- all products from a specific channel
+- individual product information by using the product id
 
 ## Get all products
 
@@ -68,7 +71,7 @@ will get an array of just the products of that channel:
 ```js
 async function fetchAllProductsByChannel() => {
   const sdk = getSDK();
-  const products = await sdk.channel.item.getAll(CHANNEL_ID);
+  const products = await sdk.channel.item.getAll(CHANNEL_ID); // CHANNEL_ID: number
   return products;
 });
 ```
@@ -92,12 +95,48 @@ Response:
 ]
 ```
 
+:::info
+
+If you need information about which is your channel id, use this sdk operation.
+You will get all active channels with their respective ids.
+
+```js
+async function getActiveChannels() => {
+  const sdk = getSDK();
+  const channels = await sdk.channel.base.getAllActive();
+  return channels;
+});
+```
+
+```json
+[
+  {
+    "createdAt": "2022-10-14T14:24:24.044Z",
+    "updatedAt": "2022-10-14T14:24:24.322Z",
+    "deletedAt": null,
+    "id": 2,
+    "name": "Shopify",
+    "enabled": true
+  },
+  {
+    "createdAt": "2022-10-14T14:24:24.044Z",
+    "updatedAt": "2022-10-14T14:24:24.322Z",
+    "deletedAt": null,
+    "id": 5,
+    "name": "Woocommerce",
+    "enabled": true
+  }
+]
+```
+
+:::
+
 ## Get products by ids
 
 Retrieve an array of the products added to your channel.
 
 ```js
-const productIds = [ID1, ID2];
+const productIds = [ID1, ID2]; // ID: number
 
 async function fetchProductsByIds(ids) {
   const sdk = getSDK();

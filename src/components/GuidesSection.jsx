@@ -8,12 +8,13 @@ export default function GuidesSection({ title, className, elements }) {
   return (
     <Section title={title} className={className}>
       {elements?.map((element) => (
-        <Card
-          title={element.title}
-          description={element.description}
-          to={element.to}
-          key={element.id}
-        />
+        <div key={element.id}>
+          <Card
+            title={element.title}
+            description={element.description}
+            to={element.to}
+          />
+        </div>
       ))}
     </Section>
   );
