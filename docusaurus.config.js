@@ -360,6 +360,7 @@ const config = {
         indexName: 'docs',
         contextualSearch: true,
         searchParameters: {},
+        searchPagePath: false,
       },
       posthog: {
         apiKey: 'c1X6knGkGuxT4WFysAWi6chjtoMmTzILKO7inv7hIgs',
