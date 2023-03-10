@@ -4,7 +4,7 @@ const fs = require('fs');
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/vsDark');
 
-//const UIKitReferencePlugins = require('./plugins/ui-kit-reference-plugin.cjs');
+const UIKitReferencePlugins = require('./plugins/ui-kit-reference-plugin.cjs');
 const { webpackPlugin } = require('./plugins/webpack-plugin.cjs');
 const posthogPlugin = require('./plugins/posthog-plugin.cjs');
 const tailwindPlugin = require('./plugins/tailwind-plugin.cjs');
@@ -89,7 +89,7 @@ const config = {
     locales: ['en'],
   },
 
-  //clientModules: [require.resolve('./src/client/define-ui-kit.js')],
+  clientModules: [require.resolve('./src/client/define-ui-kit.js')],
 
   presets: [
     [
@@ -125,7 +125,7 @@ const config = {
     webpackPlugin,
     posthogPlugin,
     ...SECTIONS,
-    //...UIKitReferencePlugins,
+    ...UIKitReferencePlugins,
   ],
 
   themes: ['@docusaurus/theme-live-codeblock'],
