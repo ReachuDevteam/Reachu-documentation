@@ -4,7 +4,7 @@ const fs = require('fs');
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/vsDark');
 
-const UIKitReferencePlugins = require('./plugins/ui-kit-reference-plugin.cjs');
+//const UIKitReferencePlugins = require('./plugins/ui-kit-reference-plugin.cjs');
 const { webpackPlugin } = require('./plugins/webpack-plugin.cjs');
 const posthogPlugin = require('./plugins/posthog-plugin.cjs');
 const tailwindPlugin = require('./plugins/tailwind-plugin.cjs');
@@ -42,73 +42,11 @@ function defineSection(section, version = {}, options = {}) {
   ];
 }
 
-const latestVersions = {
-  'ui-kit': '1.x.x',
-  'web-core': '0.38.x',
-  'react-native': '0.23.x',
-  android: '0.14.x',
-  ios: '1.33.x',
-  flutter: '0.7.x',
-  'android-core': '1.0.0',
-  'flutter-core': '1.0.0',
-};
-
 const SECTIONS = [
   defineSection('sdk'),
   defineSection('shopify'),
   defineSection('woocommerce'),
   defineSection('wordpress'),
-  defineSection('cli'),
-
-  defineSection('react', { label: '0.x.x' }),
-  defineSection('javascript', { label: '0.x.x' }),
-
-  // [web] ui-sdk
-  defineSection('ui-kit', {
-    label: latestVersions['ui-kit'],
-  }),
-  defineSection('react-ui-kit', {
-    label: latestVersions['ui-kit'],
-  }),
-  defineSection('angular-ui-kit', {
-    label: latestVersions['ui-kit'],
-  }),
-  defineSection('vue-ui-kit', {
-    label: latestVersions['ui-kit'],
-  }),
-
-  // [web] core-sdk
-  defineSection('web-core', {
-    label: latestVersions['web-core'],
-  }),
-
-  // [web] android-core
-  defineSection('android-core', {
-    label: latestVersions['android-core'],
-  }),
-
-  // [web] flutter-core
-  defineSection('flutter-core', {
-    label: latestVersions['flutter-core'],
-  }),
-
-  // [mobile]
-  defineSection('rn-core', {
-    label: latestVersions['rn-core'],
-  }),
-
-  defineSection('react-native', {
-    label: latestVersions['react-native'],
-  }),
-  defineSection('android', {
-    label: latestVersions['android'],
-  }),
-  defineSection('ios', {
-    label: latestVersions['ios'],
-  }),
-  defineSection('flutter', {
-    label: latestVersions['flutter'],
-  }),
 ];
 
 const resourcesHTML = fs.readFileSync('./src/snippets/resources.html', 'utf-8');
@@ -151,7 +89,7 @@ const config = {
     locales: ['en'],
   },
 
-  clientModules: [require.resolve('./src/client/define-ui-kit.js')],
+  //clientModules: [require.resolve('./src/client/define-ui-kit.js')],
 
   presets: [
     [
@@ -187,7 +125,7 @@ const config = {
     webpackPlugin,
     posthogPlugin,
     ...SECTIONS,
-    ...UIKitReferencePlugins,
+    //...UIKitReferencePlugins,
   ],
 
   themes: ['@docusaurus/theme-live-codeblock'],
