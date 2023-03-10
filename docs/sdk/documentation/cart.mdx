@@ -56,7 +56,9 @@ You may want to interact with a created cart in the following ways:
 
 ### Add an item
 
-From the SDKs product operation, you get all information
+From the SDKs [product operations](/sdk/documentation/product), you get all
+necessary information to complete the line_items object and add an item to the
+cart.
 
 :::info
 
@@ -129,9 +131,13 @@ async () => {
 ### Update an item
 
 ```js
-async (cart_id, product, variant) => {
+async (CART_ID, CART_ITEM_ID) => {
   const sdk = getSDK();
-  await sdk.shopCart.cartItem.update(CART_ID, CART_ITEM_ID, { qty: quantity });
+  const updateObj = {
+    qty: number,
+  };
+
+  await sdk.shopCart.cartItem.update(CART_ID, CART_ITEM_ID, updateObj);
 };
 ```
 
