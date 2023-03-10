@@ -4,4 +4,64 @@ sidebar_position: 4
 
 # Tutorials
 
-This section is under development and will be coming soon.
+This short tutorial will explore how to integrate install and use Reachus SDKs
+main operations, from fetching products to initiate a checkout. We will use
+Reachus SDK to load our data using the Reachu API and enable the payment
+solution.
+
+## Requirements
+
+To follow this tutorial, there are the following requirements:
+
+- Basic understanding of React
+- Node, yarn (or npm) installed
+- An account on the [Reachu platform](https://www.reachu.io/)
+
+## Setup the project
+
+Let's start by creating a new
+[React application](https://reactjs.org/docs/create-a-new-react-app.html).
+
+```shell
+npx create-react-app my-app
+cd my-app
+```
+
+Next, we need to install the Reachu SDK
+
+```shell
+npm i @reachu/sdk
+```
+
+Then, let's start the development server
+
+```shell
+npm start
+```
+
+## Connecting to Reachu
+
+Now that we kickstarted our project, we need to create a connection to Reachu
+and enable the store solution.
+
+To initialize the connection, go to src/, create a new file reachu-sdk.js and
+add the following code.
+
+```js
+import { SdkClient } from '@reachu/sdk';
+
+let sdk;
+
+export function getSDK() {
+  if (!sdk) sdk = new SdkClient('YOUR_API_KEY', 'https://api.reachu.io');
+  return sdk;
+}
+```
+
+This function will do mainly two things: Initialize the connection with Reachu
+(enabling the SDK and the checkout solution) and provide an API client that we
+can use to retrieve content from the platform, to be used in our application.
+
+In the Reachu platform, create a new Channel.
+
+![screenshot-showing-platform-channel](/static/sdk/tutorial-channels.png)
