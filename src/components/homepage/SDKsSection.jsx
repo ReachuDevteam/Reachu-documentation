@@ -62,7 +62,7 @@ export default function SDKsSection() {
         <link rel="prefetch" href="/static/landing-page/plugin-sdk-dark.png" />
       </Head>
       <div className="mx-auto max-w-7xl">
-        <div className="sticky top-14 mb-20 flex flex-col items-center gap-6 bg-secondary-1000 py-6 lg:flex-row lg:justify-between">
+        <div className="sticky top-14 z-10 mb-20 flex flex-col items-center gap-6 rounded-2xl bg-secondary-1000 py-6 lg:flex-row lg:justify-between">
           <h2 className="my-0 font-jakarta lg:text-3xl">
             Reachu is the API for product data access
           </h2>
@@ -115,7 +115,7 @@ export default function SDKsSection() {
         </div>
 
         <div
-          className="sdk-section mb-16 flex flex-col rounded-3xl bg-secondary-900 lg:flex-row"
+          className="sdk-section relative mb-16 flex flex-col rounded-3xl bg-secondary-900 lg:flex-row"
           data-section="web"
           id="web"
         >
@@ -316,6 +316,8 @@ export default function SDKsSection() {
           <div className="flex flex-[3] items-center justify-center rounded-3xl p-6 px-8 lg:justify-end">
             <img
               src={`/static/landing-page/sdk.png`}
+              className="rounded-2xl p-3"
+              style={{ backgroundColor: 'rgb(251 251 251)' }}
               alt="Plugin SDK Usage Preview"
             />
           </div>

@@ -15,7 +15,7 @@ export default function HeroSection() {
       <div className="mx-auto flex max-w-7xl flex-col items-center lg:flex-row">
         <div className="flex-1 text-center lg:text-left">
           <img
-            src={`/logo/${colorMode}.svg`}
+            src={`/logo/${colorMode}-docs.svg`}
             alt="Reachu"
             style={{ maxWidth: 300, marginBottom: 15 }}
           />
@@ -24,12 +24,17 @@ export default function HeroSection() {
             sync your platform with any eCommerce system.
           </p>
           <div className="mt-8 flex flex-col gap-4 lg:flex-row">
-            <Link
-              href="#start-building"
-              className="rounded-sm bg-primary px-12 py-2.5 text-center font-semibold text-white hover:text-white"
-            >
-              Start building
-            </Link>
+            <div className="relative">
+              <span
+                className={`btn-gradient-bg btn-gradient-bg-${colorMode}`}
+              ></span>
+              <Link
+                href="#start-building"
+                className={`btn-gradient btn-gradient-${colorMode} rounded-sm bg-transparent px-12 py-2.5 text-center font-semibold text-white hover:text-white`}
+              >
+                Start building
+              </Link>
+            </div>
             {/*<Link
               href="/getting-started"
               className="rounded-sm border border-solid border-primary bg-primary/10 px-12 py-2.5 text-center font-semibold text-primary hover:text-primary dark:border-primary-100 dark:text-primary-100"
@@ -38,12 +43,19 @@ export default function HeroSection() {
             </Link>*/}
           </div>
         </div>
-        <div className="">
-          <img
-          //src={`/static/landing-page/hero-${colorMode}.png`}
-          //alt="Preview of using Dyte SDKs"
-          />
-        </div>
+        <div
+          style={{
+            height: '70%',
+            width: '40%',
+            background:
+              'linear-gradient(180deg, #1C4BF2 0%, rgba(112, 0, 255, 0.67) 100%)',
+            borderRadius: 16,
+            transform: 'rotate(45deg)',
+            position: 'absolute',
+            right: -90,
+            zIndex: 0,
+          }}
+        ></div>
       </div>
     </section>
   );
