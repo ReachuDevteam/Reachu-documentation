@@ -1052,8 +1052,8 @@ img[alt='APIKeys'] {
     linear-gradient(165deg, rgb(28, 75, 242) 0%, rgba(112, 0, 255, 0.67) 100%);
 }
 
-.btn-gradient-light:hover {
-  color: black !important;
+.btn-gradient:hover {
+  box-shadow: none;
 }
 
 .btn-gradient-bg {
