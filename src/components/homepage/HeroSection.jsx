@@ -19,7 +19,7 @@ export default function HeroSection() {
             alt="Reachu"
             style={{ maxWidth: 300, marginBottom: 15 }}
           />
-          <p className="text-sm font-bold text-white lg:max-w-md lg:text-2xl">
+          <p className="text-sm font-bold lg:max-w-md lg:text-2xl">
             Start selling products natively in your own platform with ease
           </p>
           <div className="mt-8 flex flex-col gap-4 lg:flex-row">
@@ -29,7 +29,7 @@ export default function HeroSection() {
               ></span>
               <Link
                 href="#start-building"
-                className={`btn-gradient btn-gradient-${colorMode} rounded-sm bg-transparent px-12 py-3.5 text-center font-semibold text-white hover:text-white`}
+                className={`btn-gradient btn-gradient-${colorMode} rounded-sm bg-transparent px-12 py-3.5 text-center font-semibold text-white transition duration-500 ease-in-out hover:text-white`}
               >
                 Start building
               </Link>
