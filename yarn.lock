@@ -6400,6 +6400,11 @@
   dependencies:
     "esutils" "^2.0.2"
 
+"docusaurus-plugin-script-tags@^2.0.0-beta.6":
+  "integrity" "sha512-kUJ9DS7cK7RTt1pqfmQG0lDjmuIq52y87l4lM7EmfdBvZowi1wTQ6eDszxjn8Oo9Lpv0g1MP8g+uTudUIWp0hQ=="
+  "resolved" "https://registry.npmjs.org/docusaurus-plugin-script-tags/-/docusaurus-plugin-script-tags-2.0.0-beta.6.tgz"
+  "version" "2.0.0-beta.6"
+
 "docusaurus-plugin-typedoc@^0.17.5":
   "integrity" "sha512-mMTk4lRy2+wQ7fmMOv6RLfKkoGnHkBLE8qUoPfWFoqUYDDDInwVQKxz12FNnQx86eJSLgBiZmuY/zB/bYsZQlQ=="
   "resolved" "https://registry.npmjs.org/docusaurus-plugin-typedoc/-/docusaurus-plugin-typedoc-0.17.5.tgz"
@@ -12147,7 +12152,7 @@
   dependencies:
     "read" "1"
 
-"prop-types@^15.5.8", "prop-types@^15.6.2", "prop-types@^15.7.2", "prop-types@^15.8.1":
+"prop-types@^15.5.0", "prop-types@^15.5.8", "prop-types@^15.6.2", "prop-types@^15.7.2", "prop-types@^15.8.1":
   "integrity" "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg=="
   "resolved" "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   "version" "15.8.1"
@@ -12436,6 +12441,13 @@
   "version" "1.0.1"
   dependencies:
     "@babel/runtime" "^7.10.3"
+
+"react-loadable@*":
+  "integrity" "sha512-C8Aui0ZpMd4KokxRdVAm2bQtI03k2RMRNzOB+IipV3yxFTSVICv7WoUr5L9ALB5BmKO1iHgZtWM8EvYG83otdg=="
+  "resolved" "https://registry.npmjs.org/react-loadable/-/react-loadable-5.5.0.tgz"
+  "version" "5.5.0"
+  dependencies:
+    "prop-types" "^15.5.0"
 
 "react-loadable@npm:@docusaurus/react-loadable@5.5.2":
   "integrity" "sha512-A3dYjdBGuy0IGT+wyLIGIKLRE+sAk1iNk0f1HjNDysO7u8lhL4N3VEm+FAubmJbAztn94F7MxBTPmnixbiyFdQ=="
