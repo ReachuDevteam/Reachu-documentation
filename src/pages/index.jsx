@@ -5,7 +5,6 @@ import Link from '@docusaurus/Link';
 import HeroSection from '../components/homepage/HeroSection';
 import SDKsSection from '../components/homepage/SDKsSection';
 import APIReferenceSection from '../components/homepage/APIReferenceSection';
-import CommunitySection from '../components/homepage/CommunitySection';
 import HomeFooter from '../components/homepage/HomeFooter';
 
 export default function Homepage() {
