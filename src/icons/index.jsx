@@ -18,3 +18,4 @@ export { default as DisconnectedPlugIcon } from './DisconnectedPlugIcon';
 export { default as ShopifyIcon } from './ShopifyIcon';
 export { default as WooIcon } from './WooIcon';
 export { default as WordPressIcon } from './WordPressIcon';
+export { default as MagentoIcon } from './MagentoIcon';

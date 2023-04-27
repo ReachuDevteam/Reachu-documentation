@@ -12,13 +12,12 @@ type Product = {
   id: number,
   title: string,
   description: string,
-  sku?: string,
+  sku: string,
   qty: number,
-  images?: { url: string }[],
-  publicPrice?: string,
-  optionsEnabled?: boolean,
-  options?: ProductOption[],
-  variants?: ProductVariant[],
+  images: { url: string }[],
+  optionsEnabled: boolean,
+  options: ProductOption[],
+  variants: ProductVariant[],
   price: {
     amount: string,
     currencyCode: string,
@@ -90,5 +89,24 @@ interface Checkout {
   availablePaymentMethods: {
     name: string,
   }[];
+  shipping_address: Address;
+  billing_address: Address;
+}
+
+interface Address {
+  id: string;
+  first_name: string;
+  last_name: string;
+  zip: string;
+  city: string;
+  phone_code: string;
+  phone: number;
+  company: string;
+  address1: string;
+  address2: string;
+  province: string;
+  province_code: string;
+  country: string;
+  country_code: string;
 }
 ```
