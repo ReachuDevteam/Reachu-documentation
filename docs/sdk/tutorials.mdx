@@ -334,6 +334,7 @@ On the DisplayProducts.jsx file:
           product_id: product.id,
           quantity: 1,
           variant_id: null,
+          shipping_id: product.productShipping[0]?.shipping?.id,
           price_data: {
             currency: product.price.currencyCode,
             tax: 25,
@@ -365,6 +366,13 @@ On the DisplayProducts.jsx file:
   ))}
 ...
 ```
+
+:::info
+
+Note that we have added a default shipping_id to the product. The customer will
+be able to update it at the checkout.
+
+:::
 
 ### Update quantity or remove products
 
@@ -504,7 +512,6 @@ const DisplayCheckout = ({ checkout, setCheckout }) => {
   const handleUpdateCheckout = async (body) => {
     const sdk = getSDK();
     const response = await sdk.shopCart.checkout.update(checkout.id, body);
-    console.log(response);
     if (response) setCheckout(response);
   };
 
@@ -632,44 +639,32 @@ Each product may have different shipment options as they may come from different
 suppliers. Before initiating the payment, a shipment for each product must be
 confirmed.
 
-Once the customer confirms the shipping id, we will add the confirmed shipping
-id to the item in the cart.
+For each product, you can set one as default and to update it to a new one you
+can use the shopCart.cartItem.update sdk feature.
 
-In the checkout object we find a shipping parameter with the total shipping
-calculated.
+This change will also automatically trigger a change in the checkout shipping
+price so you can update it in your front-end.
 
 ![screenshot-checkout-shipping](/static/sdk/tutorial-checkout-shipping.png)
 
+```
+src/checkout/components/FormShipping.jsx
+```
+
 ```js
-import { useState, useEffect } from 'react';
 import { getSDK } from '../../../reachu-sdk';
 
-import Button from '../../common/Button';
-
-const ShippingItem = ({ item, cartId }) => {
-  const [shipping, setShipping] = useState(null);
-  const [value, setValue] = useState(null);
-
-  useEffect(() => {
-    const fetchShipping = async () => {
-      const sdk = getSDK();
-      const response = await sdk.shopCart.shipping.getShippingByProductId(
-        item.product_id
-      );
-      setValue(response[0].id);
-      setShipping(response);
-    };
-    fetchShipping();
-  }, []);
-
-  const onChange = (e) => {
+const ShippingItem = ({ item, cartId, checkoutId, setCheckout }) => {
+  const onChange = async (e) => {
     const shippingId = e.target.value;
-    setValue(shippingId);
-  };
-
-  const handleUpdateShipping = async () => {
     const sdk = getSDK();
-    await sdk.shopCart.cartItem.update(cartId, item.id, { shippingId: value });
+    const response = await sdk.shopCart.cartItem.update(cartId, item.id, {
+      shipping_id: shippingId,
+    });
+    if (response) {
+      const checkout = await sdk.shopCart.checkout.getById(checkoutId);
+      setCheckout(checkout);
+    }
   };
 
   return (
@@ -687,10 +682,9 @@ const ShippingItem = ({ item, cartId }) => {
             name="shipping"
             placeholder="Shipping"
             className="mr-3 block w-full border border-gray-900 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-            value={value}
             onChange={onChange}
           >
-            {shipping?.map(
+            {item.product_available_shippings.map(
               ({ id, name, description, currencyCode, amount }) => (
                 <option key={id} value={id}>
                   {name} -- {description} -- {currencyCode} {amount}
@@ -698,14 +692,13 @@ const ShippingItem = ({ item, cartId }) => {
               )
             )}
           </select>
-          <Button onClick={handleUpdateShipping}>Set</Button>
         </div>
       </div>
     </div>
   );
 };
 
-const FormShipping = ({ checkout }) => {
+const FormShipping = ({ checkout, setCheckout }) => {
   return (
     <div className="flex-1 overflow-y-auto">
       <div>
@@ -719,9 +712,11 @@ const FormShipping = ({ checkout }) => {
         <div></div>
         {checkout?.cart?.line_items?.map((item) => (
           <ShippingItem
-            item={item}
             key={item.id}
+            item={item}
             cartId={checkout.cart.cart_id}
+            checkoutId={checkout.id}
+            setCheckout={setCheckout}
           />
         ))}
       </div>
@@ -732,7 +727,7 @@ const FormShipping = ({ checkout }) => {
 export default FormShipping;
 ```
 
-### Payment
+## Payment
 
 In the checkout object you will have the information of the available payment
 methods for your user:
@@ -748,9 +743,358 @@ methods for your user:
 ]
 ```
 
-### Payment
+We can let the user select the payment method on the frontend:
 
-For Klarna we already have all information and we can initiate payment:
+```
+src/checkout/DisplayCheckout.jsx
+```
+
+```js
+...
+const [selectedPayment, setSelectedPayment] = useState(null);
+const availablePaymentMethods = checkout?.availablePaymentMethods;
+...
+  <h3 className="font-bold text-3xl mt-10 mb-12">
+      Payment
+  </h3>
+  <div className="flex justify-center gap-6 max-w-md mx-auto">
+    {availablePaymentMethods.map(payment => (
+      <Button
+        onClick={() => setSelectedPayment(payment.name)}
+        filled={selectedPayment === payment.name}
+      >
+        {payment.name}
+      </Button>
+    ))}
+  </div>
+...
+```
+
+### Klarna
+
+For Klarna we already have all information and we can initiate payment. The
+Klarna snippet handles the shipping and billing address information of the
+customer.
+
+Still, to initiate Klarna, you need to provide:
+
+- the cart id
+- the email of the user
+- the country code ([ISO 3166 Alpha-2](https://www.iban.com/country-codes))
+- the current location of the user
 
 ![screenshot-checkout-klarna-1](/static/sdk/tutorial-checkout-klarna-1.png)
 ![screenshot-checkout-klarna-1](/static/sdk/tutorial-checkout-klarna-2.png)
+
+```
+src/checkout/DisplayCheckout.jsx
+```
+
+```js
+...
+const [initiateKlarna, setInitiateKlarna] = useState(false);
+...
+  {selectedPayment === "Klarna" && (
+      <>
+          <div className="flex my-12 justify-center mx-auto">
+              <Button
+                  filled
+                  className="max-w-xs"
+                  onClick={() => setInitiateKlarna(true)}
+              >
+                  Go to payment
+              </Button>
+          </div>
+          {initiateKlarna && (
+              <DisplayKlarna cart={checkout?.cart} />
+          )}
+      </>
+  )}
+...
+```
+
+```
+src/checkout/components/DisplayKlarna.jsx
+```
+
+```js
+import { useEffect } from 'react';
+import { getSDK } from '../../../reachu-sdk';
+
+const DisplayKlarna = ({ cart }) => {
+  useEffect(() => {
+    const fetchCheckout = async () => {
+      const data = await getSDK().klarna.payment.init(
+        {
+          email: 'coworking@iqplus.no',
+          country_code: 'NO',
+          href: `${window.location.origin}${window.location.pathname}`,
+        },
+        cart.id || cart.cart_id
+      );
+      const checkoutContainer = document.getElementById(
+        'klarna-checkout-container'
+      );
+      checkoutContainer.innerHTML = data.html_snippet;
+      const scriptsTags = checkoutContainer.getElementsByTagName('script');
+      for (let i = 0; i < scriptsTags.length; i++) {
+        const parentNode = scriptsTags[i].parentNode;
+        const newScriptTag = document.createElement('script');
+        newScriptTag.type = 'text/javascript';
+        newScriptTag.text = scriptsTags[i].text;
+        parentNode.removeChild(scriptsTags[i]);
+        parentNode.appendChild(newScriptTag);
+      }
+    };
+    fetchCheckout();
+  }, []);
+
+  return <div id="klarna-checkout-container" style={{ width: '100%' }} />;
+};
+
+export default DisplayKlarna;
+```
+
+#### Success page
+
+Once the customer completes the payment, you will be redirected to the href url
+you provided before, including in the params the order_id. You can now display a
+new Klarna snippet with the order confirmation information.
+
+```js
+const search = window.location.search || '';
+const urlParams = new URLSearchParams(search);
+const isSuccess = urlParams.get('success') === 'true';
+const orderId = urlParams.get('order_id');
+```
+
+```js
+import { useEffect } from 'react';
+import { getSDK } from '../reachu-sdk';
+
+const KlarnaSuccess = ({ orderId }) => {
+  useEffect(() => {
+    const fetchOrder = async () => {
+      const data = await getSDK().klarna.order.getById(orderId);
+      const confirmationContainer = document.getElementById(
+        'klarna-checkout-confirmation'
+      );
+      confirmationContainer.innerHTML = data.html_snippet;
+      const scriptsTags = confirmationContainer.getElementsByTagName('script');
+      for (let i = 0; i < scriptsTags.length; i++) {
+        const parentNode = scriptsTags[i].parentNode;
+        const newScriptTag = document.createElement('script');
+        newScriptTag.type = 'text/javascript';
+        newScriptTag.text = scriptsTags[i].text;
+        parentNode.removeChild(scriptsTags[i]);
+        parentNode.appendChild(newScriptTag);
+      }
+    };
+    if (orderId) {
+      fetchOrder();
+    }
+  }, []);
+  return (
+    <div>
+      <div id="klarna-checkout-confirmation" style={{ width: '100%' }}></div>
+      <div className="flex justify-center">
+        <a href="/" className="mt-16 rounded bg-black py-4 px-12 text-white">
+          Continue shoping
+        </a>
+      </div>
+    </div>
+  );
+};
+
+export default KlarnaSuccess;
+```
+
+### Stripe
+
+For Stripe we will need to get the shipping and the billing address before
+payment initiation.
+
+So, if Stripe is selected, we will add an additional form to collect this data.
+
+![screenshot-checkout-stripe-form](/static/sdk/tutorial-checkout-stripe-form.png)
+
+```js
+import { useState } from 'react';
+import Button from '../../common/Button';
+import FormField from '../../common/FormField';
+import CountrySelect from '../../common/CountrySelect';
+
+const FormStripe = ({ handleUpdateCheckout }) => {
+  const [valid, setValid] = useState(false);
+
+  return (
+    <form
+      onChange={(e) => {
+        setValid(e.currentTarget.checkValidity());
+      }}
+      className=""
+      onSubmit={(e) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget);
+        const formFields = [
+          'address1',
+          'address2',
+          'zip',
+          'city',
+          'country_code',
+          'same_billing',
+        ];
+        const values = formFields.reduce(
+          (acc, field) => ({ ...acc, [field]: data.get(field) }),
+          {}
+        );
+        const body = {
+          billing_address: { ...values },
+          shipping_address: { ...values },
+        };
+        handleUpdateCheckout(body, 'stripe');
+      }}
+    >
+      <div className="">
+        <div className="grid grid-cols-2 gap-6 pb-3">
+          <FormField
+            label="Address 1"
+            name="address1"
+            defaultValue=""
+            autoFocus
+            required
+          />
+          <FormField
+            label="Zip Code"
+            name="zip"
+            defaultValue=""
+            required
+            autoFocus
+          />
+          <FormField
+            label="City"
+            name="city"
+            defaultValue=""
+            required
+            autoFocus
+          />
+          <CountrySelect
+            label="Country"
+            name="country_code"
+            defaultValue="NO"
+            className=""
+            autoFocus
+          />
+          <div className="flex items-center justify-center">
+            <input
+              type="checkbox"
+              name="same_billing"
+              className="mr-6"
+              checked
+            />
+            <label htmlFor="same_billing">Same billing address</label>
+          </div>
+        </div>
+      </div>
+      <div className="block pt-4">
+        <Button type="submit" disabled={!valid} className="mx-auto w-52" filled>
+          Next
+        </Button>
+      </div>
+    </form>
+  );
+};
+
+export default FormStripe;
+```
+
+When the user clicks on the Next button, we recommend to update the checkout
+with the shipping and billing values:
+
+```js
+const handleUpdateCheckout = async (body, step) => {
+  const sdk = getSDK();
+  const response = await sdk.shopCart.checkout.update(checkout.id, body);
+  if (response) setCheckout(response);
+  if (step === 'stripe') setInitiateStripe(true);
+};
+```
+
+Here you can decide to trigger the initiate payment right away or request an
+additional click to Go to Payment. As stated in the documentation, the response
+will provide a checkout_url we need to redirect the user to. The funciton should
+look like this:
+
+```js
+const handleInitiateStripe = async () => {
+  const sdk = getSDK();
+  const response = await sdk.shopCart.payment.create(checkout.id, {
+    success_url: `${window.location.origin}${window.location.pathname}?success=true`,
+    cancel_url: `${window.location.origin}${window.location.pathname}?canceled=true`,
+    payment_method: 'Stripe',
+    email: checkout.email,
+  });
+  if (response) window.location.href = response.checkout_url;
+};
+```
+
+The user should be redirected to this page:
+
+![screenshot-checkout-stripe-page](/static/sdk/tutorial-checkout-stripe-page.png)
+
+#### Success page
+
+Once the user completes the final step of the checkout, it will be redirected
+back to the success url you previously provided.
+
+Using params on the succes url you can activate the order confirmation page.
+
+Using the stored information on the localstorage you can retrieve the order
+information and print it on this page:
+
+```js
+import { useState, useEffect } from 'react';
+import { getSDK } from '../reachu-sdk';
+
+const StripeSuccess = () => {
+  const [payment, setPayment] = useState(null);
+
+  useEffect(() => {
+    const fetchCheckout = async () => {
+      const checkoutId = localStorage.getItem('reachu-checkout-id');
+      if (checkoutId) {
+        const sdk = getSDK();
+        const response = await sdk.shopCart.payment.getByCheckoutId(checkoutId);
+        if (response) return setPayment(response);
+      }
+    };
+    fetchCheckout();
+  }, []);
+
+  return (
+    <>
+      <div className="flex justify-center py-24 text-center">
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="90"
+            height="90"
+            viewBox="0 0 24 24"
+            className="mb-6 w-full"
+          >
+            <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.25 8.891l-1.421-1.409-6.105 6.218-3.078-2.937-1.396 1.436 4.5 4.319 7.5-7.627z" />
+          </svg>
+          <h1 className="text-3xl font-bold">Your order is completed.</h1>
+        </div>
+      </div>
+      <div className="text-center">
+        <a href="/" className="rounded bg-black py-4 px-12 text-white">
+          Continue shoping
+        </a>
+      </div>
+    </>
+  );
+};
+
+export default StripeSuccess;
+```

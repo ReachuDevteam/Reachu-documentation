@@ -78,6 +78,7 @@ async () => {
         product_id: number,
         quantity: number,
         variant_id: string,
+        shipping_id: string,
         price_data: {
           currency: string,
           tax: number,
@@ -134,6 +135,7 @@ async (CART_ID, CART_ITEM_ID) => {
   const sdk = getSDK();
   const updateObj = {
     qty: number,
+    shipping_id: string,
   };
 
   await sdk.shopCart.cartItem.update(CART_ID, CART_ITEM_ID, updateObj);
@@ -144,7 +146,39 @@ Response:
 
 ```json
 {
-  "message": "The item was updated successfully"
+  "line_items": [
+    {
+      "id": "d0136ca8-76d3-4d65-8fb7-c9cc4960e418",
+      "product_id": 5797,
+      "product_title": "T-shirt",
+      "product_image": [
+        {
+          "id": 18724,
+          "deletedAt": null,
+          "url": "https://reachu-uploads-qa.s3.amazonaws.com/product-images/5797-0af14ec7-a3cf-438d-928f-0caffbd8fc4b.jpeg",
+          "width": 810,
+          "height": 1168,
+          "order": 0
+        },
+        {
+          "id": 18725,
+          "deletedAt": null,
+          "url": "https://reachu-uploads-qa.s3.amazonaws.com/product-images/5797-88e5f764-e927-4a87-b466-82b816ab5d95.jpeg",
+          "width": 762,
+          "height": 1016,
+          "order": 1
+        }
+      ],
+      "variant_id": null,
+      "variant_title": null,
+      "quantity": 1,
+      "price_data": {
+        "unit_price": 100,
+        "tax": 25,
+        "currency": "EUR"
+      }
+    }
+  ]
 }
 ```
 
@@ -161,7 +195,39 @@ Response:
 
 ```json
 {
-  "message": "The item was removed successfully"
+  "line_items": [
+    {
+      "id": "d0136ca8-76d3-4d65-8fb7-c9cc4960e418",
+      "product_id": 5797,
+      "product_title": "T-shirt",
+      "product_image": [
+        {
+          "id": 18724,
+          "deletedAt": null,
+          "url": "https://reachu-uploads-qa.s3.amazonaws.com/product-images/5797-0af14ec7-a3cf-438d-928f-0caffbd8fc4b.jpeg",
+          "width": 810,
+          "height": 1168,
+          "order": 0
+        },
+        {
+          "id": 18725,
+          "deletedAt": null,
+          "url": "https://reachu-uploads-qa.s3.amazonaws.com/product-images/5797-88e5f764-e927-4a87-b466-82b816ab5d95.jpeg",
+          "width": 762,
+          "height": 1016,
+          "order": 1
+        }
+      ],
+      "variant_id": null,
+      "variant_title": null,
+      "quantity": 1,
+      "price_data": {
+        "unit_price": 100,
+        "tax": 25,
+        "currency": "EUR"
+      }
+    }
+  ]
 }
 ```
 
@@ -227,6 +293,38 @@ Response
 
 ```json
 {
-  "message": "The cart was deleted successfully"
+  "line_items": [
+    {
+      "id": "d0136ca8-76d3-4d65-8fb7-c9cc4960e418",
+      "product_id": 5797,
+      "product_title": "T-shirt",
+      "product_image": [
+        {
+          "id": 18724,
+          "deletedAt": null,
+          "url": "https://reachu-uploads-qa.s3.amazonaws.com/product-images/5797-0af14ec7-a3cf-438d-928f-0caffbd8fc4b.jpeg",
+          "width": 810,
+          "height": 1168,
+          "order": 0
+        },
+        {
+          "id": 18725,
+          "deletedAt": null,
+          "url": "https://reachu-uploads-qa.s3.amazonaws.com/product-images/5797-88e5f764-e927-4a87-b466-82b816ab5d95.jpeg",
+          "width": 762,
+          "height": 1016,
+          "order": 1
+        }
+      ],
+      "variant_id": null,
+      "variant_title": null,
+      "quantity": 1,
+      "price_data": {
+        "unit_price": 100,
+        "tax": 25,
+        "currency": "EUR"
+      }
+    }
+  ]
 }
 ```
