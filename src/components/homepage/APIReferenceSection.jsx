@@ -24,12 +24,12 @@ export default function APIReferenceSection() {
         <div className="flex-1">
           <h2 className="text-4xl">API Reference</h2>
           <p className="text-zinc-400">
-            This API allows you to fetch product data from your Reachu catalog
-            and use it on your own surface. For instance in order to sell
-            products natively within your own application, game, or webpage.
-            Here you will find introductions to all features, as well as
-            resources, guides, and reference documentation for the APIs data
-            structure.
+            The API allows you to fetch product data and use it in your own
+            product, application or webpage. For instance in order to sell
+            products natively within your own game, or headless commerce
+            storefront. Here you will find introductions to all features, as
+            well as resources, guides, and reference documentation for the APIs
+            data structure.
           </p>
           <Link href="/api" className="text-primary-100 dark:text-primary">
             Get started with Reachu APIs &rarr;
@@ -40,13 +40,13 @@ export default function APIReferenceSection() {
                 href="/api/"
                 className="group font-jakarta font-semibold text-current"
               >
-                Create a product
+                Add Products
                 <span className="ml-2 opacity-0 transition group-hover:translate-x-2 group-hover:opacity-100">
                   &rarr;
                 </span>
               </Link>
               <div className="text-zinc-400">
-                Create a product for one of your suppliers
+                Fetch product from one or all of your Merchants
               </div>
             </li>
             <li className="flex flex-col gap-2">
@@ -54,13 +54,13 @@ export default function APIReferenceSection() {
                 href="/api/"
                 className="group font-jakarta font-semibold text-current"
               >
-                Create a collection
+                Create a Checkout
                 <span className="ml-2 opacity-0 transition group-hover:translate-x-2 group-hover:opacity-100">
                   &rarr;
                 </span>
               </Link>
               <div className="text-zinc-400">
-                Add a collection and asign a title, image and products
+                Have users checkout natively in your product
               </div>
             </li>
             <li className="flex flex-col gap-2">
@@ -68,13 +68,13 @@ export default function APIReferenceSection() {
                 href="/api/"
                 className="group font-jakarta font-semibold text-current"
               >
-                Add a shopping class
+                Place an order
                 <span className="ml-2 opacity-0 transition group-hover:translate-x-2 group-hover:opacity-100">
                   &rarr;
                 </span>
               </Link>
               <div className="text-zinc-400">
-                Associate one or more shipping classes to a product
+                Send orders back to the Merchants for fulfillment
               </div>
             </li>
           </ul>

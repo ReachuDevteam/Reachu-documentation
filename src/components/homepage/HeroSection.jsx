@@ -20,7 +20,7 @@ export default function HeroSection() {
             style={{ maxWidth: 300, marginBottom: 15 }}
           />
           <p className="text-sm font-bold lg:max-w-md lg:text-2xl">
-            Start selling products natively in your own platform with ease
+            How to add ecommerce anywhere
           </p>
           <div className="mt-8 flex flex-col gap-4 lg:flex-row">
             <div className="relative">
@@ -31,7 +31,7 @@ export default function HeroSection() {
                 href="#start-building"
                 className={`btn-gradient btn-gradient-${colorMode} rounded-sm bg-transparent px-12 py-3.5 text-center font-semibold text-white transition duration-500 ease-in-out hover:text-white`}
               >
-                Start building
+                Get Started
               </Link>
             </div>
             {/*<Link
