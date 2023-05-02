@@ -64,7 +64,7 @@ export default function SDKsSection() {
       <div className="mx-auto max-w-7xl">
         <div className="sticky top-14 z-10 mb-20 flex flex-col items-center gap-6 rounded-2xl bg-secondary-1000 py-6 lg:flex-row lg:justify-between">
           <h2 className="my-0 font-jakarta lg:text-3xl">
-            Reachu is the API for product data access
+            Go live faster with our pre built integrations, SDK and API
           </h2>
           <div className="mx-auto flex h-20 w-full flex-1 items-center justify-center self-start lg:w-auto lg:justify-end">
             <div className="flex max-w-sm flex-1 items-center rounded-full border border-solid border-text-400 text-sm lg:text-base">
@@ -124,8 +124,8 @@ export default function SDKsSection() {
             <p className="text-sm leading-relaxed text-text-400 lg:max-w-sm">
               Reachu provides a number of plug-and-play applications and
               integrations to third party services. Making it possible for both
-              Suppliers and Channels to get started without needing development,
-              or easily extend Reachu to fit their scope.
+              Merchants and Channels to get started quickly while having the
+              freedom to customize.
             </p>
             {/* <Link className="text-sm">Learn More &rarr;</Link> */}
           </div>
@@ -133,9 +133,10 @@ export default function SDKsSection() {
             <h4>Extensions for Channels</h4>
             <h5>Storefronts</h5>
             <p className="text-sm leading-relaxed text-text-400">
-              Integrate with Outshifter and import products to your Storefront
-              in minutes. Our apps and integrations for Channels auto-updates
-              product information, orders and inventory in real-time.
+              Integrate with Reachu to import products to your Storefront, blog,
+              webpage or application in minutes. Our apps and integrations for
+              Channels auto-updates product information, orders and inventory in
+              real-time.
             </p>
             <div>
               <ul className="mb-0 flex list-none flex-col gap-2 pl-0">
@@ -143,21 +144,21 @@ export default function SDKsSection() {
                   <SDKLink
                     href="shopify"
                     Icon={ShopifyIcon}
-                    label="Shopify App"
+                    label="Shopify Source"
                   />
                 </li>
                 <li>
                   <SDKLink
                     href="woocommerce"
                     Icon={WooIcon}
-                    label="WooCommerce Plugin"
+                    label="WooCommerce"
                   />
                 </li>
                 <li>
                   <SDKLink
                     href="wordpress"
                     Icon={WordPressIcon}
-                    label="WordPress Plugin"
+                    label="WordPress"
                   />
                 </li>
               </ul>
@@ -167,24 +168,19 @@ export default function SDKsSection() {
             <h4>Extensions for Suppliers</h4>
             <h5>eCommerce systems</h5>
             <p className="text-sm leading-relaxed text-text-400">
-              Connect your eCommerce system directly with Reachu and
-              automatically export products give Channels access to your product
-              data. Reachu synchronizes all orders, inventory and other product
-              information in real-time.
+              Connect your ecommerce system to export products and give Channels
+              and third parties access to them. Reachu synchronizes all orders,
+              inventory and other product information in real-time.
             </p>
             <ul className="mb-0 flex list-none flex-col gap-2 pl-0">
               <li>
-                <SDKLink
-                  href="shopify"
-                  Icon={ShopifyIcon}
-                  label="Shopify App"
-                />
+                <SDKLink href="shopify" Icon={ShopifyIcon} label="Shopify" />
               </li>
               <li>
                 <SDKLink
                   href="woocommerce"
                   Icon={WooIcon}
-                  label="WooCommerce Plugin"
+                  label="WooCommerce"
                 />
               </li>
               {/*<li>
@@ -302,12 +298,12 @@ export default function SDKsSection() {
           <div className="flex flex-1 flex-col justify-center p-6 text-center lg:pl-16 lg:text-left">
             <h3 className="text-3xl">SDK</h3>
             <p className="text-sm leading-relaxed text-text-400 lg:max-w-sm">
-              The SDK lets Channels connect their stores or platforms with
-              Reachu to start selling products. It enables Channels to select
-              and automatically import products from Reachu to their platforms
-              with one click. Reachu ensures that product data, stock,
-              fulfillment, and shipping information is synchronized with each of
-              the Suppliers eCommerce systems.
+              The SDK lets you connect your application, storefront or platform
+              with Reachu to start selling products natively. It enables you to
+              automatically import products from Reachu and add native ecommerce
+              functionality to your product. Reachu ensures that product data,
+              stock, fulfillment, and shipping information is synchronized with
+              all of the Merchants ecommerce systems.
             </p>
             <Link className="text-sm" href="/sdk">
               Learn More &rarr;
