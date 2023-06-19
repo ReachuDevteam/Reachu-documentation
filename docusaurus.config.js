@@ -26,6 +26,13 @@ function defineSection(section, version = {}, options = {}) {
     /** @type {import('@docusaurus/plugin-content-docs').Options} */
     ({
       path: `docs/${section}`,
+      lastVersion: 'current',
+      versions: {
+        current: {
+          label: '1.0.0',
+          path: '1.0.0',
+        },
+      },
       routeBasePath: section,
       id: section,
       sidebarPath: require.resolve('./sidebars-default.js'),
@@ -97,12 +104,11 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          lastVersion: 'current',
           path: 'docs/home',
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars-home.js'),
           breadcrumbs: false,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/reachu',
           ...defaultSettings,
         },
@@ -155,25 +161,6 @@ const config = {
           width: '101px',
         },
         items: [
-          {
-            type: 'docsVersion',
-            position: 'left',
-            to: '/path',
-            label: 'label',
-          },
-
-          /*{
-            label: 'SDKs',
-            type: 'dropdown',
-            className: 'dyte-dropdown',
-            items: [
-              {
-                type: 'html',
-                value: sdksHTML,
-                className: 'dyte-dropdown',
-              },
-            ],
-          },*/
           {
             label: 'SDK',
             to: 'sdk',
