@@ -155,6 +155,14 @@ const config = {
           width: '101px',
         },
         items: [
+          [
+            {
+              type: 'docsVersion',
+              position: 'left',
+              to: '/path',
+              label: 'label',
+            },
+          ],
           /*{
             label: 'SDKs',
             type: 'dropdown',
