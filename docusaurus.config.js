@@ -27,16 +27,10 @@ function defineSection(section, version = {}, options = {}) {
     ({
       path: `docs/${section}`,
       lastVersion: 'current',
-      versions: {
-        current: {
-          label: '1.0.0',
-          path: '1.0.0',
-        },
-      },
       routeBasePath: section,
       id: section,
       sidebarPath: require.resolve('./sidebars-default.js'),
-      breadcrumbs: false,
+      breadcrumbs: true,
       editUrl: 'https://github.com/reachu',
       versions: version && {
         current: {
@@ -50,7 +44,7 @@ function defineSection(section, version = {}, options = {}) {
 }
 
 const SECTIONS = [
-  defineSection('sdk'),
+  defineSection('sdk', { version: '1.0.0', label: '1.0.0', isLast: true, }),
   defineSection('shopify'),
   defineSection('woocommerce'),
   defineSection('wordpress'),
