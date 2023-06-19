@@ -25,36 +25,46 @@ reference to the customer's session id that is created by you in the frontend.
 Retrieve an array of the products added to your channel.
 
 ```js
-  async function createCart() => {
+  async function createCart () => {
     const sdk = getSDK();
     let newCart = await sdk.shopCart.cart.create({
       currency: string, // "EUR", "USD", "NOK", "DDK", "SEK", "CHF"
       customer_session_id: string, // We recommend an alphanumeric id
     });
-  });
+  };
 ```
 
 Response:
 
 ```json
 {
-  "cart_id": "dd961398-e3de-4204-9404-450b6170ddf3",
-  "customer_session_id": "92sdj37257",
-  "created_at": "2022-10-07T10:17:31.675Z",
-  "updated_at": "2022-10-07T10:17:31.675Z",
+  "cart_id": "b0efb6fc-ab58-4f99-8a3d-eb318c40fa82",
+  "customer_session_id": "549743",
   "line_items": [],
   "total_amount": 0,
-  "currency": "EUR"
+  "currency": "EUR",
+  "available_shipping_countries": [],
+  "shippingCountry": null
 }
 ```
 
-You may want to interact with a created cart in the following ways:
+:::info
+
+Heads up! A cart requirement will be to add a shipping country to it (the
+country the products are going to be shipped to). Once a product is added to the
+cart, the paramenter available_shipping_countries will automatically get the
+shipping countries from the supplier's avaibale shipping countries and return an
+array with the shipping codes.
+
+:::
+
+You may want to interact with a created cart line items in the following ways:
 
 - add an additional item o multiple items to the cart object
 - update the quantity of an added item
 - remove an item or multiple items from the cart object
 
-### Add an item
+## Add an item
 
 From the SDKs [product operations](/sdk/documentation/product), you get all
 necessary information to complete the line_items object and add an item to the
@@ -78,7 +88,6 @@ async () => {
         product_id: number,
         quantity: number,
         variant_id: string,
-        shipping_id: string,
         price_data: {
           currency: string,
           tax: number,
@@ -90,45 +99,157 @@ async () => {
 };
 ```
 
+:::info
+
+Note that since you have added a product to the cart, the parameter
+available_shipping_countries is updated. This information is usefull when
+updating the cart shipping country.
+
+:::
+
+Response:
+
 ```json
 {
+  "cart_id": "b0efb6fc-ab58-4f99-8a3d-eb318c40fa82",
+  "customer_session_id": "549743",
+  "shippingCountry": null,
   "line_items": [
     {
-      "id": "d0136ca8-76d3-4d65-8fb7-c9cc4960e418",
-      "product_id": 5797,
-      "product_title": "T-shirt",
+      "id": "d8064a81-2ad5-4e97-b222-934171ef60f1",
+      "supplier": "iqplustest",
+      "product_available_shippings": [],
+      "product_id": 6182,
+      "product_title": "Lacoste T-Shirt",
       "product_image": [
         {
-          "id": 18724,
-          "deletedAt": null,
-          "url": "https://reachu-uploads-qa.s3.amazonaws.com/product-images/5797-0af14ec7-a3cf-438d-928f-0caffbd8fc4b.jpeg",
-          "width": 810,
-          "height": 1168,
-          "order": 0
+          "id": 19513,
+          "url": "https://reachu-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-5ea12d76-79c4-4861-99d9-10867add85e4.jpeg",
+          "width": 762,
+          "height": 1100
         },
         {
-          "id": 18725,
-          "deletedAt": null,
-          "url": "https://reachu-uploads-qa.s3.amazonaws.com/product-images/5797-88e5f764-e927-4a87-b466-82b816ab5d95.jpeg",
+          "id": 19514,
+          "url": "https://reachu-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-826631da-f077-424a-8ff8-140d4829513b.jpeg",
           "width": 762,
-          "height": 1016,
-          "order": 1
+          "height": 1016
         }
       ],
-      "variant_id": null,
-      "variant_title": null,
+      "variant_id": 11693,
+      "variant_title": "M",
+      "variant": [
+        {
+          "option": "size",
+          "value": "M"
+        }
+      ],
       "quantity": 1,
       "price_data": {
-        "unit_price": 100,
+        "unit_price": 1744.65,
         "tax": 25,
-        "currency": "EUR"
-      }
+        "currency": "NOK"
+      },
+      "shipping": null
     }
-  ]
+  ],
+  "total_amount": 1744.65,
+  "currency": "NOK",
+  "available_shipping_countries": ["NO", "SE", "US"]
 }
 ```
 
-### Update an item
+## Update cart shipping country
+
+Once you have created the cart, you can update the shipping country. If you know
+that you will be working just with one specific country, feel free to update it
+even before adding a product to the cart.
+
+If you will be working with products that have different shipping countries, you
+can get the info of the cart available shipping countries directly from the cart
+object paramenter: available_shipping_countries
+
+```js
+const updateShippingCountry = async (shipping_country) => {
+  const response = await getSDK().shopCart.cart.update(checkout.cart.cart_id, {
+    shipping_country, // examples: "NO", "SE", "DK", "US"
+  });
+  return response;
+};
+```
+
+Now that you have added a shipping country to the cart, you may see that the
+line items come with the product available shippings just for that country. This
+allows you to easily select the shipping id to assign to each product.
+
+Response:
+
+```json
+{
+    "cart_id": "b0efb6fc-ab58-4f99-8a3d-eb318c40fa82",
+    "customer_session_id": "549743",
+    "shippingCountry": "NO",
+    "line_items": [
+      {
+        ...
+        "product_available_shippings": [
+          {
+            "id": "e42e32d5-3b76-41ac-b95f-2e6655d2af76",
+            "name": "Standard",
+            "description": "Standard shipping",
+            "countryCode": "NO",
+            "price": {
+              "amount": 290.77,
+              "currencyCode": "NOK"
+            }
+          }
+        ],
+        "shipping": null
+        ...
+      },
+      {
+        ...
+        "product_available_shippings": [
+          {
+            "id": "e42e32d5-3b76-41ac-b95f-2e6655d2af76",
+            "name": "Standard",
+            "description": "Standard shipping",
+            "countryCode": "NO",
+            "price": {
+              "amount": 290.77,
+              "currencyCode": "NOK"
+            }
+          },
+          {
+            "id": "62f97254-1c18-4ba7-b98e-053b1959fabb",
+            "name": "Express Shipping",
+            "description": "Express Shipping",
+            "countryCode": "NO",
+            "price": {
+              "amount": 639.71,
+              "currencyCode": "NOK"
+            }
+          }
+        ],
+        "shipping": null,
+        ...
+      }
+    ],
+    "total_amount": 2209.89,
+    "currency": "NOK",
+    "available_shipping_countries": [
+      "NO",
+      "SE",
+      "DK"
+    ]
+}
+```
+
+## Update item shipping class or quantity
+
+It is mandatory to assign a shipping class to a product. You can easily do it
+after you have assigned a shipping country to the cart. You can get the shipping
+id from the product_available_shippings parameter available in the cart items of
+the cart.
 
 ```js
 async (CART_ID, CART_ITEM_ID) => {
@@ -182,7 +303,7 @@ Response:
 }
 ```
 
-### Remove an item
+## Remove an item
 
 ```js
 async (CART_ID, CART_ITEM_ID) => {
