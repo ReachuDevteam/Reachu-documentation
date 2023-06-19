@@ -1,0 +1,54 @@
+---
+sidebar_position: 4
+---
+
+# API Key (Authentication)
+
+<font color="grey" size="5">
+
+How to get the user token needed for authentication.
+
+</font>
+
+The Outshifter API Key is used as authentication for all your Outshifter API
+requests. You need access to your Outshifter Account in order to generate the
+API Key.
+
+:::info If you haven't already set up an Outshifter Channel account you need to
+request access to register by filling out
+[this form](https://outshifter.typeform.com/to/as0nILBN) :::
+
+## Generate the Outshifter API Key
+
+- [ ] Log in to your Outshifter Account, go to **Settings** (available in the
+      top right hand corner) and select Sales Channels in the menu.
+
+- [ ] Click the **Create** button. This will automatically generate the API Key
+      for your user.
+
+- [ ] Copy the API Key.
+
+The Key can be used as an authentication method for all your Outshifter API
+requests.
+
+## Authentification
+
+In order to send requests to the Outshifter API, you need to be authenticated
+and supply a token for all requests. Every Outshifter user has a unique
+authorization token or API Key.
+
+:::info Your API requests will not work unless you include the API token. Make
+sure you add the API token to the request in the headers as an authorization
+key. See the example below. :::
+
+### Example:
+
+Example Outshifter API Key: RPMEQ4W-BXA44VW-Q6TVA8X-K12RVGJ
+
+Authorization: RPMEQ4W-BXA44VW-Q6TVA8X-K12RVGJ
+
+```json
+headers: {
+    authorization: RPMEQ4W-BXA44VW-Q6TVA8X-K12RVGJ
+}
+```

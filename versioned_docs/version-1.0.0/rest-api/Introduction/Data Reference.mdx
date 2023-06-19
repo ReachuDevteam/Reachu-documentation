@@ -1,0 +1,80 @@
+---
+sidebar_position: 4
+---
+
+<font color="grey" size="5">
+
+The data types used for the most important fields and examples of defined
+objects, e.g. a product or a user.
+
+</font>
+
+An overview of the general data types used in the API as well as specifics
+regarding user data and product data.
+
+### General Data Types
+
+#### Currency
+
+We use the ISO 4217 standard for defining currencies. Examples are USD, GBP, EUR
+or SEK.
+
+```javascript
+{
+    "priceCurrency": "USD"
+}
+```
+
+#### Amount
+
+Product prices should include decimals.
+
+```javascript
+{
+    "price": 100.00
+}
+```
+
+#### Date
+
+Dates are expressed according to the ISO 8601 standard with combined date, time
+and timezone. In some cases, we also accept values in the YYYY-MM-DD format, for
+example when filtering. Check the body request examples on each endpoint.
+
+```javascript
+{
+    "createdAt": "2018-08-08T08:37:22Z",
+    "dateFrom": "1981-09-06"
+}
+```
+
+#### String
+
+Strings may be up to 255 characters, unless otherwise noted in the field
+description.
+
+#### Locale & Country
+
+Locales should be formatted as a language tag consisting of a two-letter
+language code combined with a two-letter country code according to
+[RFC 5646](https://en.wikipedia.org/wiki/IETF_language_tag). Examples are
+_en-us_ for US English, _en-gb_ for British English and _nb-no_ for Norwegian.
+
+Countries are handled as two-letter country codes according to
+[ISO 3166 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Examples
+are _US_ for the United States, _GB_ for Great Britain and _NO_ for Norway.
+
+```javascript
+{
+  "locale": "nb-no",
+  "country": "NO"
+}
+```
+
+### Data types
+
+Product data, object explanations and user data are explained in further detail
+in the two following subsections:
+
+- Product Data
+- User data
