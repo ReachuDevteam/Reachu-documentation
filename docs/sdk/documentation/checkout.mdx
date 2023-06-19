@@ -29,7 +29,7 @@ async function createCheckout(CART_ID) => {
     cart_id: CART_ID,
   });
   return checkout;
-});
+};
 ```
 
 Response:
@@ -96,7 +96,7 @@ async function createCheckout(CART_ID) => {
   const sdk = getSDK();
   const paymentMethods = await sdk.shopCart.paymentMethod.getAllByUser();
   return paymentMethods;
-});
+};
 ```
 
 ```json
@@ -110,49 +110,6 @@ async function createCheckout(CART_ID) => {
     }
   ]
 }
-```
-
-## Shipping rates
-
-Get the shipping rate for the selected products on the checkout.
-
-```js
-async function getShipping(PRODUCT_ID) => {
-  const sdk = getSDK();
-  const shipping = await sdk.shopCart.shipping.getShippingByProductId(PRODUCT_ID);
-  return shipping;
-});
-```
-
-As a response, you will get an array of the selected shipping classes for that
-specific product:
-
-```json
-[
-  {
-    "createdAt": "2023-03-02T11:34:50.237Z",
-    "updatedAt": "2023-03-02T11:34:50.237Z",
-    "id": "6532eda8-cc5e-405b-b13a-4a6f63549d3a",
-    "amount": "50.00",
-    "customPriceEnabled": false,
-    "name": "Default Shipping",
-    "description": "Shipping wow",
-    "deletedAt": null,
-    "currencyCode": "EUR",
-    "default": false,
-    "shippingCountry": [
-      {
-        "createdAt": "2023-03-02T11:34:50.282Z",
-        "updatedAt": "2023-03-02T11:34:50.282Z",
-        "id": "b924a960-9584-4b58-8da0-ebd48e878d8d",
-        "amount": "50.00",
-        "country": "NO",
-        "deletedAt": null,
-        "currencyCode": "EUR"
-      }
-    ]
-  }
-]
 ```
 
 ## Interacting with a created checkout
@@ -186,7 +143,7 @@ async function createCheckout(CHECKOUT_ID) => {
   const checkout = await sdk.shopCart.checkout.update(CHECKOUT_ID, body);
 
   return checkout;
-});
+};
 ```
 
 Response:
@@ -275,7 +232,7 @@ async function getCheckout(CHECKOUT_ID) => {
   const sdk = getSDK();
   const checkout = await sdk.shopCart.checkout.getById(CHECKOUT_ID);
   return checkout;
-});
+};
 ```
 
 ```json
@@ -346,5 +303,5 @@ async function getCheckout(CHECKOUT_ID) => {
   const sdk = getSDK();
   const checkout = await sdk.shopCart.checkout.delete(CHECKOUT_ID);
   return checkout;
-});
+};
 ```
