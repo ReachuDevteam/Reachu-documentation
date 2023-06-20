@@ -107,8 +107,8 @@ product_available_shippings inside each line item will return an array with all
 the shipping options for that product.
 
 You should also pay attention to the shipping parameter inside each line item.
-This is null now, but when in a further step you assign a shipping to the
-product, this will return an object with the data if the assigned shipping.
+This is null now, but when you assign a shipping to the product, this parameter
+will return an object with the assigned shipping data.
 
 :::
 
@@ -252,7 +252,7 @@ Response:
 ## Update an item's shipping class or quantity
 
 At any point before initiating the payment you can update the quantity of a line
-item of the shipping class assigned to it.
+item or the shipping class assigned to it.
 
 It is mandatory to assign a shipping class to a product, a payment cannot be
 initiated if the shipping class of a line item is null. You can easily do it if
