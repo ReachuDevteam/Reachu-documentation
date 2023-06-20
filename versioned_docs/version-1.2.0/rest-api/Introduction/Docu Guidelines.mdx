@@ -1,0 +1,55 @@
+---
+sidebar_position: 3
+---
+
+<font color="grey" size="5">
+
+How to get the most out of the documentation, particularly endpoint information
+displays.
+
+</font>
+
+### General overview
+
+This section explains how to properly read an endpoint in the documentation.
+Each endpoint is displayed in the form of an accordion, so keep in mind that
+every time you see an arrow like the highlighted in red below, it means that
+there is further information available.
+
+![endpoint_products_by_id](/static/home/endpoint_products_by_id.png)
+
+References:
+
+**`GET`**: Type of endpoint requests, including PUT, POST, DELETE and GET.
+
+**`https://api.outshifter.com/catalog/users/:id/products:`** The address to send
+the required operation to the endpoint.
+
+**`Multiple products by user id`**: The endpoint title
+
+### Parameters
+
+Once you open the accordion to get further information, you will see the
+included endpoint parameters. It includes the field, type of data and a
+description of what is required.
+
+![endpoint_products_by_id_opened](/static/home/endpoint_products_by_id_opened.png)
+
+References:
+
+`Path`: Parameter that is included in the address of the endpoint. In the
+example, it is the user id.
+
+`Header`: Primarily used for authentication. For every endpoint that requires
+authentication, it should be included in the header.
+
+`Body`: The payload. In the example, it is the option to apply filters, but it
+can also be an object with information required to create a new user.
+
+### Responses
+
+When you open the "Responses" tab, you will get the type of response and the
+expected response data. In the below example we see that the response is an
+array with all the selected supplier´s products.
+
+![endpoint_response](/static/home/endpoint_response.png)
