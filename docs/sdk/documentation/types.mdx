@@ -13,8 +13,7 @@ type Product = {
   title: string,
   description: string,
   sku: string,
-  qty: number,
-  images: { url: string }[],
+  quantity: number,
   optionsEnabled: boolean,
   options: ProductOption[],
   variants: ProductVariant[],
@@ -22,13 +21,17 @@ type Product = {
     amount: string,
     currencyCode: string,
   },
+  images: {
+    url: string,
+    order: number,
+  }[],
 };
 
 type ProductOption = {
   id: number,
   deletedAt: string,
   name: string,
-  order: 1,
+  order: number,
   values: string,
 };
 
@@ -51,20 +54,46 @@ type ProductVariant = {
 interface Cart {
   cart_id: string;
   customer_session_id: string;
-  created_at: Date;
-  updated_at: Date;
+  shippingCountry: string;
+  total_amount: number;
+  currency: string;
+  available_shipping_countries: string[];
   line_items: {
     product_id: number,
-    variant_id: number | null | undefined,
+    product_title: string,
+    supplier: string,
     quantity: number,
     price_data: {
       unit_price: number,
       tax: number,
       currency: string,
     },
+    variant_id: number | null | undefined,
+    variant_title: string | null,
+    variant: {
+      option: string,
+      value: string,
+    }[],
+    product_available_shippings: {
+      id: string,
+      name: string,
+      description: string,
+      countryCode: string,
+      price: {
+        amount: number,
+        currencyCode: string,
+      },
+    },
+    shipping: {
+      id: string,
+      name: string,
+      description: string,
+      price: {
+        amount: number,
+        currencyCode: string,
+      },
+    },
   }[];
-  total_amount: number;
-  currency: string;
 }
 ```
 
@@ -77,6 +106,7 @@ interface Checkout {
   total_price: number;
   total_tax: number;
   total_line_items_price: number;
+  total_amount_shipping: number;
   deletedAt: string;
   success_url: string;
   cancel_url: string;

@@ -25,13 +25,13 @@ reference to the customer's session id that is created by you in the frontend.
 Retrieve an array of the products added to your channel.
 
 ```js
-  async function createCart () => {
-    const sdk = getSDK();
-    let newCart = await sdk.shopCart.cart.create({
-      currency: string, // "EUR", "USD", "NOK", "DDK", "SEK", "CHF"
-      customer_session_id: string, // We recommend an alphanumeric id
-    });
-  };
+async function createCart() => {
+  const sdk = getSDK();
+  let newCart = await sdk.shopCart.cart.create({
+    currency: string, // "EUR", "USD", "NOK", "DDK", "SEK", "CHF"
+    customer_session_id: string, // We recommend an alphanumeric id
+  });
+};
 ```
 
 Response:
@@ -78,9 +78,8 @@ objects to the line_items array.
 :::
 
 ```js
-async () => {
+async function addToCart() => {
   const sdk = getSDK();
-
   await sdk.shopCart.cartItem.create({
     cartId: string,
     line_items: [
@@ -103,7 +102,13 @@ async () => {
 
 Note that since you have added a product to the cart, the parameter
 available_shipping_countries is updated. This information is usefull when
-updating the cart shipping country.
+updating the cart shipping country, and once you do it, the
+product_available_shippings inside each line item will return an array with all
+the shipping options for that product.
+
+You should also pay attention to the shipping parameter inside each line item.
+This is null now, but when in a further step you assign a shipping to the
+product, this will return an object with the data if the assigned shipping.
 
 :::
 
@@ -244,21 +249,24 @@ Response:
 }
 ```
 
-## Update item shipping class or quantity
+## Update an item's shipping class or quantity
 
-It is mandatory to assign a shipping class to a product. You can easily do it
-after you have assigned a shipping country to the cart. You can get the shipping
-id from the product_available_shippings parameter available in the cart items of
-the cart.
+At any point before initiating the payment you can update the quantity of a line
+item of the shipping class assigned to it.
+
+It is mandatory to assign a shipping class to a product, a payment cannot be
+initiated if the shipping class of a line item is null. You can easily do it if
+the cart has a shipping country as you have the the shipping ids information on
+the product_available_shippings parameter available in the cart items of the
+cart.
 
 ```js
-async (CART_ID, CART_ITEM_ID) => {
+async function updateCartItem(CART_ID, CART_ITEM_ID) => {
   const sdk = getSDK();
   const updateObj = {
     qty: number,
     shipping_id: string,
   };
-
   await sdk.shopCart.cartItem.update(CART_ID, CART_ITEM_ID, updateObj);
 };
 ```
@@ -267,39 +275,69 @@ Response:
 
 ```json
 {
+  "cart_id": "b0efb6fc-ab58-4f99-8a3d-eb318c40fa82",
+  "customer_session_id": "549743",
+  "shippingCountry": "NO",
   "line_items": [
     {
-      "id": "d0136ca8-76d3-4d65-8fb7-c9cc4960e418",
-      "product_id": 5797,
-      "product_title": "T-shirt",
-      "product_image": [
+      "id": "21a71e99-9dd6-4956-a39e-84a7c8ee2dec",
+      "supplier": "reachu-supplier-test",
+      "product_available_shippings": [
         {
-          "id": 18724,
-          "deletedAt": null,
-          "url": "https://reachu-uploads-qa.s3.amazonaws.com/product-images/5797-0af14ec7-a3cf-438d-928f-0caffbd8fc4b.jpeg",
-          "width": 810,
-          "height": 1168,
-          "order": 0
-        },
-        {
-          "id": 18725,
-          "deletedAt": null,
-          "url": "https://reachu-uploads-qa.s3.amazonaws.com/product-images/5797-88e5f764-e927-4a87-b466-82b816ab5d95.jpeg",
-          "width": 762,
-          "height": 1016,
-          "order": 1
+          "id": "e42e32d5-3b76-41ac-b95f-2e6655d2af76",
+          "name": "Standard",
+          "description": "Standard shipping",
+          "countryCode": "NO",
+          "price": {
+            "amount": 290.77,
+            "currencyCode": "NOK"
+          }
         }
       ],
-      "variant_id": null,
-      "variant_title": null,
+      "product_id": 6182,
+      "product_title": "Lacoste T-Shirt",
+      "product_image": [
+        {
+          "id": 19513,
+          "url": "https://reachu-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-5ea12d76-79c4-4861-99d9-10867add85e4.jpeg",
+          "width": 762,
+          "height": 1100
+        },
+        {
+          "id": 19514,
+          "url": "https://reachu-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-826631da-f077-424a-8ff8-140d4829513b.jpeg",
+          "width": 762,
+          "height": 1016
+        }
+      ],
+      "variant_id": 11693,
+      "variant_title": "M",
+      "variant": [
+        {
+          "option": "size",
+          "value": "M"
+        }
+      ],
       "quantity": 1,
       "price_data": {
-        "unit_price": 100,
+        "unit_price": 1744.65,
         "tax": 25,
-        "currency": "EUR"
+        "currency": "NOK"
+      },
+      "shipping": {
+        "id": "e42e32d5-3b76-41ac-b95f-2e6655d2af76",
+        "name": "Standard",
+        "description": "Standard shipping",
+        "price": {
+          "amount": 290.77,
+          "currencyCode": "NOK"
+        }
       }
     }
-  ]
+  ],
+  "total_amount": 1744.65,
+  "currency": "NOK",
+  "available_shipping_countries": ["NO"]
 }
 ```
 
@@ -312,43 +350,20 @@ async (CART_ID, CART_ITEM_ID) => {
 };
 ```
 
+As response you will get the updated cart. If there was only one product on the
+cart, the line_items parameter will return an empty array.
+
 Response:
 
 ```json
 {
-  "line_items": [
-    {
-      "id": "d0136ca8-76d3-4d65-8fb7-c9cc4960e418",
-      "product_id": 5797,
-      "product_title": "T-shirt",
-      "product_image": [
-        {
-          "id": 18724,
-          "deletedAt": null,
-          "url": "https://reachu-uploads-qa.s3.amazonaws.com/product-images/5797-0af14ec7-a3cf-438d-928f-0caffbd8fc4b.jpeg",
-          "width": 810,
-          "height": 1168,
-          "order": 0
-        },
-        {
-          "id": 18725,
-          "deletedAt": null,
-          "url": "https://reachu-uploads-qa.s3.amazonaws.com/product-images/5797-88e5f764-e927-4a87-b466-82b816ab5d95.jpeg",
-          "width": 762,
-          "height": 1016,
-          "order": 1
-        }
-      ],
-      "variant_id": null,
-      "variant_title": null,
-      "quantity": 1,
-      "price_data": {
-        "unit_price": 100,
-        "tax": 25,
-        "currency": "EUR"
-      }
-    }
-  ]
+  "cart_id": "b0efb6fc-ab58-4f99-8a3d-eb318c40fa82",
+  "customer_session_id": "549743",
+  "shippingCountry": "NO",
+  "line_items": [],
+  "total_amount": 0,
+  "currency": "NOK",
+  "available_shipping_countries": []
 }
 ```
 
@@ -368,34 +383,69 @@ Response:
 
 ```json
 {
-  "cart_id": 112321203,
-  "customer_session_id": "92sdj34234",
-  "created_at": "2022-04-05T13:20:16-04:00",
-  "updated_at": "2022-04-05T13:20:16-04:00",
+  "cart_id": "b0efb6fc-ab58-4f99-8a3d-eb318c40fa82",
+  "customer_session_id": "549743",
+  "shippingCountry": "NO",
   "line_items": [
     {
-      "product_id": 112232,
-      "variant_id": 231,
-      "quantity": 2,
-      "price_data": {
-        "unit_price": "323.13",
-        "tax": "12",
-        "currency": "EUR"
-      }
-    },
-    {
-      "product_id": 112000,
-      "variant_id": null,
+      "id": "21a71e99-9dd6-4956-a39e-84a7c8ee2dec",
+      "supplier": "iqplustest",
+      "product_available_shippings": [
+        {
+          "id": "e42e32d5-3b76-41ac-b95f-2e6655d2af76",
+          "name": "Standard",
+          "description": "Standard shipping",
+          "countryCode": "NO",
+          "price": {
+            "amount": 290.77,
+            "currencyCode": "NOK"
+          }
+        }
+      ],
+      "product_id": 6182,
+      "product_title": "Lacoste T-Shirt",
+      "product_image": [
+        {
+          "id": 19513,
+          "url": "https://reachu-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-5ea12d76-79c4-4861-99d9-10867add85e4.jpeg",
+          "width": 762,
+          "height": 1100
+        },
+        {
+          "id": 19514,
+          "url": "https://reachu-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-826631da-f077-424a-8ff8-140d4829513b.jpeg",
+          "width": 762,
+          "height": 1016
+        }
+      ],
+      "variant_id": 11693,
+      "variant_title": "M",
+      "variant": [
+        {
+          "option": "size",
+          "value": "M"
+        }
+      ],
       "quantity": 1,
       "price_data": {
-        "unit_price": "100.00",
-        "tax": "12",
-        "currency": "EUR"
+        "unit_price": 1744.65,
+        "tax": 25,
+        "currency": "NOK"
+      },
+      "shipping": {
+        "id": "e42e32d5-3b76-41ac-b95f-2e6655d2af76",
+        "name": "Standard",
+        "description": "Standard shipping",
+        "price": {
+          "amount": 290.77,
+          "currencyCode": "NOK"
+        }
       }
     }
   ],
-  "total_amount": "1200.20",
-  "currency": "EUR"
+  "total_amount": 1744.65,
+  "currency": "NOK",
+  "available_shipping_countries": ["NO"]
 }
 ```
 
@@ -404,48 +454,8 @@ Response:
 In case you need to delete a cart, it is also possible via the SDK.
 
 ```js
-async (CART_ID) => {
+async function deleteCart(CART_ID) => {
   const sdk = getSDK();
   await sdk.shopCart.cart.delete(CART_ID);
 };
-```
-
-Response
-
-```json
-{
-  "line_items": [
-    {
-      "id": "d0136ca8-76d3-4d65-8fb7-c9cc4960e418",
-      "product_id": 5797,
-      "product_title": "T-shirt",
-      "product_image": [
-        {
-          "id": 18724,
-          "deletedAt": null,
-          "url": "https://reachu-uploads-qa.s3.amazonaws.com/product-images/5797-0af14ec7-a3cf-438d-928f-0caffbd8fc4b.jpeg",
-          "width": 810,
-          "height": 1168,
-          "order": 0
-        },
-        {
-          "id": 18725,
-          "deletedAt": null,
-          "url": "https://reachu-uploads-qa.s3.amazonaws.com/product-images/5797-88e5f764-e927-4a87-b466-82b816ab5d95.jpeg",
-          "width": 762,
-          "height": 1016,
-          "order": 1
-        }
-      ],
-      "variant_id": null,
-      "variant_title": null,
-      "quantity": 1,
-      "price_data": {
-        "unit_price": 100,
-        "tax": 25,
-        "currency": "EUR"
-      }
-    }
-  ]
-}
 ```
