@@ -12,6 +12,7 @@ type Product = {
   id: number,
   title: string,
   description: string,
+  supplier: string,
   sku: string,
   quantity: number,
   optionsEnabled: boolean,
@@ -83,7 +84,7 @@ interface Cart {
         amount: number,
         currencyCode: string,
       },
-    },
+    }[],
     shipping: {
       id: string,
       name: string,
@@ -93,9 +94,40 @@ interface Cart {
         currencyCode: string,
       },
     },
-  }[];
+  };
 }
 ```
+
+:::info
+
+<strong>On the cart object:</strong>
+
+-<code>available_shipping_countries:</code> Based on the products added to the
+cart, we check the shipping countries of each product and we return an array
+with the shipping codes available from the added products shipping classes. This
+way we narrow the options you can show the final customer to select the cart's
+shippingCountry.
+
+-<code>shippingCountry:</code> The shipping country assigned to the cart. You
+can set a default country if you know all your products will be shipped to a
+specific country. If not, you can use the country codes we provide in the field
+available_shipping_countries. Based on the value of this field, the available
+shipping classes on each line item are updated to match with the selected
+country.
+
+<strong>On the cart's line items:</strong>
+
+-<code>product_available_shippings:</code> This is an array where you receive
+all the shipping classes available for the product that matches the country
+assigned on the shippingCountry field in the cart. This field will return an
+empty array until you update the cart's shippingCountry.
+
+-<code>shipping:</code>This field will be null until you update the shipping id
+on the line item. Once you set a shipping class to the line item, the
+information about the selected shipping class will be displayed here. If this
+field is null, you won't be able to initiate the payment.
+
+:::
 
 ## Checkout types
 
