@@ -334,7 +334,6 @@ On the DisplayProducts.jsx file:
           product_id: product.id,
           quantity: 1,
           variant_id: null,
-          shipping_id: product.productShipping[0]?.shipping?.id,
           price_data: {
             currency: product.price.currencyCode,
             tax: 25,
@@ -343,7 +342,7 @@ On the DisplayProducts.jsx file:
         },
       ],
     });
-    setCart({ ...cart, line_items: response.line_items });
+    setCart(response);
   }
 ...
   {products?.map(product => (
@@ -383,7 +382,7 @@ const CartItem = ({ cart, setCart, item }) => {
   const handleRemoveFromCart = async () => {
     const sdk = getSDK();
     const response = await sdk.shopCart.cartItem.delete(cart.cart_id, item.id);
-    setCart({ ...cart, line_items: response.line_items });
+    setCart(response);
   };
 
   const handleUpdateCart = async (qty) => {
@@ -391,7 +390,7 @@ const CartItem = ({ cart, setCart, item }) => {
     const response = await sdk.shopCart.cartItem.update(cart.cart_id, item.id, {
       qty,
     });
-    setCart({ ...cart, line_items: response.line_items });
+    setCart(response);
   };
 
   return (
@@ -632,11 +631,37 @@ Each product may have different shipment options as they may come from different
 suppliers. Before initiating the payment, a shipment for each product must be
 confirmed.
 
-For each product, you can set one as default and to update it to a new one you
-can use the shopCart.cartItem.update sdk feature.
+We should start by updating the shipping country of the cart. This is mandatory
+as this will automatically update the available shipping classes on each product
+in the line items array.
 
-This change will also automatically trigger a change in the checkout shipping
-price so you can update it in your front-end.
+Here we have a good trick for you. Based on the products added to the cart, we
+check the shipping countries of each product and we return an array with just
+the shipping codes available in your products. This way we narrow the options we
+display on our country selector. You will find this data on the cart object
+under this parameter:
+
+```js
+"available_shipping_countries": ["NO", "SE", "US"]
+```
+
+You can choose the best way to update it and where to display it on your
+front-end, and here is the function to do it:
+
+```js
+const updateShippingCountry = async (checkout) => {
+  const updatedCart = await getSDK().shopCart.cart.update(
+    checkout.cart.cart_id,
+    {
+      shipping_country: 'NO',
+    }
+  );
+  return updatedCart;
+};
+```
+
+After this, for each product you can set one shipping class as default or update
+it to a new one by using the shopCart.cartItem.update sdk feature.
 
 ![screenshot-checkout-shipping](/static/sdk/tutorial-checkout-shipping.png)
 
@@ -678,9 +703,9 @@ const ShippingItem = ({ item, cartId, checkoutId, setCheckout }) => {
             onChange={onChange}
           >
             {item.product_available_shippings.map(
-              ({ id, name, description, currencyCode, amount }) => (
+              ({ id, name, description, price }) => (
                 <option key={id} value={id}>
-                  {name} -- {description} -- {currencyCode} {amount}
+                  {name} -- {description} -- {price.currencyCode} {price.amount}
                 </option>
               )
             )}
