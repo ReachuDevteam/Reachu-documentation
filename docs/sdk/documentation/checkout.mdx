@@ -36,44 +36,80 @@ Response:
 
 ```json
 {
-  "cart": {
-    "createdAt": "2022-10-07T10:17:31.675Z",
-    "updatedAt": "2022-10-07T11:15:56.000Z",
-    "id": "dd961398-e3de-4204-9404-450b6170ddf3",
-    "customer_session_id": "92sdj37257",
-    "currency": "NOK",
-    "total_amount": "200.00",
-    "deletedAt": null,
-    "line_items": [
-      {
-        "createdAt": "2022-10-07T10:35:15.189Z",
-        "updatedAt": "2022-10-07T10:35:15.189Z",
-        "id": "c383e935-38d6-4cee-8c50-30506e3476c3",
-        "deletedAt": null,
-        "variantId": null,
-        "quantity": 1,
-        "priceData": {
-          "id": "004b5ec6-edb8-4004-8d34-9e7769a91b46",
-          "unitPrice": "200.00",
-          "tax": "12.00",
-          "currency": "NOK"
-        }
-      }
-    ]
-  },
-  "status": "ACTIVE",
-  "total_price": "200.00",
-  "total_tax": "12.00",
-  "total_line_items_price": 200,
+  "createdAt": "2023-06-20T08:18:04.973Z",
+  "updatedAt": "2023-06-20T08:18:04.973Z",
+  "id": "7a1c1397-9508-47f2-8b90-ef9143a0bab3",
   "deletedAt": null,
   "success_url": null,
   "cancel_url": null,
   "payment_method": null,
   "email": null,
+  "status": "ACTIVE",
   "checkout_url": null,
-  "createdAt": "2022-10-07T11:44:53.666Z",
-  "updatedAt": "2022-10-07T11:44:53.666Z",
-  "id": "67954a7d-7bb4-49ef-82a6-bbe491d949a6",
+  "origin_payment_id": null,
+  "total_price": "1744.65",
+  "total_tax": "436.16",
+  "total_line_items_price": 1745,
+  "cart": {
+    "cart_id": "b0efb6fc-ab58-4f99-8a3d-eb318c40fa82",
+    "customer_session_id": "549743",
+    "shippingCountry": "NO",
+    "line_items": [
+      {
+        "id": "21ad179e-579e-4dba-a1ad-e2339013b1ce",
+        "supplier": "iqplustest",
+        "product_available_shippings": [
+          {
+            "id": "e42e32d5-3b76-41ac-b95f-2e6655d2af76",
+            "name": "Standard",
+            "description": "Standard shipping",
+            "countryCode": "NO",
+            "price": {
+              "amount": 290.77,
+              "currencyCode": "NOK"
+            }
+          }
+        ],
+        "product_id": 6182,
+        "product_title": "Lacoste T-Shirt",
+        "product_image": [
+          {
+            "id": 19513,
+            "url": "https://reachu-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-5ea12d76-79c4-4861-99d9-10867add85e4.jpeg",
+            "width": 762,
+            "height": 1100
+          },
+          {
+            "id": 19514,
+            "url": "https://reachu-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-826631da-f077-424a-8ff8-140d4829513b.jpeg",
+            "width": 762,
+            "height": 1016
+          }
+        ],
+        "variant_id": 11693,
+        "variant_title": "M",
+        "variant": [
+          {
+            "option": "size",
+            "value": "M"
+          }
+        ],
+        "quantity": 1,
+        "price_data": {
+          "unit_price": 1744.65,
+          "tax": 25,
+          "currency": "NOK"
+        },
+        "shipping": null
+      }
+    ],
+    "total_amount": 1744.65,
+    "currency": "NOK",
+    "available_shipping_countries": ["NO"]
+  },
+  "billing_address": null,
+  "shipping_address": null,
+  "total_amount_shipping": 0,
   "availablePaymentMethods": [
     {
       "name": "Stripe"
@@ -92,7 +128,7 @@ the response as part of the checkout object. You can still get them separately
 by using the method below.
 
 ```js
-async function createCheckout(CART_ID) => {
+async function getPaymentMethods() => {
   const sdk = getSDK();
   const paymentMethods = await sdk.shopCart.paymentMethod.getAllByUser();
   return paymentMethods;
@@ -126,7 +162,7 @@ After creation, you can update the following information from the checkout:
   - cancel_url
 
 ```js
-async function createCheckout(CHECKOUT_ID) => {
+async function updateCheckout(CHECKOUT_ID) => {
   const sdk = getSDK();
   const body = {
     shipping_address: {
@@ -139,9 +175,7 @@ async function createCheckout(CHECKOUT_ID) => {
       zip: "0672"
     }
   };
-
   const checkout = await sdk.shopCart.checkout.update(CHECKOUT_ID, body);
-
   return checkout;
 };
 ```
@@ -150,61 +184,7 @@ Response:
 
 ```json
 {
-  "createdAt": "2023-03-03T11:37:57.773Z",
-  "updatedAt": "2023-03-03T12:29:13.000Z",
-  "id": "ae02680b-4699-4670-accd-fbf7c4ccac42",
-  "deletedAt": null,
-  "success_url": null,
-  "cancel_url": null,
-  "payment_method": null,
-  "email": null,
-  "status": "ACTIVE",
-  "checkout_url": null,
-  "origin_payment_id": null,
-  "total_price": "0.00",
-  "total_tax": "0.00",
-  "total_line_items_price": 0,
-  "cart": {
-    "cart_id": "7fd747b6-dd73-462c-b579-7773f273a98c",
-    "customer_session_id": "768166",
-    "created_at": "2023-03-03T11:18:53.906Z",
-    "updated_at": "2023-03-03T12:07:15.000Z",
-    "line_items": [
-      {
-        "id": "d0136ca8-76d3-4d65-8fb7-c9cc4960e418",
-        "product_id": 5797,
-        "product_title": "T-shirt",
-        "product_image": [
-          {
-            "id": 18724,
-            "deletedAt": null,
-            "url": "https://outshifter-uploads-qa.s3.amazonaws.com/product-images/5797-0af14ec7-a3cf-438d-928f-0caffbd8fc4b.jpeg",
-            "width": 810,
-            "height": 1168,
-            "order": 0
-          },
-          {
-            "id": 18725,
-            "deletedAt": null,
-            "url": "https://outshifter-uploads-qa.s3.amazonaws.com/product-images/5797-88e5f764-e927-4a87-b466-82b816ab5d95.jpeg",
-            "width": 762,
-            "height": 1016,
-            "order": 1
-          }
-        ],
-        "variant_id": null,
-        "variant_title": null,
-        "quantity": 1,
-        "price_data": {
-          "unit_price": 100,
-          "tax": 25,
-          "currency": "EUR"
-        }
-      }
-    ],
-    "total_amount": 100,
-    "currency": "EUR"
-  },
+  ...
   "billing_address": null,
   "shipping_address": {
     "id": "6fa90bd2-6fc3-422b-a2cd-e4330be23de7",
@@ -237,62 +217,118 @@ async function getCheckout(CHECKOUT_ID) => {
 
 ```json
 {
-  "createdAt": "2022-10-07T11:44:53.666Z",
-  "updatedAt": "2022-10-07T11:52:56.000Z",
-  "id": "67954a7d-7bb4-49ef-82a6-bbe491d949a6",
+  "createdAt": "2023-06-20T08:18:04.973Z",
+  "updatedAt": "2023-06-20T08:23:47.000Z",
+  "id": "7a1c1397-9508-47f2-8b90-ef9143a0bab3",
   "deletedAt": null,
   "success_url": null,
   "cancel_url": null,
   "payment_method": null,
-  "email": null,
+  "email": "test@test.com",
   "status": "ACTIVE",
   "checkout_url": null,
-  "total_price": "200.00",
-  "total_tax": "12.00",
-  "total_line_items_price": 200,
+  "origin_payment_id": null,
+  "total_price": "2035.42",
+  "total_tax": "436.16",
+  "total_line_items_price": 1745,
   "cart": {
-    "createdAt": "2022-10-07T10:17:31.675Z",
-    "updatedAt": "2022-10-07T11:15:56.000Z",
-    "id": "dd961398-e3de-4204-9404-450b6170ddf3",
-    "customer_session_id": "92sdj37257",
-    "currency": "NOK",
-    "total_amount": "200.00",
-    "deletedAt": null,
+    "cart_id": "b0efb6fc-ab58-4f99-8a3d-eb318c40fa82",
+    "customer_session_id": "549743",
+    "shippingCountry": "NO",
     "line_items": [
       {
-        "createdAt": "2022-10-07T10:35:15.189Z",
-        "updatedAt": "2022-10-07T10:35:15.189Z",
-        "id": "c383e935-38d6-4cee-8c50-30506e3476c3",
-        "deletedAt": null,
-        "variantId": null,
+        "id": "21ad179e-579e-4dba-a1ad-e2339013b1ce",
+        "supplier": "iqplustest",
+        "product_available_shippings": [
+          {
+            "id": "e42e32d5-3b76-41ac-b95f-2e6655d2af76",
+            "name": "Standard",
+            "description": "Standard shipping",
+            "countryCode": "NO",
+            "price": {
+              "amount": 290.77,
+              "currencyCode": "NOK"
+            }
+          }
+        ],
+        "product_id": 6182,
+        "product_title": "Lacoste T-Shirt",
+        "product_image": [
+          {
+            "id": 19513,
+            "url": "https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-5ea12d76-79c4-4861-99d9-10867add85e4.jpeg",
+            "width": 762,
+            "height": 1100
+          },
+          {
+            "id": 19514,
+            "url": "https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-826631da-f077-424a-8ff8-140d4829513b.jpeg",
+            "width": 762,
+            "height": 1016
+          }
+        ],
+        "variant_id": 11693,
+        "variant_title": "M",
+        "variant": [
+          {
+            "option": "size",
+            "value": "M"
+          }
+        ],
         "quantity": 1,
-        "product": null,
-        "priceData": {
-          "id": "004b5ec6-edb8-4004-8d34-9e7769a91b46",
-          "unitPrice": "200.00",
-          "tax": "12.00",
+        "price_data": {
+          "unit_price": 1744.65,
+          "tax": 25,
           "currency": "NOK"
+        },
+        "shipping": {
+          "id": "e42e32d5-3b76-41ac-b95f-2e6655d2af76",
+          "name": "Standard",
+          "description": "Standard shipping",
+          "price": {
+            "amount": 290.77,
+            "currencyCode": "NOK"
+          }
         }
       }
-    ]
+    ],
+    "total_amount": 1744.65,
+    "currency": "NOK",
+    "available_shipping_countries": ["NO"]
   },
-  "billing_address": null,
-  "shipping_address": {
-    "id": "12f13194-0501-47c3-ab67-1c980f5a8a4b",
-    "first_name": "John",
-    "last_name": "Johnson",
+  "billing_address": {
+    "id": "c920b1c5-a975-410d-beb0-d23bc13a9e3c",
+    "first_name": "Test",
+    "last_name": "User",
     "phone_code": null,
     "phone": null,
     "company": null,
-    "address1": null,
+    "address1": "Test Address",
     "address2": null,
-    "city": null,
+    "city": "Test City",
     "province": null,
     "province_code": null,
     "country": null,
-    "country_code": null,
-    "zip": null
-  }
+    "country_code": "NO",
+    "zip": "0672"
+  },
+  "shipping_address": {
+    "id": "b0858b5a-3a06-45db-a5fe-21a94d9caf61",
+    "first_name": "Test",
+    "last_name": "User",
+    "phone_code": null,
+    "phone": null,
+    "company": null,
+    "address1": "Test Address",
+    "address2": null,
+    "city": "Test City",
+    "province": null,
+    "province_code": null,
+    "country": null,
+    "country_code": "NO",
+    "zip": "0672"
+  },
+  "total_amount_shipping": 290.77
 }
 ```
 
