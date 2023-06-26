@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Getting Started",
+    "description": "Getting Started",
+    "to": "/universal-integration/getting-started"
+  },
+  {
+    "title": "Authentication",
+    "description": "Authentication",
+    "to": "/universal-integration/authentication"
+  },
+  {
+    "title": "API Reference",
+    "description": "API Reference",
+    "to": "/universal-integration/api-reference"
+  },
+  {
+    "title": "Webhooks",
+    "description": "Webhooks",
+    "to": "/universal-integration/webhooks"
+  },
+  {
+    "title": "FAQ",
+    "description": "FAQ",
+    "to": "/universal-integration/faq"
+  },
+  {
+    "title": "Release Notes",
+    "description": "Release Notes",
+    "to": "/universal-integration/release-notes"
+  }
+]

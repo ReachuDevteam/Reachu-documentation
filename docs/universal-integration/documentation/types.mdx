@@ -1,0 +1,142 @@
+---
+title: Types
+sidebar_position: 5
+---
+
+# Types
+
+## Product types
+
+```js
+type Product = {
+  id: number,
+  title: string,
+  description: string,
+  sku: string,
+  quantity: number,
+  optionsEnabled: boolean,
+  options: ProductOption[],
+  variants: ProductVariant[],
+  price: {
+    amount: string,
+    currencyCode: string,
+  },
+  images: {
+    url: string,
+    order: number,
+  }[],
+};
+
+type ProductOption = {
+  id: number,
+  deletedAt: string,
+  name: string,
+  order: number,
+  values: string,
+};
+
+type ProductVariant = {
+  barcode: string,
+  deletedAt: string,
+  id: number,
+  originId: string,
+  originalPrice: { amount: string, currencyCode: string },
+  price: string,
+  quantity: number,
+  sku: string,
+  title: string,
+};
+```
+
+## Cart types
+
+```js
+interface Cart {
+  cart_id: string;
+  customer_session_id: string;
+  shippingCountry: string;
+  total_amount: number;
+  currency: string;
+  available_shipping_countries: string[];
+  line_items: {
+    product_id: number,
+    product_title: string,
+    supplier: string,
+    quantity: number,
+    price_data: {
+      unit_price: number,
+      tax: number,
+      currency: string,
+    },
+    variant_id: number | null | undefined,
+    variant_title: string | null,
+    variant: {
+      option: string,
+      value: string,
+    }[],
+    product_available_shippings: {
+      id: string,
+      name: string,
+      description: string,
+      countryCode: string,
+      price: {
+        amount: number,
+        currencyCode: string,
+      },
+    },
+    shipping: {
+      id: string,
+      name: string,
+      description: string,
+      price: {
+        amount: number,
+        currencyCode: string,
+      },
+    },
+  }[];
+}
+```
+
+## Checkout types
+
+```js
+interface Checkout {
+  id: string;
+  status: status;
+  total_price: number;
+  total_tax: number;
+  total_line_items_price: number;
+  total_amount_shipping: number;
+  deletedAt: string;
+  success_url: string;
+  cancel_url: string;
+  payment_method: string;
+  email: string;
+  checkout_url: string;
+  createdAt: string;
+  updatedAt: string;
+  cart: Cart;
+  availablePaymentMethods: {
+    name: string,
+  }[];
+  shipping_address: Address;
+  billing_address: Address;
+}
+
+interface Address {
+  id: string;
+  first_name: string;
+  last_name: string;
+  zip: string;
+  city: string;
+  phone_code: string;
+  phone: number;
+  company: string;
+  address1: string;
+  address2: string;
+  province: string;
+  province_code: string;
+  country: string;
+  country_code: string;
+}
+```
