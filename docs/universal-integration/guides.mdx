@@ -5,11 +5,11 @@ slug: /
 
 # Overview
 
-The Reachu Universal Integration allows you to import products from your ecommerce system and add them to the Reachu platform.
+The Reachu Universal Integration allows you to import products from your
+ecommerce system and add them to the Reachu platform.
 
-:::info
-It's important to note that this solution is in beta mode and may require support from the Reachu development team.
-:::
+:::info It's important to note that this solution is in beta mode and may
+require support from the Reachu development team. :::
 
 It's based on Reachu's API and provides the ability to retrieve products and
 collections from your Reachu account, add products to a cart, payments and
@@ -21,18 +21,38 @@ If you encounter difficulties, have other questions or feedback please reach out
 to us at [support@reachu.io](support@reachu.io).
 
 ## These are the requirements to be able to integrate with Reachu:
+
 ### 1. Available Restful API
-In order to integrate your system with our service, it should possess an accessible Restful API (or a similar system). This API is integral for us to access the required ecommerce data and synchronize it with our system.
+
+In order to integrate your system with our service, it should possess an
+accessible Restful API (or a similar system). This API is integral for us to
+access the required ecommerce data and synchronize it with our system.
+
 ### 2. Access to Essential Data
-Integration requires access to essential data from the ecommerce platform. This includes product information such as the name, description, price, SKU, images, and stock levels. Access to order information data is also required.
+
+Integration requires access to essential data from the ecommerce platform. This
+includes product information such as the name, description, price, SKU, images,
+and stock levels. Access to order information data is also required.
+
 ### 3. Ability to Write Data
-Our system not only needs to read data from your system, but it should also have the capability to write data back to it. This ability is necessary for updating inventory levels, marking an order as shipped, and other similar tasks.
-### 4. Webhooks 
-For real-time synchronization, it is ideal if the ecommerce system supports webhooks. This allows the ecommerce platform to send data to our system each time a relevant event occurs, such as a stock change or product information updates. In the absence of webhooks, our system should be able to perform polling i.e., making regular requests to the API to check for any changes.
+
+Our system not only needs to read data from your system, but it should also have
+the capability to write data back to it. This ability is necessary for updating
+inventory levels, marking an order as shipped, and other similar tasks.
+
+### 4. Webhooks
+
+For real-time synchronization, it is ideal if the ecommerce system supports
+webhooks. This allows the ecommerce platform to send data to our system each
+time a relevant event occurs, such as a stock change or product information
+updates. In the absence of webhooks, our system should be able to perform
+polling i.e., making regular requests to the API to check for any changes.
+
 ### 5. Authentication
-your system should support authentication. This is necessary for our system to access the data from the ecommerce platform. The authentication method can be either OAuth or API keys.
 
-
+your system should support authentication. This is necessary for our system to
+access the data from the ecommerce platform. The authentication method can be
+either OAuth or API keys.
 
 import GuidesSection from '@site/src/components/GuidesSection';
 import elements from './structure.json';
