@@ -48,6 +48,7 @@ const SECTIONS = [
   defineSection('shopify'),
   defineSection('woocommerce'),
   defineSection('wordpress'),
+  defineSection('universal-integration'),
 ];
 
 const resourcesHTML = fs.readFileSync('./src/snippets/resources.html', 'utf-8');
@@ -164,6 +165,10 @@ const config = {
             to: '/api/',
           },
           {
+            label: 'Universal Integration',
+            to: 'universal-integration',
+          },
+          {
             label: 'Integrations',
             type: 'dropdown',
             className: 'dyte-dropdown resources-dropdown',
@@ -175,21 +180,17 @@ const config = {
               },
             ],
           },
-          /*{
-            label: 'FAQ',
-            to: '/faq',
-          },*/
-
           {
             type: 'search',
             position: 'right',
           },
-          /*{
+          {
             label: 'Book a demo',
-            href: 'https://dyte.io/schedule-demo',
+            href: 'https://reachu.typeform.com/to/OgqORjgM',
             position: 'right',
             className: 'navbar-book-demo',
           },
+          /*
           {
             label: 'Sign Up',
             href: 'https://dev.dyte.io/register',

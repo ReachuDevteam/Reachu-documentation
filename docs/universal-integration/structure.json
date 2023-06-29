@@ -1,0 +1,27 @@
+[
+  {
+    "title": "Getting Started",
+    "description": "Getting Started",
+    "to": "/universal-integration/getting-started"
+  },
+  {
+    "title": "Requirements",
+    "description": "Requirements",
+    "to": "/universal-integration/requirements"
+  },
+  {
+    "title": "Webhooks",
+    "description": "Webhooks",
+    "to": "/universal-integration/webhooks"
+  },
+  {
+    "title": "FAQ",
+    "description": "FAQ",
+    "to": "/universal-integration/faq"
+  },
+  {
+    "title": "Release Notes",
+    "description": "Release Notes",
+    "to": "/universal-integration/release-notes"
+  }
+]
