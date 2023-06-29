@@ -5,14 +5,9 @@
     "to": "/universal-integration/getting-started"
   },
   {
-    "title": "Authentication",
-    "description": "Authentication",
-    "to": "/universal-integration/authentication"
-  },
-  {
-    "title": "API Reference",
-    "description": "API Reference",
-    "to": "/universal-integration/api-reference"
+    "title": "Requirements",
+    "description": "Requirements",
+    "to": "/universal-integration/requirements"
   },
   {
     "title": "Webhooks",
