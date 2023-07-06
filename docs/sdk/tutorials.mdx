@@ -366,6 +366,167 @@ On the DisplayProducts.jsx file:
 ...
 ```
 
+### Handle a product with variants
+
+Let's go through an example. We have a piece of clothing that have different
+sizes and colors. If a product has variants you will have to pay attention to
+two properties, options and variants.
+
+```json
+options: [
+    {
+        "id": 152,
+        "name": "Size",
+        "order": 1,
+        "values": "S,M,L"
+    },
+    {
+        "id": 153,
+        "name": "Color",
+        "order": 2,
+        "values": "Black,White"
+    }
+]
+```
+
+From options you can display a selector for the customer to can choose from:
+
+```js
+{
+  product.options.map((option) => (
+    <div>
+      <label>{option.name}</label>
+      <select onChange={(e) => handleChange(option.name, e.target.value)}>
+        <option value="">Select an option</option>
+        {option.values.split(',').map((value) => (
+          <option key={value} value={value}>
+            {value}
+          </option>
+        ))}
+      </select>
+    </div>
+  ));
+}
+```
+
+Next, we add the select onChange handler.
+
+```js
+const [variations, setVariations] = useState({});
+
+const handleChange = (option, value) => {
+  setVariations((prevVariations) => ({
+    ...prevVariations,
+    [option]: value,
+  }));
+};
+```
+
+Once all options are selected by the user, the variations variable should look
+somthething like this:
+
+```json
+{
+  "Size": "S",
+  "Color": "White"
+}
+```
+
+Now that we have the options combinations we need to get the selected variation.
+Let's take a look to the variants field, it is an array:
+
+```json
+variants: [
+  {
+    "id": 3522,
+    "barcode": "434322432",
+    "originalPrice": {
+      "amount": 100.00,
+      "baseAmount": null,
+      "currencyCode": "NOK"
+    },
+    "price": "407.09",
+    "quantity": 25,
+    "sku": "S-Black",
+    "title": "S-Black"
+  },
+  {
+    "id": 3523,
+    "barcode": "432432412",
+    "originalPrice": {
+      "amount": 100.00,
+      "baseAmount": null,
+      "currencyCode": "NOK"
+    },
+    "price": "100.00",
+    "quantity": 40,
+    "sku": "S-White",
+    "title": "S-White"
+  },
+  ...
+]
+```
+
+The key parameter to look for is the title, as it has the option combination for
+that particular variant. We will have to go through each variation and match the
+title with the variants selected by the final user in the frontend.
+
+```js
+const selectedVariantTitle = product.options
+  .map((option) => variations[option.name])
+  .join('-'); //
+
+const selectedVariant = product.variants.find(
+  (variant) => variant.title === selectedVariantTitle
+); // the value here will be an object with the selected variant
+```
+
+Using our example, the values of each variable will be:
+
+```js
+selectedVariantTitle = 'S-White';
+```
+
+```js
+selectedVariant = {
+  id: 3523,
+  barcode: '432432412',
+  originalPrice: {
+    amount: 100.0,
+    baseAmount: null,
+    currencyCode: 'NOK',
+  },
+  price: '100.00',
+  quantity: 40,
+  sku: 'S-White',
+  title: 'S-White',
+};
+```
+
+This way we have now access to the variant id and when we add a product to the
+cart, we must include it:
+
+```js
+const handleAddToCart = async (CART_ID, PRODUCT_ID, selectedVariant) => {
+  const sdk = getSDK();
+  const response = await sdk.shopCart.cartItem.create({
+    cartId: CART_ID,
+    line_items: [
+      {
+        product_id: PRODUCT_ID,
+        quantity: 1,
+        variant_id: selectedVariant.id, // add the variant id here
+        price_data: {
+          unit_price: Number(selectedVariant.originalPrice.amount), // use the variants info
+          currency: selectedVariant.originalPrice.currencyCode, // use the variants info
+          tax: 25,
+        },
+      },
+    ],
+  });
+};
+```
+
 ### Update quantity or remove products
 
 We will handle both directly with the quantity, adding an add and a remove
