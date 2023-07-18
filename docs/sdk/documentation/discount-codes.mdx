@@ -5,14 +5,21 @@ sidebar_position: 5
 
 # Discount Codes
 
-The implementation of discount codes into a shopping cart is a great way to promote customer purchase behavior and track marketing effectiveness.  there are several new fields to facilitate the application of discount codes to individual items and to the cart total.
+The implementation of discount codes into a shopping cart is a great way to
+promote customer purchase behavior and track marketing effectiveness. there are
+several new fields to facilitate the application of discount codes to individual
+items and to the cart total.
 
 :::info
 
 :::
 
 ### 1. Order-Level Discounts
-Order-level discounts are applied to the total of the order. For example, a discount code may offer a 10% discount on the total purchase. To implement this, we have added the total_discount field to the cart object. This field reflects the total amount discounted from the entire order.
+
+Order-level discounts are applied to the total of the order. For example, a
+discount code may offer a 10% discount on the total purchase. To implement this,
+we have added the total_discount field to the cart object. This field reflects
+the total amount discounted from the entire order.
 
 ```json
 "cart": {
@@ -24,7 +31,12 @@ Order-level discounts are applied to the total of the order. For example, a disc
 ```
 
 ### 2. Item-Level Discounts
-Item-level discounts are applied to individual items within the cart. For example, a discount code might provide a 15% discount on a specific item. To handle this, we have included the discounted_price field within the price_data object of each line item in the cart. This field indicates the price of the item after the discount is applied.
+
+Item-level discounts are applied to individual items within the cart. For
+example, a discount code might provide a 15% discount on a specific item. To
+handle this, we have included the discounted_price field within the price_data
+object of each line item in the cart. This field indicates the price of the item
+after the discount is applied.
 
 Here's a sample of how it would look:
 
@@ -46,65 +58,80 @@ Here's a sample of how it would look:
 
 ## Fetching Available Discount Codes
 
-This section details how to fetch and handle the available discount codes for a user. Use the discounts() method provided by the discountModule to retrieve an array of available discounts.
+This section details how to fetch and handle the available discount codes for a
+user. Use the discounts() method provided by the discountModule to retrieve an
+array of available discounts.
 
-The method returns a promise that resolves to an array of discount objects. Each object represents an available discount and contains information such as the discount code, the discount percentage, and the start and end dates of the discount.
+The method returns a promise that resolves to an array of discount objects. Each
+object represents an available discount and contains information such as the
+discount code, the discount percentage, and the start and end dates of the
+discount.
 
 Here is an example of how to use this method:
 
 ```javascript
 try {
-    const availableDiscounts = await discountModule.discount.discounts();
-    // Handle the availableDiscounts array as required, 
-    // for example, render the discounts in the frontend.
+  const availableDiscounts = await discountModule.discount.discounts();
+  // Handle the availableDiscounts array as required,
+  // for example, render the discounts in the frontend.
 } catch (error) {
-    // Log or handle any error that occurs while fetching the discounts.
-    console.error('Error getting available discount codes:', error.message);
+  // Log or handle any error that occurs while fetching the discounts.
+  console.error('Error getting available discount codes:', error.message);
 }
-
-
-
 ```
+
 ## Verifying a Discount Code
-This section outlines how to validate a discount code using the verifyDiscount() method provided by the SDK.
 
-This method is used to check whether a provided discount code is valid. It takes an object with a code property as argument, which should be the discount code you want to verify.
+This section outlines how to validate a discount code using the verifyDiscount()
+method provided by the SDK.
 
-The method returns a promise that resolves to an object, which includes a valid property indicating whether the discount code is valid.
+This method is used to check whether a provided discount code is valid. It takes
+an object with a code property as argument, which should be the discount code
+you want to verify.
+
+The method returns a promise that resolves to an object, which includes a valid
+property indicating whether the discount code is valid.
 
 Here is an example of how to use this method:
-  
-  ```javascript
-  try {
-    const discountCodeToVerify = { code: 'DISCOUNT_CODE' }; // replace with your discount code
-    const verificationResult = await returnSdk().discount.discount.verifyDiscount(discountCodeToVerify);
-    // If the discount code is valid, verificationResult.valid will be true
+
+```javascript
+try {
+  const discountCodeToVerify = { code: 'DISCOUNT_CODE' }; // replace with your discount code
+  const verificationResult = await returnSdk().discount.discount.verifyDiscount(
+    discountCodeToVerify
+  );
+  // If the discount code is valid, verificationResult.valid will be true
 } catch (error) {
-    // Log or handle any error that occurs while verifying the discount code.
-    console.error('Error verifying discount code:', error.message);
+  // Log or handle any error that occurs while verifying the discount code.
+  console.error('Error verifying discount code:', error.message);
 }
-  
-  ```
+```
 
 ## Applying a Discount Code
-This section outlines how to apply a discount code using the applyDiscount() method provided by the SDK.
-This method is used to apply a provided discount code to a shopping cart. It accepts an object with two properties: code (the discount code) and cartId (the ID of the cart to apply the discount to).
 
-The method returns a promise that resolves to an object, which includes an executed property that indicates whether the discount code was successfully applied.
+This section outlines how to apply a discount code using the applyDiscount()
+method provided by the SDK. This method is used to apply a provided discount
+code to a shopping cart. It accepts an object with two properties: code (the
+discount code) and cartId (the ID of the cart to apply the discount to).
+
+The method returns a promise that resolves to an object, which includes an
+executed property that indicates whether the discount code was successfully
+applied.
 
 Here is an example of how to use this method:
-  
-  ```javascript
-  try {
-    const discountToApply = { 
-        code: 'DISCOUNT_CODE', // replace with your discount code
-        cartId: 'CART_ID' // replace with your cart ID
-    }; 
-    const applyResult = await returnSdk().discount.discount.applyDiscount(discountToApply);
-    // If the discount code is successfully applied, applyResult.executed will be true
-} catch (error) {
-    // Log or handle any error that occurs while applying the discount code.
-    console.error('Error applying discount code:', error.message);
-}
 
-  ```
+```javascript
+try {
+  const discountToApply = {
+    code: 'DISCOUNT_CODE', // replace with your discount code
+    cartId: 'CART_ID', // replace with your cart ID
+  };
+  const applyResult = await returnSdk().discount.discount.applyDiscount(
+    discountToApply
+  );
+  // If the discount code is successfully applied, applyResult.executed will be true
+} catch (error) {
+  // Log or handle any error that occurs while applying the discount code.
+  console.error('Error applying discount code:', error.message);
+}
+```
