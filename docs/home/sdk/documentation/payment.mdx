@@ -1,0 +1,295 @@
+---
+title: Payment
+sidebar_position: 4
+---
+
+# Payment
+
+## Initiate payment with Stripe
+
+You will not be able to proceed to payment if you have not added the following
+information to the checkout:
+
+- personal information (name, email)
+- shipping information
+- billing information
+- payment method
+- shipping rate for each product
+
+Once the customer has selected the payment method and completed the required
+personal and shipping information, the next step is to proceed with the payment.
+There are two return URLs parameters you should add:
+
+- "success_url": where to redirect the final customer after the payment is
+  fulfilled on the checkout.
+- "cancel_url": where to redirect the final customer if the checkout is not
+  completed or the go back button is pressed.
+
+In case no return URLs are provided, Reachu creates as default its own success
+and cancels URL where the final customer is redirected and shown the
+corresponding information.
+
+The data you send when creating the Stripe payment will depend on the fields
+that were previosly filled in any previous steps, but in this example we will
+include all, assuming the checkout has not been updated with the information.
+
+```js
+async function initiatePaymentWithStripe(CHECKOUT_ID) => {
+  const sdk = getSDK();
+  const body = {
+    success_url: "https://yourdomain.com?success=true", // example success url
+    cancel_url: "https://yourdomain.com?canceled=true", // example cancelled url
+    payment_method: "Stripe",
+    email: "example@email.com"
+    shipping_address: Address;
+    billing_address: Address;
+  };
+  const response = await sdk.shopCart.payment.create(CHECKOUT_ID, body);
+  if (response) window.location.href = response.checkout_url;
+}
+```
+
+As a response, you get the checkout URL. You should redirect the user to this
+url and allow them to complete the payment. An order id is also created with
+pending status.
+
+```json
+{
+  "checkout_url": "https://checkout.stripe.com/pay/cs_test_b1VMRSqjnNbLRfT58rDbfId4annlCVwHy8caxZJcquValgOVZIO8MZ2H99#fidkdWxOYHwnPyd1blpxYHZxWjA0SVNSbjRDa3N8bkBQRnFSQ3Y9c0sxYm1mRnRtUWlSPHV2QjB0djJ9VGpDdUx0TEt%2FRjFsQzQwRDdmRmY0XWhMVTBocTxLfGBycjddU39VNDFWN1VdXHBdNTVGQGJoc2o1QicpJ2N3amhWYHdzYHcnP3F3cGApJ2lkfGpwcVF8dWAnPydocGlxbFpscWBoJyknYGtkZ2lgVWlkZmBtamlhYHd2Jz9xd3BgeCUl",
+  "order_id": 3232
+}
+```
+
+## Initiate payment with Klarna
+
+```js
+async function initiatePaymentWithKlarna(CART_ID) => {
+  const sdk = getSDK();
+  const body = {
+    email: "email@test.com",
+    country_code: "NO",
+    href: `https://www.reachu.io/`, //the url you want to be redirected after the payment
+  };
+
+  const klarna = await sdk.klarna.payment.init(body, CART_ID);
+
+  return klarna;
+}
+```
+
+As a response you will receive a snippet to display the Klarna solution on your
+store. If you need assistance implementing this solution, in our
+[tutorial section](/sdk/tutorials/) we show you an example.
+
+```json
+{
+  "order_id": "87987917-bf23-4092-adbb-702916f45097",
+  "status": "checkout_incomplete",
+  "purchase_country": "no",
+  "purchase_currency": "EUR",
+  "locale": "nb-NO",
+  "billing_address": {
+    "country": "no"
+  },
+  "customer": {},
+  "shipping_address": {
+    "country": "no"
+  },
+  "order_amount": 20000,
+  "order_tax_amount": 4000,
+  "order_lines": [
+    {
+      "type": "physical",
+      "name": "T-shirt",
+      "quantity": 1,
+      "unit_price": 10000,
+      "tax_rate": 2500,
+      "total_amount": 10000,
+      "total_discount_amount": 0,
+      "total_tax_amount": 2000,
+      "merchant_data": "{\"productId\":5797}"
+    },
+    {
+      "type": "physical",
+      "name": "T-shirt",
+      "quantity": 1,
+      "unit_price": 10000,
+      "tax_rate": 2500,
+      "total_amount": 10000,
+      "total_discount_amount": 0,
+      "total_tax_amount": 2000,
+      "merchant_data": "{\"productId\":5797}"
+    }
+  ],
+  "merchant_urls": {
+    "terms": "https://outshifter.com/terms",
+    "checkout": "https://www.reachu.io/?order_id={checkout.order.id}",
+    "confirmation": "https://www.reachu.io/?order_id={checkout.order.id}&payment_processor=KLARNA",
+    "push": "https://api-qa.outshifter.com/klarna/webhooks?order_id={checkout.order.id}"
+  },
+  "html_snippet": "<div id=\"klarna-checkout-container\" style=\"overflow: hidden;\">\n  <div id=\"klarna-unsupported-page\">\n  <style type=\"text/css\">\n  @-webkit-keyframes klarnaFadeIn{from{opacity:0}to{opacity:1}}@-moz-keyframes klarnaFadeIn{from{opacity:0}to{opacity:1}}@keyframes klarnaFadeIn{from{opacity:0}to{opacity:1}}#klarna-unsupported-page{opacity:0;opacity:1\\9;-webkit-animation:klarnaFadeIn ease-in 1;-moz-animation:klarnaFadeIn ease-in 1;animation:klarnaFadeIn ease-in 1;-webkit-animation-fill-mode:forwards;-moz-animation-fill-mode:forwards;animation-fill-mode:forwards;-webkit-animation-duration:.1s;-moz-animation-duration:.1s;animation-duration:.1s;-webkit-animation-delay:5s;-moz-animation-delay:5s;animation-delay:5s;text-align:center;padding-top:64px}#klarna-unsupported-page .heading{font-family: \"Klarna Headline\", Helvetica, Arial, sans-serif;color: rgb(23, 23, 23);font-size: 36px;letter-spacing: -0.2px;-webkit-font-smoothing: antialiased;}#klarna-unsupported-page .subheading{font-family: \"Klarna Text\", \"Klarna Sans\", Helvetica, Arial, sans-serif;color: rgb(23, 23, 23);-webkit-font-smoothing: antialiased;line-height: 28px;font-weight: 400;font-size: 19px;max-width: 640px;margin: 20px auto;}#klarna-unsupported-page .reload {cursor: pointer;outline: none;-webkit-tap-highlight-color: rgba(255, 255, 255, 0);border-width: 1px;background-color: rgb(38, 37, 37);border-color: rgb(38, 37, 37);padding: 15px 24px;margin-top: 15px;color: rgb(255, 255, 255);font-family: \"Klarna Text\", \"Klarna Sans\", Helvetica, Arial, sans-serif;font-weight: 500;text-rendering: geometricprecision;font-size: 100%;}\n  </style>\n  <h1 class=\"heading\">Something went wrong</h1>\n  <p class=\"subheading\">Sorry for any inconvenience, please try reloading the checkout page or try again later.</p>\n  <p class=\"subheading\">If the problem persists it maybe be because you are using an old version of the web browser which is not safe nor compatible with modern web sites. For a smoother checkout experience, please install a newer browser.</p>\n  <button class=\"reload\" onclick=\"reloadCheckoutHandler && reloadCheckoutHandler()\">Reload checkout</button>\n  </div>\n  <script id=\"klarna-checkout-context\" type=\"text/javascript\">\n  /* <![CDATA[ */\n  var reloadCheckoutHandler;\n  (function(w,k,i,d,n,c,l){\n    w[k]=w[k]||function(){(w[k].q=w[k].q||[]).push(arguments)};\n    l=w[k].config={\n      container:w.document.getElementById(i),\n      ORDER_URL:'https://js.playground.klarna.com/eu/kco/checkout/orders/87987917-bf23-4092-adbb-702916f45097',\n      AUTH_HEADER:'KlarnaCheckout lm5ad1cpgk3123l6i5zs',\n      IS_CANARY:false,\n      IS_IN_CLIENT_ROLLOUT:false,\n      LOCALE:'nb-NO',\n      ORDER_STATUS:'checkout_incomplete',\n      MERCHANT_NAME:'Your business name',\n      GUI_OPTIONS:[],\n      ALLOW_SEPARATE_SHIPPING_ADDRESS:true,\n      PURCHASE_COUNTRY:'nor',\n      PURCHASE_CURRENCY:'EUR',\n      TESTDRIVE:true,\n      BOOTSTRAP_SRC:'https://js.playground.klarna.com/kcoc/230302-220a3b4/checkout.bootstrap.js',\n      FE_EVENTS_DISABLED:'false',      CLIENT_EVENT_HOST:'https://eu.playground.klarnaevt.com'\n    };\n    n=d.createElement('script');\n    c=d.getElementById(i);\n    n.async=!0;\n    n.src=l.BOOTSTRAP_SRC;\n    c.appendChild(n);\n    try{\n      ((w.Image && (new w.Image))||(d.createElement && d.createElement('img'))||{}).src =\n        l.CLIENT_EVENT_HOST + '/v1/checkout/snippet/load' +\n        '?sid=' + l.ORDER_URL.split('/').slice(-1) +\n        '&order_status=' + w.encodeURIComponent(l.ORDER_STATUS) +\n        '&timestamp=' + (new Date).getTime();\n    }catch(e){}\n    reloadCheckoutHandler = function () {\n        try{\n            ((w.Image && (new w.Image))||(d.createElement && d.createElement('img'))||{}).src =\n            l.CLIENT_EVENT_HOST+'/v1/checkout/snippet/reload?sid='+l.ORDER_URL.split('/').slice(-1)+\n            '&order_status='+w.encodeURIComponent(l.ORDER_STATUS)+'&timestamp='+(new Date()).getTime();\n            window.location.reload();\n        }catch(e){}\n    }\n  })(this,'_klarnaCheckout','klarna-checkout-container',document);\n  /* ]]> */\n  </script>\n  <noscript>\nPlease <a href=\"http://enable-javascript.com\">enable JavaScript</a>.\n  </noscript>\n</div>",
+  "started_at": "2023-03-08T09:49:34Z",
+  "last_modified_at": "2023-03-08T09:49:34Z",
+  "options": {
+    "allow_separate_shipping_address": true,
+    "date_of_birth_mandatory": false,
+    "require_validate_callback_success": false,
+    "phone_mandatory": true
+  },
+  "external_payment_methods": [],
+  "external_checkouts": [],
+  "shipping_options": [
+    {
+      "id": "6532eda8-cc5e-405b-b13a-4a6f63549d3a 6532eda8-cc5e-405b-b13a-4a6f63549d3a",
+      "name": "Flat rate price to NO",
+      "price": 10000,
+      "tax_amount": 2000,
+      "tax_rate": 2500,
+      "preselected": true,
+      "delivery_details": {}
+    }
+  ],
+  "merchant_data": "{\"sellerId\":\"726\",\"flatRates\":[{\"service_name\":\"6532eda8-cc5e-405b-b13a-4a6f63549d3a\",\"service_code\":\"\",\"total_price\":\"6532eda8-cc5e-405b-b13a-4a6f63549d3a\"},{\"service_name\":\"6532eda8-cc5e-405b-b13a-4a6f63549d3a\",\"service_code\":\"\",\"total_price\":\"6532eda8-cc5e-405b-b13a-4a6f63549d3a\"}]}",
+  "selected_shipping_option": {
+    "id": "6532eda8-cc5e-405b-b13a-4a6f63549d3a 6532eda8-cc5e-405b-b13a-4a6f63549d3a",
+    "name": "Flat rate price to NO",
+    "price": 10000,
+    "tax_amount": 2000,
+    "tax_rate": 2500,
+    "preselected": true,
+    "delivery_details": {}
+  }
+}
+```
+
+### Fetch order success with Klarna
+
+Once the customer completes the payment, you will be redirected to the href url
+you provided before, including in the params the order_id. You can now display a
+new Klarna snippet with the order confirmation information.
+
+```js
+const data = await getSDK().klarna.order.getById(ORDER_ID);
+```
+
+Below you may see the response. See our tutorial to learn the recommended way to
+display the snippet provided by Klarna.
+
+```json
+{
+  "order_id": "d599ef23-9d9b-4b4c-bb50-7896910dc0f6",
+  "status": "checkout_complete",
+  "purchase_country": "no",
+  "purchase_currency": "EUR",
+  "locale": "nb-NO",
+  "billing_address": {
+    "given_name": "John",
+    "family_name": "Doe",
+    "email": "johndoe@gmail.com",
+    "street_address": "Venåsvegen 45",
+    "postal_code": "0672",
+    "city": "Oslo",
+    "phone": "+47 459 66 344",
+    "country": "no"
+  },
+  "customer": {},
+  "shipping_address": {
+    "given_name": "John",
+    "family_name": "Doe",
+    "email": "johndoe@gmail.com",
+    "street_address": "Venåsvegen 45",
+    "postal_code": "0672",
+    "city": "Oslo",
+    "phone": "+47 459 66 344",
+    "country": "no"
+  },
+  "order_amount": 77028,
+  "order_tax_amount": 15405,
+  "order_lines": [
+    {
+      "type": "physical",
+      "name": "Top",
+      "quantity": 1,
+      "unit_price": 33300,
+      "tax_rate": 2500,
+      "total_amount": 33300,
+      "total_discount_amount": 0,
+      "total_tax_amount": 6660,
+      "merchant_data": "{\"productId\":5802}"
+    },
+    {
+      "type": "physical",
+      "name": "Shoes",
+      "quantity": 1,
+      "unit_price": 15000,
+      "tax_rate": 2500,
+      "total_amount": 15000,
+      "total_discount_amount": 0,
+      "total_tax_amount": 3000,
+      "merchant_data": "{\"productId\":5801}"
+    },
+    {
+      "type": "physical",
+      "name": "Polo flowers",
+      "quantity": 1,
+      "unit_price": 13728,
+      "tax_rate": 2500,
+      "total_amount": 13728,
+      "total_discount_amount": 0,
+      "total_tax_amount": 2745,
+      "merchant_data": "{\"productId\":5778}"
+    },
+    {
+      "type": "shipping_fee",
+      "reference": "6532eda8-cc5e-405b-b13a-4a6f63549d3a 6532eda8-cc5e-405b-b13a-4a6f63549d3a 6532eda8-cc5e-405b-b13a-4a6f63549d3a",
+      "name": "Flat rate price to NO",
+      "quantity": 1,
+      "unit_price": 15000,
+      "tax_rate": 2500,
+      "total_amount": 15000,
+      "total_discount_amount": 0,
+      "total_tax_amount": 3000
+    }
+  ],
+  "merchant_urls": {
+    "terms": "https://outshifter.com/terms",
+    "checkout": "http://localhost:3001/?order_id={checkout.order.id}",
+    "confirmation": "http://localhost:3001/?order_id={checkout.order.id}&payment_processor=KLARNA",
+    "push": "https://api-qa.reachu.io/klarna/webhooks?order_id={checkout.order.id}"
+  },
+  "html_snippet": "<div id=\"klarna-checkout-container\" style=\"overflow: hidden;\">\n  <div id=\"klarna-unsupported-page\">\n  <style type=\"text/css\">\n  @-webkit-keyframes klarnaFadeIn{from{opacity:0}to{opacity:1}}@-moz-keyframes klarnaFadeIn{from{opacity:0}to{opacity:1}}@keyframes klarnaFadeIn{from{opacity:0}to{opacity:1}}#klarna-unsupported-page{opacity:0;opacity:1\\9;-webkit-animation:klarnaFadeIn ease-in 1;-moz-animation:klarnaFadeIn ease-in 1;animation:klarnaFadeIn ease-in 1;-webkit-animation-fill-mode:forwards;-moz-animation-fill-mode:forwards;animation-fill-mode:forwards;-webkit-animation-duration:.1s;-moz-animation-duration:.1s;animation-duration:.1s;-webkit-animation-delay:5s;-moz-animation-delay:5s;animation-delay:5s;text-align:center;padding-top:64px}#klarna-unsupported-page .heading{font-family: \"Klarna Headline\", Helvetica, Arial, sans-serif;color: rgb(23, 23, 23);font-size: 36px;letter-spacing: -0.2px;-webkit-font-smoothing: antialiased;}#klarna-unsupported-page .subheading{font-family: \"Klarna Text\", \"Klarna Sans\", Helvetica, Arial, sans-serif;color: rgb(23, 23, 23);-webkit-font-smoothing: antialiased;line-height: 28px;font-weight: 400;font-size: 19px;max-width: 640px;margin: 20px auto;}#klarna-unsupported-page .reload {cursor: pointer;outline: none;-webkit-tap-highlight-color: rgba(255, 255, 255, 0);border-width: 1px;background-color: rgb(38, 37, 37);border-color: rgb(38, 37, 37);padding: 15px 24px;margin-top: 15px;color: rgb(255, 255, 255);font-family: \"Klarna Text\", \"Klarna Sans\", Helvetica, Arial, sans-serif;font-weight: 500;text-rendering: geometricprecision;font-size: 100%;}\n  </style>\n  <h1 class=\"heading\">Something went wrong</h1>\n  <p class=\"subheading\">Sorry for any inconvenience, please try reloading the checkout page or try again later.</p>\n  <p class=\"subheading\">If the problem persists it maybe be because you are using an old version of the web browser which is not safe nor compatible with modern web sites. For a smoother checkout experience, please install a newer browser.</p>\n  <button class=\"reload\" onclick=\"reloadCheckoutHandler && reloadCheckoutHandler()\">Reload checkout</button>\n  </div>\n  <script id=\"klarna-checkout-context\" type=\"text/javascript\">\n  /* <![CDATA[ */\n  var reloadCheckoutHandler;\n  (function(w,k,i,d,n,c,l){\n    w[k]=w[k]||function(){(w[k].q=w[k].q||[]).push(arguments)};\n    l=w[k].config={\n      container:w.document.getElementById(i),\n      ORDER_URL:'https://js.playground.klarna.com/eu/kco/checkout/orders/d599ef23-9d9b-4b4c-bb50-7896910dc0f6',\n      AUTH_HEADER:'KlarnaCheckout stjwugae7eh3qnacldxk',\n      IS_CANARY:false,\n      IS_IN_CLIENT_ROLLOUT:false,\n      LOCALE:'nb-NO',\n      ORDER_STATUS:'checkout_complete',\n      MERCHANT_NAME:'Your business name',\n      GUI_OPTIONS:[],\n      ALLOW_SEPARATE_SHIPPING_ADDRESS:true,\n      PURCHASE_COUNTRY:'nor',\n      PURCHASE_CURRENCY:'EUR',\n      TESTDRIVE:true,\n      BOOTSTRAP_SRC:'https://js.playground.klarna.com/kcoc/230413-cb7472c/checkout.bootstrap.js',\n      FE_EVENTS_DISABLED:'false',      CLIENT_EVENT_HOST:'https://eu.playground.klarnaevt.com'\n    };\n    n=d.createElement('script');\n    c=d.getElementById(i);\n    n.async=!0;\n    n.src=l.BOOTSTRAP_SRC;\n    c.appendChild(n);\n    try{\n      ((w.Image && (new w.Image))||(d.createElement && d.createElement('img'))||{}).src =\n        l.CLIENT_EVENT_HOST + '/v1/checkout/snippet/load' +\n        '?sid=' + l.ORDER_URL.split('/').slice(-1) +\n        '&order_status=' + w.encodeURIComponent(l.ORDER_STATUS) +\n        '&timestamp=' + (new Date).getTime();\n    }catch(e){}\n    reloadCheckoutHandler = function () {\n        try{\n            ((w.Image && (new w.Image))||(d.createElement && d.createElement('img'))||{}).src =\n            l.CLIENT_EVENT_HOST+'/v1/checkout/snippet/reload?sid='+l.ORDER_URL.split('/').slice(-1)+\n            '&order_status='+w.encodeURIComponent(l.ORDER_STATUS)+'&timestamp='+(new Date()).getTime();\n            window.location.reload();\n        }catch(e){}\n    }\n  })(this,'_klarnaCheckout','klarna-checkout-container',document);\n  /* ]]> */\n  </script>\n  <noscript>\nPlease <a href=\"http://enable-javascript.com\">enable JavaScript</a>.\n  </noscript>\n</div>",
+  "started_at": "2023-04-27T13:17:42Z",
+  "completed_at": "2023-04-27T13:18:21Z",
+  "last_modified_at": "2023-04-27T13:18:21Z",
+  "options": {
+    "allow_separate_shipping_address": true,
+    "date_of_birth_mandatory": false,
+    "require_validate_callback_success": false,
+    "phone_mandatory": true
+  },
+  "external_payment_methods": [],
+  "external_checkouts": [],
+  "shipping_options": [
+    {
+      "id": "6532eda8-cc5e-405b-b13a-4a6f63549d3a 6532eda8-cc5e-405b-b13a-4a6f63549d3a 6532eda8-cc5e-405b-b13a-4a6f63549d3a",
+      "name": "Flat rate price to NO",
+      "price": 15000,
+      "tax_amount": 3000,
+      "tax_rate": 2500,
+      "preselected": true,
+      "delivery_details": {}
+    }
+  ],
+  "merchant_data": "{\"sellerId\":\"726\",\"flatRates\":[{\"service_name\":\"6532eda8-cc5e-405b-b13a-4a6f63549d3a\",\"service_code\":\"\",\"total_price\":\"6532eda8-cc5e-405b-b13a-4a6f63549d3a\"},{\"service_name\":\"6532eda8-cc5e-405b-b13a-4a6f63549d3a\",\"service_code\":\"\",\"total_price\":\"6532eda8-cc5e-405b-b13a-4a6f63549d3a\"},{\"service_name\":\"6532eda8-cc5e-405b-b13a-4a6f63549d3a\",\"service_code\":\"\",\"total_price\":\"6532eda8-cc5e-405b-b13a-4a6f63549d3a\"}]}",
+  "payment_type_allows_increase": false,
+  "selected_shipping_option": {
+    "id": "6532eda8-cc5e-405b-b13a-4a6f63549d3a 6532eda8-cc5e-405b-b13a-4a6f63549d3a 6532eda8-cc5e-405b-b13a-4a6f63549d3a",
+    "name": "Flat rate price to NO",
+    "price": 15000,
+    "tax_amount": 3000,
+    "tax_rate": 2500,
+    "preselected": true,
+    "delivery_details": {}
+  }
+}
+```

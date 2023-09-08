@@ -1,0 +1,107 @@
+<font color="grey" size="4">
+
+Represents an individual item available for sale in Outshifter.
+
+</font>
+
+## Core Information
+
+```javascript
+type Product {
+  id: ID;
+  created_at: Date
+  updated_at: Date
+  status: ProductStatus
+}
+```
+
+#### Fields
+
+**`id (ID)`**
+
+**`created_at (Date)`**
+
+**`updated_at (Date)`**
+
+**`status (ProductStatus)`**
+
+## Commercial Information
+
+You can use it for displaying a product in your storefront.
+
+```javascript
+type Product {
+  name: String
+  description: String
+  price: ProductPrice
+  quantity: Int
+  images: [ProductImage]
+  supplier: Supplier
+  product_type: ProductType
+  options: [ProductOption]
+  variants: [ProductVariant]
+}
+```
+
+#### Fields
+
+**`name (String)`**
+
+**`description (String)`**
+
+**`price (ProductPrice)`**
+
+**`quantity (Int)`**
+
+The available stock. This field is updated each time you receive product
+information. It is an important field to validate at the moment of the purchase
+to check for possibles out of stock.
+
+**`images (ProductImage)`**
+
+**`supplier (Supplier)`**
+
+**`product_type (ProductType)`**
+
+**`options (ProductOption)`**
+
+**`variants (ProductVariant)`**
+
+## Shipping Information
+
+You may need to show shipping before a purchase. It will not always be the case.
+
+```javascript
+type Product {
+  sku: String
+  barcode: String
+  height: Float
+  length: Float
+  width: Float
+  depth: Float
+}
+```
+
+#### Fields
+
+**`sku (String)`**
+
+A stock-keeping unit (SKU) is a scannable bar code, most often seen printed on
+product labels in a retail store. The label allows vendors to automatically
+track the movement of inventory. The SKU is composed of an alphanumeric
+combination of eight-or-so characters. The characters are a code that track the
+price, product details, and the manufacturer.
+
+**`barcode (String)`**
+
+It is a method of representing data in a visual, machine-readable form. We use
+the
+[Universal Product Code (UPC)](https://en.wikipedia.org/wiki/Universal_Product_Code).
+
+**`height (Float)`**
+
+**`length (Float)`**
+
+**`width (Float)`**
+
+**`depth (Float)`**

@@ -1,0 +1,231 @@
+# **User data**
+
+An overview of the types of Outshifter user data you'll encounter.
+
+Outshifter has 3 types of users:
+
+- **Suppliers**: The suppliers. They list and ship the products.
+
+- **Channels**: The sales channels. They sell the products in their storefronts.
+
+- **Customers**: The final consumer. They buy and receive the purchased
+  products.
+
+This section shows you the type of data you should be expecting to receive.
+
+## **Supplier**
+
+```json
+{
+  "id": 367,
+  "isBusiness": true,
+  "isSupplier": true,
+  "name": "Warner Bros",
+  "avatar": "https://outshifter-uploads.s3.us-east-2.amazonaws.com/user-avatar/avatar.jpeg",
+  "warehouse": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "address": "Nydalsveien 15A",
+    "postalCode": "0418",
+    "city": "Oslo",
+    "state": "Oslo",
+    "country": "NO"
+  },
+  "return": {
+    "right": "14 days",
+    "label": "Included in package",
+    "cost": "Covered by vendor",
+    "privacyPolicy": "Supplier return policy"
+  },
+  "address": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "address": "Nydalsveien 15A",
+    "postalCode": "0418",
+    "city": "Oslo",
+    "state": "Oslo",
+    "country": "NO"
+  }
+}
+```
+
+#### **Fields**
+
+**name**: The display supplier name.
+
+**avatar**: The logo of the supplier.
+
+**warehouse**: The address where the supplier has their products stored.
+
+#### **Return Fields**
+
+**right**: Return right from the date the customer has received the product.
+Available options:
+
+- 14 days
+
+- 28 days
+
+**label**: Whether the return package is included in the package or not.
+Available options:
+
+- Included in package
+
+- Not included in package
+
+**cost**: Whether the return cost is covered by the vendor or the customer.
+Available options:
+
+- Covered by vendor
+
+- Covered by customer
+
+**privacyPolicy**: The full return policy and terms description.
+
+**address:** The address to return the items.
+
+## **Seller**
+
+```json
+{
+  "id": 478,
+  "isBusiness": false,
+  "isSupplier": false,
+  "brandName": "seller",
+  "avatar": "https://outshifter-uploads.s3.us-east-2.amazonaws.com/user-avatar/username.jpeg",
+  "coverImage": "https://outshifter-uploads.s3.us-east-2.amazonaws.com/user-avatar/username_cover.jpeg",
+  "phone": {
+    "countryCode": "+45",
+    "number": 47834983
+  },
+  "address": {
+    "address": "Langgata 25A",
+    "address2": "",
+    "postCode": "0566",
+    "state": "",
+    "country": "NO",
+    "city": "Oslo"
+  },
+  "importedQuantity": "7",
+  "ordersQuantity": "38",
+  "connectionsQuantity": "2",
+  "interests": "Beauty,Fashion,Travel"
+}
+```
+
+#### **Fields**
+
+**importedQuantity**: The quantity of products this seller has saved to its
+profile. Can be products from different suppliers.
+
+**ordersQuantity**: The total number of orders this sellers has, including all
+available channels.
+
+**connectionsQuantity**:
+
+#### **Return Fields**
+
+**right**: Return right from the date the customer has received the product.
+Available options:
+
+- 14 days
+
+- 28 days
+
+**label**: Whether the return package is included in the package or not.
+Available options:
+
+- Included in package
+
+- Not included in package
+
+**cost**: Whether the return cost is covered by the vendor or the customer.
+Available options:
+
+- Covered by vendor
+
+- Covered by customer
+
+**privacyPolicy**: The full return policy and terms description.
+
+**address:** The address to return the items.
+
+## **Seller**
+
+```json
+{
+  "id": 478,
+  "isBusiness": false,
+  "isSupplier": false,
+  "brandName": "seller",
+  "avatar": "https://outshifter-uploads.s3.us-east-2.amazonaws.com/user-avatar/username.jpeg",
+  "coverImage": "https://outshifter-uploads.s3.us-east-2.amazonaws.com/user-avatar/username_cover.jpeg",
+  "phone": {
+    "countryCode": "+45",
+    "number": 47834983
+  },
+  "address": {
+    "address": "Langgata 25A",
+    "address2": "",
+    "postCode": "0566",
+    "state": "",
+    "country": "NO",
+    "city": "Oslo"
+  },
+  "importedQuantity": "7",
+  "ordersQuantity": "38",
+  "connectionsQuantity": "2",
+  "interests": "Beauty,Fashion,Travel"
+}
+```
+
+#### **Fields**
+
+**importedQuantity**: The quantity of products this seller has saved to its
+profile. Can be products from different suppliers.
+
+**ordersQuantity**: The total number of orders this sellers has, including all
+available channels.
+
+**connectionsQuantity**: The total connections the user has. It can be with
+another seller or with suppliers.
+
+## **Customer**
+
+```json
+{
+  "id": 3992,
+  "fullName": "John Doe",
+  "email": "customer@example.com",
+  "phone": {
+    "countryCode": "+45",
+    "number": "47834983"
+  },
+  "shippingAddress": {
+    "name": "John",
+    "surname": "Doe",
+    "address": "Nydalsveien 14",
+    "city": "Oslo",
+    "postalCode": "1484",
+    "country": "NO"
+  },
+  "billingAddress": {
+    "name": "John",
+    "surname": "Doe",
+    "address": "Nydalsveien 14",
+    "city": "Oslo",
+    "postalCode": "1484",
+    "country": "NO"
+  }
+}
+```
+
+- **id**: The unique user identifier.
+
+- **email**: Used to login
+
+- **phone**: Contact phone information.
+
+- **shippingAddress**: Address to receive the product.
+
+- **billingAddress**
