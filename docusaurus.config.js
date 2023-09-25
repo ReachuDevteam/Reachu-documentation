@@ -20,7 +20,7 @@ const tailwindPlugin = require('./plugins/tailwind-plugin.cjs');
  * @param {string} section
  * @param {import('@docusaurus/plugin-content-docs').Options} options
  */
-function defineSection(section, version = {}, options = {}) {
+function defineSection(section, version = { label: 'Default Version' }, options = {}) {
   return [
     '@docusaurus/plugin-content-docs',
     /** @type {import('@docusaurus/plugin-content-docs').Options} */

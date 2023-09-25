@@ -1,0 +1,10 @@
+image: node:latest
+
+pages:
+  script:
+  - cd website # Navega a la carpeta donde se encuentra tu proyecto Docusaurus
+  - npm install
+  - npm run build
+  artifacts:
+    paths:
+    - public
