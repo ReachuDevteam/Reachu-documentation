@@ -1,0 +1,343 @@
+---
+title: Checkout
+sidebar_position: 3
+---
+
+# Checkout
+
+The below process describes the key milestones in the checkout process flow in
+Reachu. There are also additional steps that may occur along the way; however,
+the purpose of this instruction is to deliver a base reference for the user to
+work with.
+
+| Step                | Description                                                                                                                                                          |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Checkout Initiation | Once the final customer is ready to initiate the order, an object with the cart data is needed for the checkout process. You can still update the cart at this time. |
+| Shipping Methods    | The way orders will be sent. E.g. postal service, click & collect.                                                                                                   |
+| Payment Method      | A payment provider. E.g., Stripe, Klarna.                                                                                                                            |
+| Payment             | This object contains status and additional data about payment. Payments are processed by third parties.                                                              |
+| Checkout Completion | Once the payment succeeds, the checkout is finished.                                                                                                                 |
+
+## Initiate the checkout
+
+Retrieve an array of the products added to your channel.
+
+```js
+async function createCheckout(CART_ID) => {
+  const sdk = getSDK();
+  const checkout = await sdk.shopCart.checkout.create({
+    cart_id: CART_ID,
+  });
+  return checkout;
+};
+```
+
+Response:
+
+```json
+{
+  "createdAt": "2023-06-20T08:18:04.973Z",
+  "updatedAt": "2023-06-20T08:18:04.973Z",
+  "id": "7a1c1397-9508-47f2-8b90-ef9143a0bab3",
+  "deletedAt": null,
+  "success_url": null,
+  "cancel_url": null,
+  "payment_method": null,
+  "email": null,
+  "status": "ACTIVE",
+  "checkout_url": null,
+  "origin_payment_id": null,
+  "total_price": "1744.65",
+  "total_tax": "436.16",
+  "total_line_items_price": 1745,
+  "cart": {
+    "cart_id": "b0efb6fc-ab58-4f99-8a3d-eb318c40fa82",
+    "customer_session_id": "549743",
+    "shippingCountry": "NO",
+    "line_items": [
+      {
+        "id": "21ad179e-579e-4dba-a1ad-e2339013b1ce",
+        "supplier": "iqplustest",
+        "product_available_shippings": [
+          {
+            "id": "e42e32d5-3b76-41ac-b95f-2e6655d2af76",
+            "name": "Standard",
+            "description": "Standard shipping",
+            "countryCode": "NO",
+            "price": {
+              "amount": 290.77,
+              "currencyCode": "NOK"
+            }
+          }
+        ],
+        "product_id": 6182,
+        "product_title": "Lacoste T-Shirt",
+        "product_image": [
+          {
+            "id": 19513,
+            "url": "https://reachu-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-5ea12d76-79c4-4861-99d9-10867add85e4.jpeg",
+            "width": 762,
+            "height": 1100
+          },
+          {
+            "id": 19514,
+            "url": "https://reachu-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-826631da-f077-424a-8ff8-140d4829513b.jpeg",
+            "width": 762,
+            "height": 1016
+          }
+        ],
+        "variant_id": 11693,
+        "variant_title": "M",
+        "variant": [
+          {
+            "option": "size",
+            "value": "M"
+          }
+        ],
+        "quantity": 1,
+        "price_data": {
+          "unit_price": 1744.65,
+          "tax": 25,
+          "currency": "NOK"
+        },
+        "shipping": null
+      }
+    ],
+    "total_amount": 1744.65,
+    "currency": "NOK",
+    "available_shipping_countries": ["NO"]
+  },
+  "billing_address": null,
+  "shipping_address": null,
+  "total_amount_shipping": 0,
+  "availablePaymentMethods": [
+    {
+      "name": "Stripe"
+    },
+    {
+      "name": "Klarna"
+    }
+  ]
+}
+```
+
+## Payment Methods
+
+When you initiate the checkout, you will get the available payment methods in
+the response as part of the checkout object. You can still get them separately
+by using the method below.
+
+```js
+async function getPaymentMethods() => {
+  const sdk = getSDK();
+  const paymentMethods = await sdk.shopCart.paymentMethod.getAllByUser();
+  return paymentMethods;
+};
+```
+
+```json
+{
+  "availablePaymentMethods": [
+    {
+      "name": "Stripe"
+    },
+    {
+      "name": "Klarna"
+    }
+  ]
+}
+```
+
+## Interacting with a created checkout
+
+### Update the checkout
+
+After creation, you can update the following information from the checkout:
+
+- billing_address
+- shipping_address
+- after payment redirect urls
+  - return_url
+  - success_url
+  - cancel_url
+
+```js
+async function updateCheckout(CHECKOUT_ID) => {
+  const sdk = getSDK();
+  const body = {
+    shipping_address: {
+      first_name: "John",
+      last_name: "Johnson",
+      email: "johnjohnson@example.com",
+      address1: "Address 1",
+      city: "Oslo",
+      country: "Norway",
+      zip: "0672"
+    }
+  };
+  const checkout = await sdk.shopCart.checkout.update(CHECKOUT_ID, body);
+  return checkout;
+};
+```
+
+Response:
+
+```json
+{
+  ...
+  "billing_address": null,
+  "shipping_address": {
+    "id": "6fa90bd2-6fc3-422b-a2cd-e4330be23de7",
+    "first_name": "John",
+    "last_name": "Johnson",
+    "phone_code": null,
+    "phone": null,
+    "company": null,
+    "address1": "Address 1",
+    "address2": null,
+    "city": "Oslo",
+    "province": null,
+    "province_code": null,
+    "country": "Norway",
+    "country_code": null,
+    "zip": "0672"
+  }
+}
+```
+
+### Get the checkout
+
+```js
+async function getCheckout(CHECKOUT_ID) => {
+  const sdk = getSDK();
+  const checkout = await sdk.shopCart.checkout.getById(CHECKOUT_ID);
+  return checkout;
+};
+```
+
+```json
+{
+  "createdAt": "2023-06-20T08:18:04.973Z",
+  "updatedAt": "2023-06-20T08:23:47.000Z",
+  "id": "7a1c1397-9508-47f2-8b90-ef9143a0bab3",
+  "deletedAt": null,
+  "success_url": null,
+  "cancel_url": null,
+  "payment_method": null,
+  "email": "test@test.com",
+  "status": "ACTIVE",
+  "checkout_url": null,
+  "origin_payment_id": null,
+  "total_price": "2035.42",
+  "total_tax": "436.16",
+  "total_line_items_price": 1745,
+  "cart": {
+    "cart_id": "b0efb6fc-ab58-4f99-8a3d-eb318c40fa82",
+    "customer_session_id": "549743",
+    "shippingCountry": "NO",
+    "line_items": [
+      {
+        "id": "21ad179e-579e-4dba-a1ad-e2339013b1ce",
+        "supplier": "iqplustest",
+        "product_available_shippings": [
+          {
+            "id": "e42e32d5-3b76-41ac-b95f-2e6655d2af76",
+            "name": "Standard",
+            "description": "Standard shipping",
+            "countryCode": "NO",
+            "price": {
+              "amount": 290.77,
+              "currencyCode": "NOK"
+            }
+          }
+        ],
+        "product_id": 6182,
+        "product_title": "Lacoste T-Shirt",
+        "product_image": [
+          {
+            "id": 19513,
+            "url": "https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-5ea12d76-79c4-4861-99d9-10867add85e4.jpeg",
+            "width": 762,
+            "height": 1100
+          },
+          {
+            "id": 19514,
+            "url": "https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-826631da-f077-424a-8ff8-140d4829513b.jpeg",
+            "width": 762,
+            "height": 1016
+          }
+        ],
+        "variant_id": 11693,
+        "variant_title": "M",
+        "variant": [
+          {
+            "option": "size",
+            "value": "M"
+          }
+        ],
+        "quantity": 1,
+        "price_data": {
+          "unit_price": 1744.65,
+          "tax": 25,
+          "currency": "NOK"
+        },
+        "shipping": {
+          "id": "e42e32d5-3b76-41ac-b95f-2e6655d2af76",
+          "name": "Standard",
+          "description": "Standard shipping",
+          "price": {
+            "amount": 290.77,
+            "currencyCode": "NOK"
+          }
+        }
+      }
+    ],
+    "total_amount": 1744.65,
+    "currency": "NOK",
+    "available_shipping_countries": ["NO"]
+  },
+  "billing_address": {
+    "id": "c920b1c5-a975-410d-beb0-d23bc13a9e3c",
+    "first_name": "Test",
+    "last_name": "User",
+    "phone_code": null,
+    "phone": null,
+    "company": null,
+    "address1": "Test Address",
+    "address2": null,
+    "city": "Test City",
+    "province": null,
+    "province_code": null,
+    "country": null,
+    "country_code": "NO",
+    "zip": "0672"
+  },
+  "shipping_address": {
+    "id": "b0858b5a-3a06-45db-a5fe-21a94d9caf61",
+    "first_name": "Test",
+    "last_name": "User",
+    "phone_code": null,
+    "phone": null,
+    "company": null,
+    "address1": "Test Address",
+    "address2": null,
+    "city": "Test City",
+    "province": null,
+    "province_code": null,
+    "country": null,
+    "country_code": "NO",
+    "zip": "0672"
+  },
+  "total_amount_shipping": 290.77
+}
+```
+
+### Delete a checkout
+
+```js
+async function getCheckout(CHECKOUT_ID) => {
+  const sdk = getSDK();
+  const checkout = await sdk.shopCart.checkout.delete(CHECKOUT_ID);
+  return checkout;
+};
+```

@@ -20,7 +20,7 @@ const tailwindPlugin = require('./plugins/tailwind-plugin.cjs');
  * @param {string} section
  * @param {import('@docusaurus/plugin-content-docs').Options} options
  */
-function defineSection(section, version = {}, options = {}) {
+function defineSection(section, version = { label: 'Default Version' }, options = {}) {
   return [
     '@docusaurus/plugin-content-docs',
     /** @type {import('@docusaurus/plugin-content-docs').Options} */
@@ -31,7 +31,7 @@ function defineSection(section, version = {}, options = {}) {
       id: section,
       sidebarPath: require.resolve('./sidebars-default.js'),
       breadcrumbs: true,
-      editUrl: 'https://github.com/reachu',
+      editUrl: 'https://gitlab.com/outshifterdev/docs.gitlab.io/-/edit/main/',
       versions: version && {
         current: {
           label: version.label,
@@ -44,7 +44,7 @@ function defineSection(section, version = {}, options = {}) {
 }
 
 const SECTIONS = [
-  defineSection('sdk', { version: '1.0.0', label: '1.0.0', isLast: true, }),
+  defineSection('sdk', { version: '1.2.1', label: '1.2.1', isLast: true, }),
   defineSection('shopify'),
   defineSection('woocommerce'),
   defineSection('wordpress'),
@@ -156,6 +156,18 @@ const config = {
           width: '101px',
         },
         items: [
+          {
+            type: 'docsVersionDropdown',
+            position: 'left',
+            label: 'v1.2.0',  // puedes cambiar esto al nombre de tu versión actual
+            to: '/',  // este es el enlace predeterminado, que generalmente apunta a la documentación más reciente
+          },
+          {
+            type: 'docsVersionDropdown',
+            position: 'right',
+            label: 'Version',  // puedes cambiar esto al nombre de tu versión actual
+            to: '/',  // este es el enlace predeterminado, que generalmente apunta a la documentación más reciente
+          },
           {
             label: 'SDK',
             to: 'sdk',

@@ -2,11 +2,17 @@
   "index_name": "docs",
   "sitemap_urls": ["https://www.docs.reachu.io/sitemap.xml"],
   "start_urls": [
-    {
-      "url": "https://www.docs.reachu.io/sdk",
-      "tags": "sdk",
-      "selectors_key": "sdk"
-    },
+      {
+    "url": "https://www.docs.reachu.io/v1.0/sdk",
+    "tags": "sdk",
+    "selectors_key": "sdk"
+  },
+  "https://www.docs.reachu.io/v1.0/",
+  {
+    "url": "https://www.docs.reachu.io/v2.0/sdk",
+    "tags": "sdk",
+    "selectors_key": "sdk"
+  },
     "https://www.docs.reachu.io/"
   ],
   "stop_urls": [],

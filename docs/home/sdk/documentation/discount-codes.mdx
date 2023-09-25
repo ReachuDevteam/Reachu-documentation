@@ -136,29 +136,33 @@ try {
 }
 ```
 
-## Deleting an Applied Discount Code
 
-This section outlines how to delete a previously applied discount code using the deleteAppliedDiscount() method provided by the SDK. This method is used to remove a discount code from a shopping cart. It accepts an object with two properties: code (the discount code) and cartId (the ID of the cart from which the discount will be removed).
 
-The method returns a promise that resolves to an object, which includes an executed property that indicates whether the discount code was successfully deleted.
+## Applying a Discount Code
+
+This section outlines how to apply a discount code using the applyDiscount()
+method provided by the SDK. This method is used to apply a provided discount
+code to a shopping cart. It accepts an object with two properties: code (the
+discount code) and cartId (the ID of the cart to apply the discount to).
+
+The method returns a promise that resolves to an object, which includes an
+executed property that indicates whether the discount code was successfully
+applied.
 
 Here is an example of how to use this method:
 
-
-
 ```javascript
 try {
-  const discountToDelete = {
+  const discountToApply = {
     code: 'DISCOUNT_CODE', // replace with your discount code
     cartId: 'CART_ID', // replace with your cart ID
   };
-  const deleteResult = await returnSdk().discount.discount.deleteAppliedDiscount(
-    discountToDelete
+  const applyResult = await returnSdk().discount.discount.applyDiscount(
+    discountToApply
   );
-  // If the discount code is successfully deleted, deleteResult.executed will be true
+  // If the discount code is successfully applied, applyResult.executed will be true
 } catch (error) {
-  // Log or handle any error that occurs while deleting the discount code.
-  console.error('Error deleting discount code:', error.message);
+  // Log or handle any error that occurs while applying the discount code.
+  console.error('Error applying discount code:', error.message);
 }
-
 ```
