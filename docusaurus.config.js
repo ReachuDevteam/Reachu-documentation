@@ -31,7 +31,7 @@ function defineSection(section, version = { label: 'Default Version' }, options 
       id: section,
       sidebarPath: require.resolve('./sidebars-default.js'),
       breadcrumbs: true,
-      editUrl: 'https://github.com/reachu',
+      editUrl: 'https://gitlab.com/outshifterdev/docs.gitlab.io/-/edit/main/',
       versions: version && {
         current: {
           label: version.label,
