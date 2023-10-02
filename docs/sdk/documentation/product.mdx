@@ -8,9 +8,40 @@ sidebar_position: 1
 In order to get product information you need to interact with the channel
 endpoint. You can choose to get:
 
-- all products from all your channels
-- all products from a specific channel
-- individual product information by using the product id
+- All products from a specific channel
+- Individual product information by using the product id
+
+### Products attributes:
+
+| Property                        | Type       | Description                                                  |
+|---------------------------------|------------|--------------------------------------------------------------|
+| `id`                            | Number     | Unique identifier for the product.                           |
+| `title`                         | String     | Name or title of the product.                                |
+| `description`                   | String     | Detailed description of the product.                         |
+| `tags`                          | String     | Tags associated with the product.                            |
+| `sku`                           | String     | Stock Keeping Unit code for the product.                     |
+| `quantity`                      | Number     | Available quantity of the product in stock.                  |
+| `price`                         | Object     | Pricing details of the product.                              |
+| `variants`                      | Array      | Different variations of the product (e.g., size, color).     |
+| `barcode`                       | String     | Barcode associated with the product.                         |
+| `options`                       | Array      | Additional options related to the product.                   |
+| `subcategories`                 | Array      | Subcategories the product belongs to.                        |
+| `images`                        | Array      | Array of image URLs representing the product.                |
+| `productShipping`               | Array      | Shipping options and details for the product.                |
+| `supplier`                      | String     | Supplier or manufacturer of the product.                     |
+| `importedProduct`               | Object     | Details if the product is imported or has special attributes.|
+| `referralFee`                   | Number     | Fee for referring the product to others.                     |
+| `return`                        | Object     | Return policy and details for the product.                   |
+
+#### Return
+
+| Property          | Type   | Description                                                                                     |
+|-------------------|--------|-------------------------------------------------------------------------------------------------|
+| `return_right`    | String | Number of days for the return right. `10`or `30`                                                        |
+| `return_label`    | String | Indicates if the return label is included.-> `included`or `not_included`                                                       |
+| `return_cost`     | String | Who bears the return cost -> `vendor`or `customer` .                                                      |
+| `supplier_policy` | String | Detailed supplier policy, including shipping and return details.                                |
+
 
 ## Get all products
 
