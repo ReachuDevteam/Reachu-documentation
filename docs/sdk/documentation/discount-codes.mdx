@@ -138,13 +138,17 @@ try {
 
 ## Deleting an Applied Discount Code
 
-This section outlines how to delete a previously applied discount code using the deleteAppliedDiscount() method provided by the SDK. This method is used to remove a discount code from a shopping cart. It accepts an object with two properties: code (the discount code) and cartId (the ID of the cart from which the discount will be removed).
+This section outlines how to delete a previously applied discount code using the
+deleteAppliedDiscount() method provided by the SDK. This method is used to
+remove a discount code from a shopping cart. It accepts an object with two
+properties: code (the discount code) and cartId (the ID of the cart from which
+the discount will be removed).
 
-The method returns a promise that resolves to an object, which includes an executed property that indicates whether the discount code was successfully deleted.
+The method returns a promise that resolves to an object, which includes an
+executed property that indicates whether the discount code was successfully
+deleted.
 
 Here is an example of how to use this method:
-
-
 
 ```javascript
 try {
@@ -152,13 +156,11 @@ try {
     code: 'DISCOUNT_CODE', // replace with your discount code
     cartId: 'CART_ID', // replace with your cart ID
   };
-  const deleteResult = await returnSdk().discount.discount.deleteAppliedDiscount(
-    discountToDelete
-  );
+  const deleteResult =
+    await returnSdk().discount.discount.deleteAppliedDiscount(discountToDelete);
   // If the discount code is successfully deleted, deleteResult.executed will be true
 } catch (error) {
   // Log or handle any error that occurs while deleting the discount code.
   console.error('Error deleting discount code:', error.message);
 }
-
 ```
