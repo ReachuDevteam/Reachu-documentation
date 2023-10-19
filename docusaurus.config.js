@@ -158,12 +158,6 @@ const config = {
         items: [
           {
             type: 'docsVersionDropdown',
-            position: 'left',
-            label: 'v1.2.0',  // puedes cambiar esto al nombre de tu versión actual
-            to: '/',  // este es el enlace predeterminado, que generalmente apunta a la documentación más reciente
-          },
-          {
-            type: 'docsVersionDropdown',
             position: 'right',
             label: 'Version',  // puedes cambiar esto al nombre de tu versión actual
             to: '/',  // este es el enlace predeterminado, que generalmente apunta a la documentación más reciente
@@ -179,18 +173,6 @@ const config = {
           {
             label: 'Universal Integration',
             to: 'universal-integration',
-          },
-          {
-            label: 'Integrations',
-            type: 'dropdown',
-            className: 'dyte-dropdown resources-dropdown',
-            items: [
-              {
-                type: 'html',
-                value: resourcesHTML,
-                className: 'dyte-dropdown',
-              },
-            ],
           },
           {
             type: 'search',
