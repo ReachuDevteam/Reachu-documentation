@@ -1,0 +1,30 @@
+---
+sidebar_position: 4
+---
+
+<font color="grey" size="4">
+
+Select a delivery method at the checkout.z
+
+</font>
+
+```javascript
+checkoutShippingAddressUpdate(
+  checkoutId: ID
+  deliveryMethod: AddressInput
+): CheckoutResponse
+```
+
+#### Arguments
+
+**checkoutId (ID)`**
+
+The ID of the checkout.
+
+**`shippingAddress (AddressInput)`**
+
+#### Type
+
+**`CheckoutResponse`**
+
+Updated the shipping address and returns the updated checkout object.

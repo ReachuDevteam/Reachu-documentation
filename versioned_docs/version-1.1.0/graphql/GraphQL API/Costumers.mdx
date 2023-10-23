@@ -1,0 +1,137 @@
+---
+sidebar_position: 5
+---
+
+Outshifter has 3 types of users:
+
+- **`suppliers`**: The brands. They list and ship the products.
+- **`sellers`**: The sales channels. They sell the products in our storefronts.
+- **`customers`**: The final consumer. They buy and receive the purchased
+  products.
+
+Suppliers and sellers management is performed through our Core Api Solution, so
+it is not on the scope of this GraphQL Sales Channel Api.
+
+If you have not created your seller yet, please refer to
+[User Creation](https://app.gitbook.com/o/I1VOeCf1Kk9QYomzSAiO/s/z9iM6vbFkU4ylWcyVMCY/getting-started/api-key-authentication).
+
+## Customers
+
+As a sales channel, you will be dealing with the creation and management of the
+final customer. You can create your own sign up or just use it for purposes.
+
+Every customer must have these fields:
+
+- **`id`**: The unique user identifier.
+- **`email`**: Used to login
+- **`phone`**: Contact phone information.
+- **`shippingAddress`**: Address to receive the product.
+- **`billingAddress`**: Address related to billing.
+
+### Create a new customer
+
+```javascript
+mutation {
+  customerCreate(
+    input: {
+      name: "John",
+      surname: "Doe"
+      email: "customer@example.com"
+      phone: {
+        countryCode: "+45",
+        number: 47834983
+      }
+      shippingAddress: {
+        name: "John"
+        surname: "Doe"
+        address: "Nydalsveien 14"
+        city: "Oslo"
+        postalCode: "1484"
+        country: "NO"
+      }
+      billingAddress: {
+        name: "John"
+        surname: "Doe"
+        address: "Nydalsveien 14"
+        city: "Oslo"
+        postalCode: "1484"
+        country: "NO"
+      }
+    }
+  ) {
+  customer {
+    id
+    email
+  }
+  errors {
+    field
+    code
+  }
+}
+```
+
+Response:
+
+```javascript
+{
+  "data": {
+    "customer": {
+      "id": "Q2hlY2tvdXQ6ZmE5ZjBkMjYtMWM3NC00MDgyLTk3MzktYTIxOGE2NzVjMDZk",
+      "email": "customer@example.com"
+    },
+    "errors": []
+  }
+}
+```
+
+### Update a customer
+
+Targeting one created customer, update any of the fields listed above.
+
+The mutation customerUpdate will update customer information. In the example
+below, we update the shipping address.
+
+```javascript
+mutation {
+  customerUpdate(
+    id: "Q2hlY2tvdXQ6ZmE5ZjBkMjYtMWM3NC00MDgyLTk3MzktYTIxOGE2NzVjMDZk"
+    shippingAddress: {
+      name: "Robert"
+      surname: "Paulsen"
+      streetAddress1: "Langgata 25A"
+      postalCode: "0566"
+      city: "Oslo"
+      country: "NO"
+    }
+  ) {
+    customer {
+      shippingAddress {
+        address
+        city
+        postalCode
+      }
+    }
+    errors {
+      field
+      message
+      code
+    }
+  }
+}
+```
+
+Response:
+
+```javascript
+{
+  "data": {
+    "customer": {
+        shippingAddress: {
+            address: "Langgata 25A"
+            city: "Oslo"
+            postalCode: "0566"
+        }
+    }
+  }
+}
+```
