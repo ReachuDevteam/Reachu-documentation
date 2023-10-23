@@ -10,9 +10,10 @@ endpoint. You can choose to get:
 
 - All products from a specific channel
 - Individual product information by using the product id
-- Fetch all products in a specific currency, fetch a product with a specific
-  currency.
+- Fetch all products in a specific currency.
 - Fetch the Return information for a product or for all products.
+- Fecht products with varians or without varians.
+
 
 ### Products attributes:
 
@@ -23,7 +24,10 @@ products in your store, ensuring seamless interaction and management. Below,
 you'll find a comprehensive list of attributes, their types, and descriptions to
 guide you through the integration process.
 
-#### Main Object
+
+<Tabs>
+  <TabItem value="Main" label="Main" default>
+
 
 | Property          | Type   | Description                                                   |
 | ----------------- | ------ | ------------------------------------------------------------- |
@@ -45,7 +49,8 @@ guide you through the integration process.
 | `referralFee`     | Number | Fee for referring the product to others.                      |
 | `return`          | Object | Return policy and details for the product.                    |
 
-#### Return
+</TabItem>
+  <TabItem value="Return" label="Return"> 
 
 | Property          | Type   | Description                                                              |
 | ----------------- | ------ | ------------------------------------------------------------------------ |
@@ -54,13 +59,20 @@ guide you through the integration process.
 | `return_cost`     | String | Who bears the return cost -> `vendor`or `customer` .                     |
 | `supplier_policy` | String | Detailed supplier policy, including shipping and return details.         |
 
-#### Price
 
+</TabItem>
+
+
+  <TabItem value="Price" label="Price">
+
+#### Price
 | Property     | Type   | Description                        |
 | ------------ | ------ | ---------------------------------- |
 | amount       | Number | The price of the product.          |
 | currencyCode | String | The currency code for the amount.  |
 | compareAt    | Number | The original price for comparison. |
+</TabItem>
+  <TabItem value="image" label="Image">
 
 #### Images
 
@@ -72,6 +84,10 @@ guide you through the integration process.
 | height   | Number | Height of the image in pixels.                          |
 | order    | Number | The order or sequence in which the image should appear. |
 
+  </TabItem>
+  <TabItem value="Shipping" label="Shipping">
+
+  
 #### Product Shipping Object
 
 | Property           | Type    | Description                                   | Notes |
@@ -83,6 +99,9 @@ guide you through the integration process.
 | default            | Boolean | Indicates if this is the default method.      |       |
 | shippingCountry    | Array   | List of countries and their shipping details. |       |
 
+  </TabItem>
+<TabItem value="shippingCountry" label="shippingCountry">
+
 #### Shipping Country Object
 
 | Property     | Type   | Description                                                 | Notes                |
@@ -93,124 +112,363 @@ guide you through the integration process.
 | currencyCode | String | The currency code for the amount.                           |                      |
 | originalData | Object | Original data containing amount, currency, and base amount. | **To be deprecated** |
 | price        | Object | Object containing the amount and currency code.             |                      |
+</TabItem>
+</Tabs>
 
 ## Get all products
 
 Retrieve an array of all the products to added to your channels.
 
+### Fetching all the products from the channel
+
+```js
+  const products = await sdk.products.getAll();
+  return products;
+```
+
+#### Parameters
+
+| Parameters | Type  | Description                                   |
+| ---------- | ----- | --------------------------------------------- |
+| Currency   | String | An array of product IDs you wish to retrieve. |
+
+
+### Fetching all the products with a specific currency
+
+In this example, a function fetchAllProducts is defined to retrieve all products, but filtered by a specific currency. The getAll method on the sdk.products object is utilized, and it's invoked with a parameter 'NOK', which is a string representing the currency (Norwegian Krone in this case). This parameter instructs the getAll method to only retrieve products priced in the specified currency.
+
+<Tabs>
+  <TabItem value="Exemple" label="Exemple" default>
+
+```js
+  async function fetchAllProducts() => {
+  const products = await sdk.products.getAll('NOK');
+  return products;
+});
+```
+
+  </TabItem>
+  <TabItem value="response" label="Response">
+
+```json
+[
+   {
+      "id":26908,
+      "title":"Backpack (26L)",
+      "description":"<p>The Nike Sportswear RPM Backpack is made to hold it all. With a padded back for comfort and a versatile strap system, it's ideal for all your on-the-go needs.</p>",
+      "tags":"",
+      "sku":"OHL9FCI3DTYFOCBG",
+      "quantity":50,
+      "price":{
+         "amount":"900.00",
+         "currencyCode":"NOK",
+         "baseAmount":"77.35",
+         "compareAt":"1200.00"
+      },
+      "variants":[],
+      "barcode":"",
+      "options":[],
+      "subcategories":[],
+      "images":[
+         {
+            "id":24644,
+            "url":"https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/26908-7ee517e1-392b-47f0-81c6-0dd4af47fb75.jpeg",
+            "width":1728,
+            "height":2160,
+            "order":0
+         },
+      ],
+      "productShipping":[
+         {
+            "id":"473dee90-2285-49ec-9083-e67a092d54b7",
+            "name":"Standard Shipping",
+            "description":"Standard Innenlands Shipping",
+            "customPriceEnabled":false,
+            "default":false,
+            "shippingCountry":[
+               {
+                  "id":"2714bf50-3395-4bfd-bab8-9f5c60728729",
+                  "amount":"49.00",
+                  "country":"NO",
+                  "currencyCode":"NOK",
+                  "originalData":{
+                     "amount":"49.00",
+                     "currencyCode":"NOK",
+                     "baseAmount":null
+                  },
+                  "price":{
+                     "amount":"49.00",
+                     "currencyCode":"NOK"
+                  }
+               }
+            ]
+         }
+      ],
+      "supplier":"StyleSculptors",
+      "importedProduct":null,
+      "referralFee":10,
+      "categories":[
+         {
+            "id":58,
+            "name":"Apparel & Accessories"
+         }
+      ]
+   },
+
+      "id":27103,
+      "title":"Test Digital",
+      "description":"<p>Test Digital</p>",
+      "tags":"",
+      "sku":"GNEYJPCIUNHSTFLQ",
+      "quantity":0,
+      "price":{
+         "amount":"100.00",
+         "currencyCode":"NOK",
+         "baseAmount":"8.59",
+         "compareAt":"0.00"
+      },
+      "variants":[
+         
+      ],
+      "barcode":"",
+      "options":[
+         
+      ],
+      "subcategories":[
+         
+      ],
+      "images":[
+         {
+            "id":25157,
+            "url":"https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/27103-2ce131c7-feb9-448b-bae1-21e526e07149.png",
+            "width":457,
+            "height":457,
+            "order":0
+         }
+      ],
+      "productShipping":[
+         
+      ],
+      "supplier":"StyleSculptors",
+      "importedProduct":null,
+      "referralFee":12,
+      "categories":[
+         {
+            "id":4401,
+            "name":"Computer Software"
+         }
+      ]
+   },
+   {
+      "id":27296,
+      "title":"SELECTED FEMME",
+      "description":"<p>Paula LS Short Dress fra Selected Femme.&nbsp;Gjør et varig inntrykk med Selected Femmes&nbsp;metalliske jacquard-minikjole. Laget med minnerike øyeblikk i tankene og har et nydelig blomsterdesign i sølv som er en kontrast mot det mørke stoffet. De lange puffermene gir kjolen en strukturert silhuett, mens snittet i midjen er flatterende for figuren din. Kjolen trenger ikke mye når det kommer til tilbehør, så vi anbefaler å style den med et par sorte, høye hæler med stropper og matchende øreringer i sølv.</p><p>- V-hals</p><p>- Halv knappelist</p><p>- Tekstiltrukne knapper</p><p>- Lange puffermer</p><p>- Elastiske ermelinninger</p><p>- Snittlinje i midjen</p><p>Metallisk jacquard-design</p><p>- Regular fit</p><p>Materiale:&nbsp;100% polyester</p>",
+      "tags":"",
+      "sku":"A50OLNJFDZ7VUDWH",
+      "quantity":50,
+      "price":{
+         "amount":"1000.00",
+         "currencyCode":"NOK",
+         "baseAmount":"85.94",
+         "compareAt":"1200.00"
+      },
+      "variants":[
+         {
+            "id":35818,
+            "barcode":"",
+            "price":{
+               "amount":"1000.00",
+               "baseAmount":"1000.00",
+               "currencyCode":"NOK",
+               "compareAt":"1200.00"
+            },
+            "quantity":9,
+            "sku":"34",
+            "title":"34",
+            "images":[
+               {
+                  "id":79306,
+                  "url":"https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/27296-07fe9ee4-f03a-470c-b616-cfd6034e7363.jpeg",
+                  "width":600,
+                  "height":600,
+                  "order":0
+               }
+            ]
+         },
+         {
+            "id":35819,
+            "barcode":"",
+            "price":{
+               "amount":"1000.00",
+               "baseAmount":"1000.00",
+               "currencyCode":"NOK",
+               "compareAt":"1200.00"
+            },
+            "quantity":10,
+            "sku":"36",
+            "title":"36",
+            "images":[
+               {
+                  "id":79307,
+                  "url":"https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/27296-be333ff6-e19b-496a-a869-a0716697ca92.jpeg",
+                  "width":600,
+                  "height":600,
+                  "order":0
+               }
+            ]
+         },
+         {
+            "id":35820,
+            "barcode":"",
+            "price":{
+               "amount":"1000.00",
+               "baseAmount":"1000.00",
+               "currencyCode":"NOK",
+               "compareAt":"1200.00"
+            },
+            "quantity":10,
+            "sku":"38",
+            "title":"38",
+            "images":[
+               {
+                  "id":79308,
+                  "url":"https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/27296-405393b2-d6cf-4910-a5a0-44754228bb85.jpeg",
+                  "width":1200,
+                  "height":1200,
+                  "order":0
+               }
+            ]
+         },
+         {
+            "id":35821,
+            "barcode":"",
+            "price":{
+               "amount":"1000.00",
+               "baseAmount":"1000.00",
+               "currencyCode":"NOK",
+               "compareAt":"1200.00"
+            },
+            "quantity":10,
+            "sku":"40",
+            "title":"40",
+            "images":[
+               {
+                  "id":79309,
+                  "url":"https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/27296-320b179d-a9ec-4e77-b454-3d2a1f29e6e1.jpeg",
+                  "width":1200,
+                  "height":1200,
+                  "order":0
+               }
+            ]
+         },
+         {
+            "id":35822,
+            "barcode":"",
+            "price":{
+               "amount":"1000.00",
+               "baseAmount":"1000.00",
+               "currencyCode":"NOK",
+               "compareAt":"1200.00"
+            },
+            "quantity":10,
+            "sku":"42",
+            "title":"42",
+            "images":[
+               {
+                  "id":79310,
+                  "url":"https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/27296-45bc0448-80dd-4f45-96e1-c05c8d92afd5.jpeg",
+                  "width":600,
+                  "height":600,
+                  "order":0
+               }
+            ]
+         }
+      ],
+      "barcode":"",
+      "options":[
+         {
+            "id":5817,
+            "name":"Size",
+            "order":1,
+            "values":"34,36,38,40,42"
+         }
+      ],
+      "subcategories":[
+         
+      ],
+      "images":[
+         {
+            "id":79282,
+            "url":"https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/27296-2a006262-2d09-47cf-acfd-0293e9bce00d.jpeg",
+            "width":1024,
+            "height":1024,
+            "order":0
+         },
+      ],
+      "productShipping":[
+         {
+            "id":"473dee90-2285-49ec-9083-e67a092d54b7",
+            "name":"Standard Shipping",
+            "description":"Standard Innenlands Shipping",
+            "customPriceEnabled":false,
+            "default":false,
+            "shippingCountry":[
+               {
+                  "id":"2714bf50-3395-4bfd-bab8-9f5c60728729",
+                  "amount":"49.00",
+                  "country":"NO",
+                  "currencyCode":"NOK",
+                  "originalData":{
+                     "amount":"49.00",
+                     "currencyCode":"NOK",
+                     "baseAmount":null
+                  },
+                  "price":{
+                     "amount":"49.00",
+                     "currencyCode":"NOK"
+                  }
+               }
+            ]
+         }
+      ],
+      "supplier":"StyleSculptors",
+      "importedProduct":null,
+      "referralFee":0,
+      "categories":[
+         {
+            "id":58,
+            "name":"Apparel & Accessories"
+         }
+      ]
+   }
+]
+```
+
+  </TabItem>
+</Tabs>
+
+
+Response:
+
+
+### Fetching all the products without variants
+
+
 ```js
 async function fetchAllProducts() => {
-  const sdk = getSDK();
-  const products = await sdk.channel.item.getAll();
+  const products = await sdk.products.getAll('NOK', {returnVariants: false});
   return products;
 });
 ```
 
-Response:
+### Fetching all the products with return policy
 
-```json
-[
-  {
-    "id": 8,
-    "channel": "Vev",
-    "list_products": [
-      {
-        "createdAt": "2023-03-02T09:27:03.383Z",
-        "id": 5797,
-        "title": "T-shirt",
-        "status": 1,
-        "description": "<p>T-shirt description</p>"
-      }
-    ],
-    "totalProducts": 2,
-    "collections": [],
-    "variants": [],
-    "products": [
-      {
-        "createdAt": "2023-03-02T09:27:03.383Z",
-        "id": 5797,
-        "title": "T-shirt",
-        "description": "<p>T-shirt description</p>"
-      }
-    ],
-    "collectionsShared": []
-  }
-]
-```
-
-:::info
-
-This feature is designed to display a list of products on the frontend of your
-solution. It provides you with general product information. If you want
-additional more detailed data, see the below in the “Get detailed product
-information by id” section below.
-
-:::
-
-The getAll() also accepts as an optional parameter the id of your channel. You
-will get an array of just the products of that channel:
 
 ```js
-async function fetchAllProductsByChannel() => {
-  const sdk = getSDK();
-  const products = await sdk.channel.item.getAll(CHANNEL_ID); // CHANNEL_ID: number
+async function fetchAllProducts() => {
+  const products = await sdk.products.getAll('NOK', {returnVariants: false, return: true});
   return products;
 });
-```
-
-Response:
-
-```json
-[
-  {
-    "createdAt": "2023-03-02T09:27:03.383Z",
-    "id": 5797,
-    "title": "T-shirt",
-    "description": "<p>T-shirt description</p>"
-  },
-  {
-    "createdAt": "2023-03-02T09:27:03.383Z",
-    "id": 5798,
-    "title": "Pants",
-    "description": "<p>Pants description</p>"
-  }
-]
-```
-
-:::info
-
-If you need information about which is your channel id, use this sdk operation.
-You will get all active channels with their respective ids. 
-
-:::
-
-```js
-async function getActiveChannels() => {
-  const sdk = getSDK();
-  const channels = await sdk.channel.base.getAllActive();
-  return channels;
-});
-```
-
-```json
-[
-  {
-    "createdAt": "2022-10-14T14:24:24.044Z",
-    "updatedAt": "2022-10-14T14:24:24.322Z",
-    "deletedAt": null,
-    "id": 2,
-    "name": "Shopify",
-    "enabled": true
-  },
-  {
-    "createdAt": "2022-10-14T14:24:24.044Z",
-    "updatedAt": "2022-10-14T14:24:24.322Z",
-    "deletedAt": null,
-    "id": 5,
-    "name": "Woocommerce",
-    "enabled": true
-  }
-]
 ```
 
 ## Get products by ids
@@ -234,6 +492,11 @@ async function fetchProductsByIds(ids: number[]): Promise<Product[]>
 
 If you want to fetch a single product, simply pass an array with one product ID:
 
+
+<Tabs>
+  <TabItem value="Exemple" label="Exemple" default>
+
+##### Example:
 ```js
 const productIds = [12345]; // Replace 12345 with your product ID
 
@@ -242,6 +505,9 @@ console.log(products);
 ```
 
 
+  </TabItem>
+  <TabItem value="response" label="Response">
+    
 
 ##### Response:
 
@@ -371,10 +637,17 @@ console.log(products);
 ]
 ```
 
+  </TabItem>
+</Tabs>
+
+
 ### Example 2: Fetching Multiple Products
 
 To fetch multiple products, extend the array to include all the product IDs
 you're interested in:
+
+<Tabs>
+  <TabItem value="Exemple" label="Exemple" default>
 
 ```js
 const productIds = [12345, 67890]; // Replace with your product IDs
@@ -382,8 +655,8 @@ const productIds = [12345, 67890]; // Replace with your product IDs
 const products = await fetchProductsByIds(productIds);
 console.log(products);
 ```
-
-Response:
+  </TabItem>
+  <TabItem value="response" label="Response">
 
 ```json
 [
@@ -812,3 +1085,5 @@ Response:
   }
 ]
 ```
+</TabItem>
+</Tabs>

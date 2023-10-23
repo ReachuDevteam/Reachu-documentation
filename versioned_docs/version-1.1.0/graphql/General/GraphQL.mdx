@@ -1,0 +1,81 @@
+<font color="grey" size="5" >
+
+A brief introduction to GraphQL, how we retrieve data through our API, and where
+to go for more resources.
+
+</font>
+
+## What is GraphQL?
+
+GraphQL is a query language for APIs and a runtime for fulfilling those queries
+with your existing data. It isn't tied to any specific database or storage
+engine and is instead backed by your existing code and data. GraphQL provides a
+complete and understandable description of the data in your API, gives clients
+the power to ask for exactly what they need and nothing more, makes it easier to
+evolve APIs over time, and enables powerful developer tools.
+
+:::info If you're new to GraphQL, Apollo has
+[resources for beginners](https://www.apollographql.com/blog/backend/the-basics-of-graphql-in-5-links-9e1dc4cac055/).
+While [the official documentation](https://graphql.org/) is another good
+starting point. :::
+
+## GraphQL Schema Language
+
+A GraphQL service is created by defining types and fields on those types, then
+providing functions for each field on each type. For example, a GraphQL service
+that tells us about a specific product and its characteristics might look
+something like this:
+
+```json
+query Query($productId: ID) {
+  Product(id: $productId) {
+    name
+    price
+    quantity
+    status
+    sku...
+  }
+}
+```
+
+## The GraphQL API
+
+Outshifter is powered by a GraphQL API. Unlike REST APIs, it gives the client
+control over how much or how little data they want to request about each object
+and allows relations within the object graph to be easily traversed.
+
+To learn more about GraphQL language and its concepts please see the official
+GraphQL website and documentation.
+
+The API endpoint is available at /graphql/ and requires queries to be submitted
+using HTTP POST method and the application/json content type.
+
+Using the Outshifter GraphQL API allows you to query and modify all of your
+channels data in an efficient and flexible manner. Our API provides both types
+of operations:
+
+- **Public** - Related to the users of your Channel.
+
+- **Private** - Related to the administration side.
+
+Here's an example query to fetch a category name:
+
+```json
+{
+  sales-channel {
+    name
+  }
+}
+```
+
+Response:
+
+```json
+{
+  "data": {
+    "sales-channel": {
+      "name": "my company e-commerce"
+    }
+  }
+}
+```

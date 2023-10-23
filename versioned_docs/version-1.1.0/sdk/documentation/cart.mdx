@@ -16,18 +16,6 @@ update of quantity). Payment methods and shipping are handled on the
 
 :::
 
-#### Cart object
-
-| Property                       | Type   | Description                                                    |
-| ------------------------------ | ------ | -------------------------------------------------------------- |
-| `cart_id`                      | String | Unique identifier for the cart.                                |
-| `customer_session_id`          | String | Unique identifier for the customer's session.                  |
-| `shippingCountry`              | Object | Information about the shipping country (or `null` if not set). |
-| `line_items`                   | Array  | List of items in the cart.                                     |
-| `total_amount`                 | Number | Total amount for the items in the cart.                        |
-| `currency`                     | String | Currency code (e.g., "NOK").                                   |
-| `available_shipping_countries` | Array  | List of countries available for shipping.                      |
-
 ## Create cart
 
 You can initiate the cart even before adding products to it, so you decide when
