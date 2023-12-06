@@ -91,7 +91,7 @@
       url('/static/landing-page/noise-dark.png');
   }
 
-  /* .sdk-section {
+   .sdk-section {
     min-height: 320px;
     transition-duration: 1.3s;
     transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -103,7 +103,7 @@
   .intersected {
     opacity: 1;
     transform: translateX(0px);
-  } */
+  } 
 
   .dyte-badge {
     @apply mb-4 inline-block rounded-sm bg-zinc-200 p-2 text-text-400 dark:bg-zinc-800;
@@ -223,7 +223,7 @@ body {
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 html[data-theme='dark'] {
-  --ifm-link-color: #1a90ff;
+  --ifm-link-color: #6603E5;
   --ifm-tabs-color-active-border: #6603E5;
   --ifm-tabs-color-active: #6603E5;
 
