@@ -1,0 +1,210 @@
+:root {
+  --ifm-navbar-height: 111;
+}
+
+@media only screen and (min-width: 992px) {
+  .navbar-original {
+    display: none;
+  }
+  .main-wrapper {
+    max-width: 92rem;
+    min-width: 92rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .navbar-original {
+    display: block;
+  }
+  .navbar-container {
+    display: none;
+  }
+}
+
+.navbar-container {
+  max-width: 92rem;
+  min-width: 92rem;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.navbar-logo {
+  max-width: 150px;
+}
+
+.navbar-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  border-bottom: 1px solid;
+}
+
+.navbar-top-row > :first-child {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.navbar-top-row > :last-child {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.custom-navbar-items {
+  display: flex;
+  border-bottom: 1px solid;
+}
+
+.custom-navbar-items a {
+  margin: 0 20px;
+  text-decoration: none;
+}
+
+.custom-btn-toogle {
+  border: none;
+  background: none;
+}
+
+.custom-btn-toogle:hover {
+  cursor: pointer;
+  color: #6603e5;
+}
+
+.custom-navbar-items .custom-navbar-item {
+  margin: 0 10px;
+  padding: 10px 10px;
+  text-decoration: none;
+}
+
+.custom-navbar-items .custom-navbar-item.active {
+  color: #6603e5;
+  font-weight: 600;
+  border-bottom: 1px solid #6603e5;
+}
+
+.navbar-container-dark .navbar-top-row,
+.navbar-container-dark .custom-navbar-items {
+  border-color: rgb(210 209 213/0.1);
+}
+
+.navbar-container-light .navbar-top-row,
+.navbar-container-light .custom-navbar-items {
+  border-color: rgb(116 115 119/0.1);
+}
+
+.navbar-container-light .custom-navbar-items a {
+  color: black;
+}
+
+.navbar-container-dark .custom-navbar-items a {
+  color: white;
+}
+
+.navbar-top-right {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.navbar-top-menu {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.navbar-top-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.navbar-container-dark .navbar-top-links a {
+  color: white;
+}
+
+.navbar-container-light .navbar-top-links a {
+  color: black;
+}
+
+.navbar-top-links a:hover {
+  color: #6603e5;
+  text-decoration: none;
+}
+
+.navbar-button {
+  background: #4ef1c9;
+  border: 1px solid #4ef1c9;
+  border-radius: 0.5rem;
+  height: 36px;
+  width: 116px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar-button:hover {
+  background: transparent;
+  text-decoration: none;
+}
+
+.navbar-button {
+  color: black;
+}
+
+.navbar-container-dark .navbar-button:hover {
+  color: white;
+}
+
+.navbar-container-light .navbar-button:hover {
+  color: black;
+}
+
+.navbar-container .DocSearch {
+  background: transparent;
+  border-radius: 0.5rem;
+  border: 1px solid #d0d5dd;
+  width: 350px;
+}
+
+.navbar-container .DocSearch:hover {
+  border-color: black;
+  box-shadow: none;
+}
+
+.navbar-container .DocSearch .DocSearch-Button-Keys {
+  min-width: auto;
+}
+
+.navbar-container
+  .DocSearch
+  .DocSearch-Button-Key
+  .DocSearch-Button-Key:first-child {
+  font-size: 16px;
+}
+
+.navbar-container .DocSearch .DocSearch-Button-Key {
+  background: none;
+  border: none;
+  box-shadow: none;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  padding: 0px;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  top: auto;
+}
