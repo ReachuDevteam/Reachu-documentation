@@ -53,19 +53,6 @@
   }
 }
 
-/* .faq-page details summary::-webkit-details-marker,
-.faq-page details summary::marker {
-  display: none;
-  width: 0;
-  height: 0;
-  list-style: none;
-  margin: 0;
-}
-
-.faq-page details > summary {
-  list-style: none;
-} */
-
 .accordion-content *:last-child {
   @apply mb-0;
 }
@@ -91,7 +78,7 @@
       url('/static/landing-page/noise-dark.png');
   }
 
-   .sdk-section {
+  .sdk-section {
     min-height: 320px;
     transition-duration: 1.3s;
     transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -103,7 +90,7 @@
   .intersected {
     opacity: 1;
     transform: translateX(0px);
-  } 
+  }
 
   .dyte-badge {
     @apply mb-4 inline-block rounded-sm bg-zinc-200 p-2 text-text-400 dark:bg-zinc-800;
@@ -150,7 +137,7 @@ body {
 
 /* Dyte Docs Tokens */
 :root {
-  --docs-color-primary: #6603E5;
+  --docs-color-primary: #6603e5;
   /* --docs-color-primary-100: #1a90ff; */
   --docs-color-primary-tint: rgba(33, 96, 253, 0.16);
   --docs-color-primary-tint-light: rgba(33 96 253/0.24);
@@ -203,13 +190,13 @@ body {
     'Liberation Mono', 'Courier New', monospace;
 
   /* Theme colors */
-  --ifm-color-primary: #6603E5;
-  --ifm-color-primary-dark: #6603E5;
-  --ifm-color-primary-darker: #6603E5;
-  --ifm-color-primary-darkest: #6603E5;
-  --ifm-color-primary-light: #6603E5;
-  --ifm-color-primary-lighter: #6603E5;
-  --ifm-color-primary-lightest: #6603E5;
+  --ifm-color-primary: #6603e5;
+  --ifm-color-primary-dark: #6603e5;
+  --ifm-color-primary-darker: #6603e5;
+  --ifm-color-primary-darkest: #6603e5;
+  --ifm-color-primary-light: #6603e5;
+  --ifm-color-primary-lighter: #6603e5;
+  --ifm-color-primary-lightest: #6603e5;
 
   --ifm-navbar-shadow: none;
   --ifm-toc-border-color: #dedede;
@@ -223,15 +210,15 @@ body {
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 html[data-theme='dark'] {
-  --ifm-link-color: #6603E5;
-  --ifm-tabs-color-active-border: #6603E5;
-  --ifm-tabs-color-active: #6603E5;
+  --ifm-link-color: #6603e5;
+  --ifm-tabs-color-active-border: #6603e5;
+  --ifm-tabs-color-active: #6603e5;
 
-  --ifm-color-primary: #6603E5;
+  --ifm-color-primary: #6603e5;
 
   --ifm-footer-background-color: #1c1c1c;
   --ifm-background-surface-color: #161616;
-  --ifm-background-color: #161616;
+  --ifm-background-color: #000000;
   --ifm-toc-border-color: #2e2e2e;
 
   --ifm-color-content: #e7e7e7;

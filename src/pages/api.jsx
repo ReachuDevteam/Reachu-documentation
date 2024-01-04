@@ -77,7 +77,7 @@ export default function Home() {
 
       <div className="mx-auto flex h-96 w-fit items-center">
         <h1 className="text-3xl font-bold">
-          The Reachu APIs section is coming soon.
+          The Reachu API section is coming soon.
         </h1>
       </div>
 
