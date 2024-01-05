@@ -29,7 +29,7 @@ const CustomNavbar = () => {
   };
 
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <div style={{ height: 112 }}></div>;
   }
 
   return (
