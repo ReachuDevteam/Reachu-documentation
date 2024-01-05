@@ -14,7 +14,6 @@ endpoint. You can choose to get:
 - Fetch the Return information for a product or for all products.
 - Fecht products with varians or without varians.
 
-
 ### Products attributes:
 
 This is the product attributes section of our eCommerce SDK documentation. As
@@ -24,10 +23,8 @@ products in your store, ensuring seamless interaction and management. Below,
 you'll find a comprehensive list of attributes, their types, and descriptions to
 guide you through the integration process.
 
-
 <Tabs>
   <TabItem value="Main" label="Main" default>
-
 
 | Property          | Type   | Description                                                   |
 | ----------------- | ------ | ------------------------------------------------------------- |
@@ -50,7 +47,7 @@ guide you through the integration process.
 | `return`          | Object | Return policy and details for the product.                    |
 
 </TabItem>
-  <TabItem value="Return" label="Return"> 
+  <TabItem value="Return" label="Return">
 
 | Property          | Type   | Description                                                              |
 | ----------------- | ------ | ------------------------------------------------------------------------ |
@@ -59,18 +56,18 @@ guide you through the integration process.
 | `return_cost`     | String | Who bears the return cost -> `vendor`or `customer` .                     |
 | `supplier_policy` | String | Detailed supplier policy, including shipping and return details.         |
 
-
 </TabItem>
-
 
   <TabItem value="Price" label="Price">
 
 #### Price
+
 | Property     | Type   | Description                        |
 | ------------ | ------ | ---------------------------------- |
 | amount       | Number | The price of the product.          |
 | currencyCode | String | The currency code for the amount.  |
 | compareAt    | Number | The original price for comparison. |
+
 </TabItem>
   <TabItem value="image" label="Image">
 
@@ -87,7 +84,6 @@ guide you through the integration process.
   </TabItem>
   <TabItem value="Shipping" label="Shipping">
 
-  
 #### Product Shipping Object
 
 | Property           | Type    | Description                                   | Notes |
@@ -112,6 +108,7 @@ guide you through the integration process.
 | currencyCode | String | The currency code for the amount.                           |                      |
 | originalData | Object | Original data containing amount, currency, and base amount. | **To be deprecated** |
 | price        | Object | Object containing the amount and currency code.             |                      |
+
 </TabItem>
 </Tabs>
 
@@ -122,20 +119,24 @@ Retrieve an array of all the products to added to your channels.
 ### Fetching all the products from the channel
 
 ```js
-  const products = await sdk.products.getAll();
-  return products;
+const products = await sdk.products.getAll();
+return products;
 ```
 
 #### Parameters
 
-| Parameters | Type  | Description                                   |
-| ---------- | ----- | --------------------------------------------- |
+| Parameters | Type   | Description                                   |
+| ---------- | ------ | --------------------------------------------- |
 | Currency   | String | An array of product IDs you wish to retrieve. |
-
 
 ### Fetching all the products with a specific currency
 
-In this example, a function fetchAllProducts is defined to retrieve all products, but filtered by a specific currency. The getAll method on the sdk.products object is utilized, and it's invoked with a parameter 'NOK', which is a string representing the currency (Norwegian Krone in this case). This parameter instructs the getAll method to only retrieve products priced in the specified currency.
+In this example, a function fetchAllProducts is defined to retrieve all
+products, but filtered by a specific currency. The getAll method on the
+sdk.products object is utilized, and it's invoked with a parameter 'NOK', which
+is a string representing the currency (Norwegian Krone in this case). This
+parameter instructs the getAll method to only retrieve products priced in the
+specified currency.
 
 <Tabs>
   <TabItem value="Exemple" label="Exemple" default>
@@ -228,14 +229,14 @@ In this example, a function fetchAllProducts is defined to retrieve all products
          "compareAt":"0.00"
       },
       "variants":[
-         
+
       ],
       "barcode":"",
       "options":[
-         
+
       ],
       "subcategories":[
-         
+
       ],
       "images":[
          {
@@ -247,7 +248,7 @@ In this example, a function fetchAllProducts is defined to retrieve all products
          }
       ],
       "productShipping":[
-         
+
       ],
       "supplier":"StyleSculptors",
       "importedProduct":null,
@@ -394,7 +395,7 @@ In this example, a function fetchAllProducts is defined to retrieve all products
          }
       ],
       "subcategories":[
-         
+
       ],
       "images":[
          {
@@ -447,12 +448,9 @@ In this example, a function fetchAllProducts is defined to retrieve all products
   </TabItem>
 </Tabs>
 
-
 Response:
 
-
 ### Fetching all the products without variants
-
 
 ```js
 async function fetchAllProducts() => {
@@ -462,7 +460,6 @@ async function fetchAllProducts() => {
 ```
 
 ### Fetching all the products with return policy
-
 
 ```js
 async function fetchAllProducts() => {
@@ -492,11 +489,11 @@ async function fetchProductsByIds(ids: number[]): Promise<Product[]>
 
 If you want to fetch a single product, simply pass an array with one product ID:
 
-
 <Tabs>
   <TabItem value="Exemple" label="Exemple" default>
 
 ##### Example:
+
 ```js
 const productIds = [12345]; // Replace 12345 with your product ID
 
@@ -504,10 +501,9 @@ const products = await fetchProductsByIds(productIds);
 console.log(products);
 ```
 
-
   </TabItem>
   <TabItem value="response" label="Response">
-    
+
 
 ##### Response:
 
@@ -640,7 +636,6 @@ console.log(products);
   </TabItem>
 </Tabs>
 
-
 ### Example 2: Fetching Multiple Products
 
 To fetch multiple products, extend the array to include all the product IDs
@@ -655,6 +650,7 @@ const productIds = [12345, 67890]; // Replace with your product IDs
 const products = await fetchProductsByIds(productIds);
 console.log(products);
 ```
+
   </TabItem>
   <TabItem value="response" label="Response">
 
@@ -1085,5 +1081,6 @@ console.log(products);
   }
 ]
 ```
+
 </TabItem>
 </Tabs>

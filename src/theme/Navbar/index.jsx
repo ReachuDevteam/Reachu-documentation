@@ -35,6 +35,8 @@ const CustomNavbar = () => {
             )}
           </a>
 
+          {colorMode}
+
           <SearchBar />
 
           <div className="navbar-top-right">
@@ -48,7 +50,7 @@ const CustomNavbar = () => {
                   Blog
                 </a>
                 <a
-                  href="https://www.reachu.io/contact"
+                  href="https://www.reachu.io/?action=contact"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -56,7 +58,7 @@ const CustomNavbar = () => {
                 </a>
               </div>
               <a
-                href="https://www.reachu.io/contact"
+                href="https://www.reachu.io/?action=book"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="navbar-button"
