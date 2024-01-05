@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import OriginalNavbar from '@theme-original/Navbar';
 import SearchBar from '@theme/SearchBar';
 import { useColorMode } from '@docusaurus/theme-common';
@@ -8,14 +8,29 @@ import { useLocation } from '@docusaurus/router';
 const CustomNavbar = () => {
   const { colorMode, setColorMode } = useColorMode();
   const { pathname } = useLocation();
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const savedColorMode = localStorage.getItem('preferredColorMode');
+    if (savedColorMode) {
+      setColorMode(savedColorMode);
+    }
+    setIsLoaded(true);
+  }, []);
 
   const toggleColorMode = () => {
-    setColorMode(colorMode === 'dark' ? 'light' : 'dark');
+    const newColorMode = colorMode === 'dark' ? 'light' : 'dark';
+    setColorMode(newColorMode);
+    localStorage.setItem('preferredColorMode', newColorMode);
   };
 
   const isLinkActive = (linkPath) => {
     return pathname === linkPath;
   };
+
+  if (!isLoaded) {
+    return <div style={{ height: 112 }}></div>;
+  }
 
   return (
     <div>
@@ -48,7 +63,7 @@ const CustomNavbar = () => {
                   Blog
                 </a>
                 <a
-                  href="https://www.reachu.io/contact"
+                  href="https://www.reachu.io/?action=contact"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -56,7 +71,7 @@ const CustomNavbar = () => {
                 </a>
               </div>
               <a
-                href="https://www.reachu.io/contact"
+                href="https://www.reachu.io/?action=book"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="navbar-button"
