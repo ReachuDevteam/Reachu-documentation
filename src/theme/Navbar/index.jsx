@@ -50,8 +50,6 @@ const CustomNavbar = () => {
             )}
           </a>
 
-          {colorMode}
-
           <SearchBar />
 
           <div className="navbar-top-right">
