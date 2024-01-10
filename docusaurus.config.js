@@ -126,6 +126,7 @@ const config = {
             require.resolve('./src/css/api-reference.css'),
             require.resolve('./src/css/custom-reachu-navbar.css'),
             require.resolve('./src/css/custom-reachu-docu.css'),
+            require.resolve('./src/css/custom-alerts.css'),
           ],
         },
         googleAnalytics: {
