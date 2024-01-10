@@ -2,18 +2,15 @@ aside.theme-doc-sidebar-container {
   padding-top: 15px;
 }
 
-.sidebar_src-theme-DocSidebar-Desktop-styles-module {
+aside.theme-doc-sidebar-container div:first-child {
   padding-right: 30px;
 }
 
-.sidebar_src-theme-DocSidebar-Desktop-styles-module
-  ul.menu__list
-  > li
-  > a.menu__link--active {
+ul.menu__list > li > a.menu__link--active {
   border-right: none;
 }
 
-.sidebar_src-theme-DocSidebar-Desktop-styles-module .menu__link {
+.menu__link {
   padding-top: 10px;
   padding-bottom: 10px;
   border-radius: 0.5rem;
@@ -21,6 +18,13 @@ aside.theme-doc-sidebar-container {
 
 .sidebar-item-keys {
   margin-bottom: 15px;
+  padding-left: 15px;
+  font-size: 14px;
+}
+
+.sidebar-item-keys svg {
+  width: 15px;
+  height: 15px;
 }
 
 .sidebar-item-link {
@@ -28,7 +32,7 @@ aside.theme-doc-sidebar-container {
   border-radius: 0.5rem;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .sidebar-item-link:hover {
@@ -40,8 +44,5 @@ aside.theme-doc-sidebar-container {
   font-weight: 600;
   padding-top: 20px;
   padding-bottom: 5px;
-}
-
-.menu__link {
-  font-weight: 400;
+  padding-left: 12px;
 }

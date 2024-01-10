@@ -12,7 +12,7 @@ import {
   BookIcon,
   EducationIcon,
   ShoppingBagIcon,
-  PinIcon,
+  TypesIcon,
 } from './sidebarIcons';
 
 const iconsMap = {
@@ -24,7 +24,7 @@ const iconsMap = {
   'documentation/checkout': ShoppingBagIcon,
   'documentation/payment': PaymentIcon,
   'documentation/discount-codes': TagIcon,
-  'documentation/types': PinIcon,
+  'documentation/types': TypesIcon,
   tutorials: EducationIcon,
   resources: BookIcon,
 };
@@ -45,7 +45,7 @@ export default function SidebarItem({ item }) {
         className={linkClass}
         aria-current={isActive ? 'page' : undefined}
       >
-        {Icon && <Icon style={{ marginRight: '8px' }} />}
+        {Icon && <Icon style={{ marginRight: '8px', width: 15, height: 15 }} />}
         {item.label}
       </Link>
     </li>
