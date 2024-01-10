@@ -25,6 +25,10 @@ const sidebars = {
     },
   ],
    */
+  /*sdk: {
+    title1: ['sdk/guides', 'sdk/getting-started'],
+    title2: ['sdk/tutorials'],
+  },*/
 };
 
 module.exports = sidebars;

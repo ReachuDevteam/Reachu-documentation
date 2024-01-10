@@ -2,7 +2,8 @@
   {
     "title": "Getting Started",
     "description": "Getting Started",
-    "to": "/sdk/getting-started"
+    "to": "/sdk/getting-started",
+    "icon": "fas fa-play-circle"
   },
   {
     "title": "Documentation",

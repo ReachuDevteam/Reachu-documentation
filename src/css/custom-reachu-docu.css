@@ -1,3 +1,48 @@
 aside.theme-doc-sidebar-container {
   padding-top: 15px;
 }
+
+aside.theme-doc-sidebar-container div:first-child {
+  padding-right: 30px;
+}
+
+ul.menu__list > li > a.menu__link--active {
+  border-right: none;
+}
+
+.menu__link {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 0.5rem;
+}
+
+.sidebar-item-keys {
+  margin-bottom: 15px;
+  padding-left: 15px;
+  font-size: 14px;
+}
+
+.sidebar-item-keys svg {
+  width: 15px;
+  height: 15px;
+}
+
+.sidebar-item-link {
+  color: black;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sidebar-item-link:hover {
+  text-decoration: none;
+}
+
+.sidebar-item-title {
+  font-size: 14px;
+  font-weight: 600;
+  padding-top: 20px;
+  padding-bottom: 5px;
+  padding-left: 12px;
+}

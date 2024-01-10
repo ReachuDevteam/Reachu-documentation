@@ -1,5 +1,6 @@
 {
   "position": 3,
   "label": "Documentation",
-  "collapsible": true
+  "collapsible": true,
+  "collapsed": true
 }
