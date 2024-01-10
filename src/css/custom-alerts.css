@@ -1,24 +1,26 @@
 :root {
-  --key-color: black;
+  --alert-color: #6941c6;
+  --alert-background-color: #f9f5ff;
 }
 
 html[data-theme='dark'] {
-  --key-color: white;
+  --alert-color: #4ef1c9;
+  --alert-background-color: rgb(64 64 64 / 39%);
 }
 
 .alert {
-  /*border: var(--key-color);*/
-  border: 1px solid #7f56d9;
-  background-color: #f9f5ff;
-  color: #6941c6;
+  border: 1px solid var(--alert-color);
+  background-color: var(--alert-background-color);
+  color: var(--alert-color);
   /* title 53389E */
   /* description 6941C6 */
 }
 
 .alert svg {
-  fill: #53389e !important;
+  fill: var(--alert-color) !important;
 }
 
 .alert a {
-  color: #53389e;
+  color: var(--alert-color);
+  font-weight: 500;
 }
