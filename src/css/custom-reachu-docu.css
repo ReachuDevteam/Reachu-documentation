@@ -1,3 +1,47 @@
 aside.theme-doc-sidebar-container {
   padding-top: 15px;
 }
+
+.sidebar_src-theme-DocSidebar-Desktop-styles-module {
+  padding-right: 30px;
+}
+
+.sidebar_src-theme-DocSidebar-Desktop-styles-module
+  ul.menu__list
+  > li
+  > a.menu__link--active {
+  border-right: none;
+}
+
+.sidebar_src-theme-DocSidebar-Desktop-styles-module .menu__link {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 0.5rem;
+}
+
+.sidebar-item-keys {
+  margin-bottom: 15px;
+}
+
+.sidebar-item-link {
+  color: black;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-item-link:hover {
+  text-decoration: none;
+}
+
+.sidebar-item-title {
+  font-size: 14px;
+  font-weight: 600;
+  padding-top: 20px;
+  padding-bottom: 5px;
+}
+
+.menu__link {
+  font-weight: 400;
+}

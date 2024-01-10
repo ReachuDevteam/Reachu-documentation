@@ -48,11 +48,19 @@ function defineSection(
 }
 
 const SECTIONS = [
-  defineSection('sdk', { version: '1.2.1', label: '1.2.1', isLast: true }),
-  defineSection('shopify'),
-  defineSection('woocommerce'),
-  defineSection('wordpress'),
-  defineSection('universal-integration'),
+  defineSection(
+    'sdk',
+    {},
+    { sidebarPath: require.resolve('./sidebars-sdk.js') }
+  ),
+  defineSection(
+    'universal-integration',
+    {},
+    { sidebarPath: require.resolve('./sidebars-universal-integration.js') }
+  ),
+  //defineSection('shopify'),
+  //defineSection('woocommerce'),
+  //defineSection('wordpress'),
 ];
 
 const resourcesHTML = fs.readFileSync('./src/snippets/resources.html', 'utf-8');
@@ -148,6 +156,7 @@ const config = {
       docs: {
         sidebar: {
           hideable: true,
+          autoCollapseCategories: true,
         },
       },
       navbar: {
@@ -165,8 +174,8 @@ const config = {
           {
             type: 'docsVersionDropdown',
             position: 'right',
-            label: 'Version', // puedes cambiar esto al nombre de tu versión actual
-            to: '/', // este es el enlace predeterminado, que generalmente apunta a la documentación más reciente
+            label: 'Version',
+            to: '/',
           },
           {
             label: 'SDK',
@@ -190,13 +199,6 @@ const config = {
             position: 'right',
             className: 'navbar-book-demo',
           },
-          /*
-          {
-            label: 'Sign Up',
-            href: 'https://dev.dyte.io/register',
-            position: 'right',
-            className: 'dev-portal-signup dev-portal-link',
-          },*/
         ],
       },
       footer: {
