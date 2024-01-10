@@ -1,3 +1,11 @@
+:root {
+  --key-color: black;
+}
+
+html[data-theme='dark'] {
+  --key-color: white;
+}
+
 aside.theme-doc-sidebar-container {
   padding-top: 15px;
 }
@@ -20,6 +28,7 @@ ul.menu__list > li > a.menu__link--active {
   margin-bottom: 15px;
   padding-left: 15px;
   font-size: 14px;
+  color: var(--key-color);
 }
 
 .sidebar-item-keys svg {
@@ -28,7 +37,6 @@ ul.menu__list > li > a.menu__link--active {
 }
 
 .sidebar-item-link {
-  color: black;
   border-radius: 0.5rem;
   display: flex;
   align-items: center;
