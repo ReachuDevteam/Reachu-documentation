@@ -3,6 +3,7 @@ import SearchBar from '@theme/SearchBar';
 import { useColorMode } from '@docusaurus/theme-common';
 import Link from '@docusaurus/Link';
 import { useLocation } from '@docusaurus/router';
+import OriginalNavbar from '@theme-original/Navbar';
 
 const CustomNavbar = () => {
   const { colorMode, setColorMode } = useColorMode();
@@ -130,7 +131,7 @@ const CustomNavbar = () => {
         </div>
       </div>
       <div className="navbar-original">
-        <div className="navbar"></div>
+        <OriginalNavbar />
       </div>
     </div>
   );
