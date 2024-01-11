@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import OriginalNavbar from '@theme-original/Navbar';
 import SearchBar from '@theme/SearchBar';
 import { useColorMode } from '@docusaurus/theme-common';
 import Link from '@docusaurus/Link';
@@ -29,7 +28,11 @@ const CustomNavbar = () => {
   };
 
   if (!isLoaded) {
-    return <div style={{ height: 112 }}></div>;
+    return (
+      <div style={{ height: 112 }}>
+        <div className="navbar" style={{ display: 'none' }}></div>
+      </div>
+    );
   }
 
   return (
@@ -127,7 +130,7 @@ const CustomNavbar = () => {
         </div>
       </div>
       <div className="navbar-original">
-        <OriginalNavbar />
+        <div className="navbar"></div>
       </div>
     </div>
   );
