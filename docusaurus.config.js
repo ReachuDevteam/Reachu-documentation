@@ -57,6 +57,13 @@ const SECTIONS = [
     'universal-integration',
     {},
     { sidebarPath: require.resolve('./sidebars-universal-integration.js') }
+
+  ),
+  defineSection(
+    'graphql',
+    {},
+    { sidebarPath: require.resolve('./sidebars-graphql.js') }
+
   ),
   //defineSection('shopify'),
   //defineSection('woocommerce'),

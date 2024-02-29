@@ -121,6 +121,14 @@ const CustomNavbar = () => {
             API Reference
           </Link>
           <Link
+            href="/graphql"
+            className={`custom-navbar-item ${
+              isLinkActive('/graphql') ? 'active' : ''
+            }`}
+          >
+            GraphQL
+          </Link>
+          <Link
             href="/universal-integration"
             className={`custom-navbar-item ${
               isLinkActive('/universal-integration') ? 'active' : ''
