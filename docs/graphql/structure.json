@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Getting Started",
+    "description": "Getting Started",
+    "to": "/sdk/getting-started",
+    "icon": "fas fa-play-circle"
+  },
+  {
+    "title": "Documentation",
+    "description": "Documentation",
+    "to": "/sdk/documentation/product"
+  },
+  {
+    "title": "Tutorials",
+    "description": "Tutorials",
+    "to": "/sdk/tutorials"
+  },
+  {
+    "title": "Resources",
+    "description": "Resources",
+    "to": "/sdk/resources"
+  }
+]
