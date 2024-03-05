@@ -1,5 +1,5 @@
 module.exports = {
-  sdk: [
+  graphql: [
     {
       type: 'html',
       value: `
@@ -25,9 +25,10 @@ module.exports = {
       value: `<div class="sidebar-item-title">Getting Started</div>`,
     },
     'getting-started',
+    'key-concepts',
     {
       type: 'html',
-      value: `<div class="sidebar-item-title">Documentation</div>`,
+      value: `<div class="sidebar-item-title">API References</div>`,
     },
     'documentation/product',
     'documentation/cart',
@@ -36,11 +37,8 @@ module.exports = {
     'documentation/payment',
     'documentation/discount-codes',
     'documentation/types',
-    {
-      type: 'html',
-      value: `<div class="sidebar-item-title">Resources</div>`,
-    },
-    'tutorials',
-    'resources',
   ],
 };
+
+
+
