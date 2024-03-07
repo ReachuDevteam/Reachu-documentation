@@ -20,6 +20,7 @@
     "format:docs": "prettier -w docs"
   },
   "dependencies": {
+    "@apollo/sandbox": "^2.5.1",
     "@docusaurus/core": "^2.4.3",
     "@docusaurus/module-type-aliases": "^2.4.3",
     "@docusaurus/preset-classic": "^2.4.3",

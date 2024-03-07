@@ -25,6 +25,7 @@ module.exports = {
       value: `<div class="sidebar-item-title">Getting Started</div>`,
     },
     'getting-started',
+    'apollo-sandbox',
     'key-concepts',
     {
       type: 'html',
