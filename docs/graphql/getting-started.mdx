@@ -1,6 +1,10 @@
 ---
+title: Getting started
 sidebar_position: 2
+slug: /getting-started
+className: sidebar-overview
 ---
+
 import signUpImg from '@site/static/img/signup.png';
 import createChannelImg from '@site/static/img/create-channel.png';
 import getApikeyImg from '@site/static/img/get-apikey-graphql.png';
@@ -22,10 +26,6 @@ Reachu platform.
 https://test.reachu.io/
 ```
 
-
-
-
-
 import DocusaurusImageUrl from '@site/static/img/signup.png';
 
 <img src={signUpImg} width={500} />
@@ -34,11 +34,9 @@ import DocusaurusImageUrl from '@site/static/img/signup.png';
 
 <img src={createChannelImg} width={500} />
 
-
 #### 3. Get you Api key for development:
 
 <img src={getApikeyImg} width={500} />
-
 
 ## Initialization of you GraphQL Client
 
@@ -47,14 +45,13 @@ SDK. It is the only class that you need to instantiate in order to use the SDK.
 To instantiate SdkClient, you can run the following command:
 
 ```javascript
-import { GraphQLClient, gql } from 'graphql-request'
+import { GraphQLClient, gql } from 'graphql-request';
 
-const endpoint = 'https://graph-ql-dev.reachu.io/'
-const client = new GraphQLClient(endpoint)
+const endpoint = 'https://graph-ql-dev.reachu.io/';
+const client = new GraphQLClient(endpoint);
 const headers = {
-  'Authorization': '<API Key Here>',
-}
-
+  Authorization: '<API Key Here>',
+};
 ```
 
 It is recommended that the new SdkClient method is called prior to any other SDK
