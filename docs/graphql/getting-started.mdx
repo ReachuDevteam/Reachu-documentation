@@ -54,17 +54,3 @@ const headers = {
 };
 ```
 
-It is recommended that the new SdkClient method is called prior to any other SDK
-operations. You can then call the getSDK function every time you need to use an
-SDK operation.
-
-```js
-import { SdkClient } from '@reachu/sdk';
-
-let sdk: SdkClient;
-
-export function getSDK(): SdkClient {
-  if (!sdk) sdk = new SdkClient('YOUR_API_KEY', 'https://api.reachu.io');
-  return sdk;
-}
-```
