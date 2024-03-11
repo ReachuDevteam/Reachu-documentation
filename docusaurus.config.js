@@ -49,6 +49,10 @@ function defineSection(
 
 const SECTIONS = [
   defineSection(
+    'api-rest',
+    {},
+    { sidebarPath: require.resolve('./sidebars-api-rest.js') }
+  ), defineSection(
     'sdk',
     {},
     { sidebarPath: require.resolve('./sidebars-sdk.js') }
@@ -65,9 +69,6 @@ const SECTIONS = [
     { sidebarPath: require.resolve('./sidebars-graphql.js') }
 
   ),
-  //defineSection('shopify'),
-  //defineSection('woocommerce'),
-  //defineSection('wordpress'),
 ];
 
 const resourcesHTML = fs.readFileSync('./src/snippets/resources.html', 'utf-8');

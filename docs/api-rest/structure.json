@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Getting Started",
+    "description": "Getting Started",
+    "to": "/api-rest/getting-started",
+    "icon": "fas fa-play-circle"
+  },
+  {
+    "title": "Documentation",
+    "description": "Documentation",
+    "to": "/api-rest/documentation/product"
+  },
+  {
+    "title": "Tutorials",
+    "description": "Tutorials",
+    "to": "/api-rest/tutorials"
+  },
+  {
+    "title": "Resources",
+    "description": "Resources",
+    "to": "/api-rest/resources"
+  }
+]

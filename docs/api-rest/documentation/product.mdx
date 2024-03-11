@@ -1,0 +1,1085 @@
+---
+title: Product
+sidebar_position: 1
+---
+
+# Product
+
+In order to get product information you need to interact with the channel
+endpoint. You can choose to get:
+
+- All products from a specific channel
+- Individual product information by using the product id
+- Fetch all products in a specific currency.
+- Fetch the Return information for a product or for all products.
+- Fecht products with varians or without varians.
+
+### Products attributes:
+
+This is the product attributes section of our eCommerce SDK documentation. As
+you build and integrate your eCommerce solutions, understanding the product
+attributes is crucial. These attributes provide essential details about the
+products in your store, ensuring seamless interaction and management. Below,
+you'll find a comprehensive list of attributes, their types, and descriptions to
+guide you through the integration process.
+
+<Tabs>
+  <TabItem value="Main" label="Main" default>
+
+| Property          | Type   | Description                                                   |
+| ----------------- | ------ | ------------------------------------------------------------- |
+| `id`              | Number | Unique identifier for the product.                            |
+| `title`           | String | Name or title of the product.                                 |
+| `description`     | String | Detailed description of the product.                          |
+| `tags`            | String | Tags associated with the product.                             |
+| `sku`             | String | Stock Keeping Unit code for the product.                      |
+| `quantity`        | Number | Available quantity of the product in stock.                   |
+| `price`           | Object | Pricing details of the product.                               |
+| `variants`        | Array  | Different variations of the product (e.g., size, color).      |
+| `barcode`         | String | Barcode associated with the product.                          |
+| `options`         | Array  | Additional options related to the product.                    |
+| `subcategories`   | Array  | Subcategories the product belongs to.                         |
+| `images`          | Array  | Array of image URLs representing the product.                 |
+| `productShipping` | Array  | Shipping options and details for the product.                 |
+| `supplier`        | String | Supplier or manufacturer of the product.                      |
+| `importedProduct` | Object | Details if the product is imported or has special attributes. |
+| `referralFee`     | Number | Fee for referring the product to others.                      |
+| `return`          | Object | Return policy and details for the product.                    |
+
+</TabItem>
+  <TabItem value="Return" label="Return">
+
+| Property          | Type   | Description                                                              |
+| ----------------- | ------ | ------------------------------------------------------------------------ |
+| `return_right`    | String | Number of days for the return right. `10`or `30`                         |
+| `return_label`    | String | Indicates if the return label is included.-> `included`or `not_included` |
+| `return_cost`     | String | Who bears the return cost -> `vendor`or `customer` .                     |
+| `supplier_policy` | String | Detailed supplier policy, including shipping and return details.         |
+
+</TabItem>
+
+  <TabItem value="Price" label="Price">
+
+#### Price
+
+| Property     | Type   | Description                        |
+| ------------ | ------ | ---------------------------------- |
+| amount       | Number | The price of the product.          |
+| currencyCode | String | The currency code for the amount.  |
+| compareAt    | Number | The original price for comparison. |
+
+</TabItem>
+  <TabItem value="image" label="Image">
+
+#### Images
+
+| Property | Type   | Description                                             |
+| -------- | ------ | ------------------------------------------------------- |
+| id       | Number | Unique identifier for the image.                        |
+| url      | String | Direct link to the image.                               |
+| width    | Number | Width of the image in pixels.                           |
+| height   | Number | Height of the image in pixels.                          |
+| order    | Number | The order or sequence in which the image should appear. |
+
+  </TabItem>
+  <TabItem value="Shipping" label="Shipping">
+
+#### Product Shipping Object
+
+| Property           | Type    | Description                                   | Notes |
+| ------------------ | ------- | --------------------------------------------- | ----- |
+| id                 | String  | Unique identifier for the shipping type.      |       |
+| name               | String  | Name of the shipping method.                  |       |
+| description        | String  | Description of the shipping method.           |       |
+| customPriceEnabled | Boolean | Indicates if custom pricing is enabled.       |       |
+| default            | Boolean | Indicates if this is the default method.      |       |
+| shippingCountry    | Array   | List of countries and their shipping details. |       |
+
+  </TabItem>
+<TabItem value="shippingCountry" label="shippingCountry">
+
+#### Shipping Country Object
+
+| Property     | Type   | Description                                                 | Notes                |
+| ------------ | ------ | ----------------------------------------------------------- | -------------------- |
+| id           | String | Unique identifier for the country shipping data.            |                      |
+| amount       | String | Shipping price for the country.                             |                      |
+| country      | String | Country code.                                               |                      |
+| currencyCode | String | The currency code for the amount.                           |                      |
+| originalData | Object | Original data containing amount, currency, and base amount. | **To be deprecated** |
+| price        | Object | Object containing the amount and currency code.             |                      |
+
+</TabItem>
+</Tabs>
+
+## Get all products
+
+Retrieve an array of all the products to added to your channels.
+
+### Fetching all the products from the channel
+
+```js
+const products = await sdk.products.getAll();
+return products;
+```
+
+#### Parameters
+
+| Parameters | Type   | Description                                   |
+| ---------- | ------ | --------------------------------------------- |
+| Currency   | String | An array of product IDs you wish to retrieve. |
+
+### Fetching all the products with a specific currency
+
+In this example, a function fetchAllProducts is defined to retrieve all
+products, but filtered by a specific currency. The getAll method on the
+sdk.products object is utilized, and it's invoked with a parameter 'NOK', which
+is a string representing the currency (Norwegian Krone in this case). This
+parameter instructs the getAll method to only retrieve products priced in the
+specified currency.
+
+<Tabs>
+  <TabItem value="Exemple" label="Exemple" default>
+
+```js
+  async function fetchAllProducts() => {
+  const products = await sdk.products.getAll('NOK');
+  return products;
+};
+```
+
+  </TabItem>
+  <TabItem value="response" label="Response">
+
+```json
+[
+   {
+      "id":26908,
+      "title":"Backpack (26L)",
+      "description":"<p>The Nike Sportswear RPM Backpack is made to hold it all. With a padded back for comfort and a versatile strap system, it's ideal for all your on-the-go needs.</p>",
+      "tags":"",
+      "sku":"OHL9FCI3DTYFOCBG",
+      "quantity":50,
+      "price":{
+         "amount":"900.00",
+         "currencyCode":"NOK",
+         "baseAmount":"77.35",
+         "compareAt":"1200.00"
+      },
+      "variants":[],
+      "barcode":"",
+      "options":[],
+      "subcategories":[],
+      "images":[
+         {
+            "id":24644,
+            "url":"https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/26908-7ee517e1-392b-47f0-81c6-0dd4af47fb75.jpeg",
+            "width":1728,
+            "height":2160,
+            "order":0
+         },
+      ],
+      "productShipping":[
+         {
+            "id":"473dee90-2285-49ec-9083-e67a092d54b7",
+            "name":"Standard Shipping",
+            "description":"Standard Innenlands Shipping",
+            "customPriceEnabled":false,
+            "default":false,
+            "shippingCountry":[
+               {
+                  "id":"2714bf50-3395-4bfd-bab8-9f5c60728729",
+                  "amount":"49.00",
+                  "country":"NO",
+                  "currencyCode":"NOK",
+                  "originalData":{
+                     "amount":"49.00",
+                     "currencyCode":"NOK",
+                     "baseAmount":null
+                  },
+                  "price":{
+                     "amount":"49.00",
+                     "currencyCode":"NOK"
+                  }
+               }
+            ]
+         }
+      ],
+      "supplier":"StyleSculptors",
+      "importedProduct":null,
+      "referralFee":10,
+      "categories":[
+         {
+            "id":58,
+            "name":"Apparel & Accessories"
+         }
+      ]
+   },
+
+      "id":27103,
+      "title":"Test Digital",
+      "description":"<p>Test Digital</p>",
+      "tags":"",
+      "sku":"GNEYJPCIUNHSTFLQ",
+      "quantity":0,
+      "price":{
+         "amount":"100.00",
+         "currencyCode":"NOK",
+         "baseAmount":"8.59",
+         "compareAt":"0.00"
+      },
+      "variants":[
+
+      ],
+      "barcode":"",
+      "options":[
+
+      ],
+      "subcategories":[
+
+      ],
+      "images":[
+         {
+            "id":25157,
+            "url":"https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/27103-2ce131c7-feb9-448b-bae1-21e526e07149.png",
+            "width":457,
+            "height":457,
+            "order":0
+         }
+      ],
+      "productShipping":[
+
+      ],
+      "supplier":"StyleSculptors",
+      "importedProduct":null,
+      "referralFee":12,
+      "categories":[
+         {
+            "id":4401,
+            "name":"Computer Software"
+         }
+      ]
+   },
+   {
+      "id":27296,
+      "title":"SELECTED FEMME",
+      "description":"<p>Paula LS Short Dress fra Selected Femme.&nbsp;Gjør et varig inntrykk med Selected Femmes&nbsp;metalliske jacquard-minikjole. Laget med minnerike øyeblikk i tankene og har et nydelig blomsterdesign i sølv som er en kontrast mot det mørke stoffet. De lange puffermene gir kjolen en strukturert silhuett, mens snittet i midjen er flatterende for figuren din. Kjolen trenger ikke mye når det kommer til tilbehør, så vi anbefaler å style den med et par sorte, høye hæler med stropper og matchende øreringer i sølv.</p><p>- V-hals</p><p>- Halv knappelist</p><p>- Tekstiltrukne knapper</p><p>- Lange puffermer</p><p>- Elastiske ermelinninger</p><p>- Snittlinje i midjen</p><p>Metallisk jacquard-design</p><p>- Regular fit</p><p>Materiale:&nbsp;100% polyester</p>",
+      "tags":"",
+      "sku":"A50OLNJFDZ7VUDWH",
+      "quantity":50,
+      "price":{
+         "amount":"1000.00",
+         "currencyCode":"NOK",
+         "baseAmount":"85.94",
+         "compareAt":"1200.00"
+      },
+      "variants":[
+         {
+            "id":35818,
+            "barcode":"",
+            "price":{
+               "amount":"1000.00",
+               "baseAmount":"1000.00",
+               "currencyCode":"NOK",
+               "compareAt":"1200.00"
+            },
+            "quantity":9,
+            "sku":"34",
+            "title":"34",
+            "images":[
+               {
+                  "id":79306,
+                  "url":"https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/27296-07fe9ee4-f03a-470c-b616-cfd6034e7363.jpeg",
+                  "width":600,
+                  "height":600,
+                  "order":0
+               }
+            ]
+         },
+         {
+            "id":35819,
+            "barcode":"",
+            "price":{
+               "amount":"1000.00",
+               "baseAmount":"1000.00",
+               "currencyCode":"NOK",
+               "compareAt":"1200.00"
+            },
+            "quantity":10,
+            "sku":"36",
+            "title":"36",
+            "images":[
+               {
+                  "id":79307,
+                  "url":"https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/27296-be333ff6-e19b-496a-a869-a0716697ca92.jpeg",
+                  "width":600,
+                  "height":600,
+                  "order":0
+               }
+            ]
+         },
+         {
+            "id":35820,
+            "barcode":"",
+            "price":{
+               "amount":"1000.00",
+               "baseAmount":"1000.00",
+               "currencyCode":"NOK",
+               "compareAt":"1200.00"
+            },
+            "quantity":10,
+            "sku":"38",
+            "title":"38",
+            "images":[
+               {
+                  "id":79308,
+                  "url":"https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/27296-405393b2-d6cf-4910-a5a0-44754228bb85.jpeg",
+                  "width":1200,
+                  "height":1200,
+                  "order":0
+               }
+            ]
+         },
+         {
+            "id":35821,
+            "barcode":"",
+            "price":{
+               "amount":"1000.00",
+               "baseAmount":"1000.00",
+               "currencyCode":"NOK",
+               "compareAt":"1200.00"
+            },
+            "quantity":10,
+            "sku":"40",
+            "title":"40",
+            "images":[
+               {
+                  "id":79309,
+                  "url":"https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/27296-320b179d-a9ec-4e77-b454-3d2a1f29e6e1.jpeg",
+                  "width":1200,
+                  "height":1200,
+                  "order":0
+               }
+            ]
+         },
+         {
+            "id":35822,
+            "barcode":"",
+            "price":{
+               "amount":"1000.00",
+               "baseAmount":"1000.00",
+               "currencyCode":"NOK",
+               "compareAt":"1200.00"
+            },
+            "quantity":10,
+            "sku":"42",
+            "title":"42",
+            "images":[
+               {
+                  "id":79310,
+                  "url":"https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/27296-45bc0448-80dd-4f45-96e1-c05c8d92afd5.jpeg",
+                  "width":600,
+                  "height":600,
+                  "order":0
+               }
+            ]
+         }
+      ],
+      "barcode":"",
+      "options":[
+         {
+            "id":5817,
+            "name":"Size",
+            "order":1,
+            "values":"34,36,38,40,42"
+         }
+      ],
+      "subcategories":[
+
+      ],
+      "images":[
+         {
+            "id":79282,
+            "url":"https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/27296-2a006262-2d09-47cf-acfd-0293e9bce00d.jpeg",
+            "width":1024,
+            "height":1024,
+            "order":0
+         },
+      ],
+      "productShipping":[
+         {
+            "id":"473dee90-2285-49ec-9083-e67a092d54b7",
+            "name":"Standard Shipping",
+            "description":"Standard Innenlands Shipping",
+            "customPriceEnabled":false,
+            "default":false,
+            "shippingCountry":[
+               {
+                  "id":"2714bf50-3395-4bfd-bab8-9f5c60728729",
+                  "amount":"49.00",
+                  "country":"NO",
+                  "currencyCode":"NOK",
+                  "originalData":{
+                     "amount":"49.00",
+                     "currencyCode":"NOK",
+                     "baseAmount":null
+                  },
+                  "price":{
+                     "amount":"49.00",
+                     "currencyCode":"NOK"
+                  }
+               }
+            ]
+         }
+      ],
+      "supplier":"StyleSculptors",
+      "importedProduct":null,
+      "referralFee":0,
+      "categories":[
+         {
+            "id":58,
+            "name":"Apparel & Accessories"
+         }
+      ]
+   }
+]
+```
+
+  </TabItem>
+</Tabs>
+
+Response:
+
+### Fetching all the products without variants
+
+```js
+async function fetchAllProducts() => {
+  const products = await sdk.products.getAll('NOK', {returnVariants: false});
+  return products;
+});
+```
+
+### Fetching all the products with return policy
+
+```js
+async function fetchAllProducts() => {
+  const products = await sdk.products.getAll('NOK', {returnVariants: false, return: true});
+  return products;
+});
+```
+
+## Get products by ids
+
+This function allows you to retrieve an array of products that have been added
+to your channel based on their IDs.
+
+### Function Signature
+
+```js
+async function fetchProductsByIds(ids: number[]): Promise<Product[]>
+```
+
+#### Parameters
+
+| Parameters | Type  | Description                                   |
+| ---------- | ----- | --------------------------------------------- |
+| ids        | Array | An array of product IDs you wish to retrieve. |
+
+### Exemple 1: Fetshing a Singel product
+
+If you want to fetch a single product, simply pass an array with one product ID:
+
+<Tabs>
+  <TabItem value="Exemple" label="Exemple" default>
+
+##### Example:
+
+```js
+const productIds = [12345]; // Replace 12345 with your product ID
+
+const products = await fetchProductsByIds(productIds);
+console.log(products);
+```
+
+  </TabItem>
+  <TabItem value="response" label="Response">
+
+##### Response:
+
+```json
+[
+  {
+    "id": 26914,
+    "title": "7 Shakra Bracelet",
+    "description": "<p>7 chakra bracelet, in blue or black.</p>",
+    "tags": "",
+    "sku": "SMNMN7ZP8GZS0EJG",
+    "quantity": 200,
+    "price": {
+      "amount": "42.99",
+      "currencyCode": "NOK",
+      "baseAmount": "3.69",
+      "compareAt": "0"
+    },
+    "variants": [
+      {
+        "id": 34258,
+        "barcode": "",
+        "price": {
+          "amount": "42.99",
+          "baseAmount": "42.99",
+          "currencyCode": "NOK",
+          "compareAt": "44.99"
+        },
+        "quantity": 100,
+        "sku": "",
+        "title": "Blue",
+        "images": [
+          {
+            "id": 24665,
+            "url": "https://cdn.shopify.com/s/files/1/0830/3099/9318/products/navy-blue-chakra-bracelet_925x_02e24e33-5eee-4dd0-b61f-e262fa9e6934.jpg?v=1695289682&originId=46288434659606",
+            "width": null,
+            "height": null,
+            "order": 1
+          }
+        ]
+      },
+      {
+        "id": 34259,
+        "barcode": "",
+        "price": {
+          "amount": "42.99",
+          "baseAmount": "42.99",
+          "currencyCode": "NOK",
+          "compareAt": "44.99"
+        },
+        "quantity": 100,
+        "sku": "",
+        "title": "Black",
+        "images": [
+          {
+            "id": 24666,
+            "url": "https://cdn.shopify.com/s/files/1/0830/3099/9318/products/7-chakra-bracelet_925x_8615b27c-3566-43f5-8a37-edd30ba8a966.jpg?v=1695289682&originId=46288434692374",
+            "width": null,
+            "height": null,
+            "order": 0
+          }
+        ]
+      }
+    ],
+    "barcode": "",
+    "options": [
+      {
+        "id": 5499,
+        "name": "Color",
+        "order": 1,
+        "values": "Blue,Black"
+      }
+    ],
+    "subcategories": [],
+    "images": [
+      {
+        "id": 24667,
+        "url": "https://cdn.shopify.com/s/files/1/0830/3099/9318/products/navy-blue-chakra-bracelet_925x_02e24e33-5eee-4dd0-b61f-e262fa9e6934.jpg?v=1695289682",
+        "width": 925,
+        "height": 618,
+        "order": 1
+      },
+      {
+        "id": 24668,
+        "url": "https://cdn.shopify.com/s/files/1/0830/3099/9318/products/7-chakra-bracelet_925x_8615b27c-3566-43f5-8a37-edd30ba8a966.jpg?v=1695289682",
+        "width": 925,
+        "height": 1386,
+        "order": 0
+      }
+    ],
+    "productShipping": [
+      {
+        "id": "473dee90-2285-49ec-9083-e67a092d54b7",
+        "name": "Standard Shipping",
+        "description": "Standard Innenlands Shipping",
+        "customPriceEnabled": false,
+        "default": false,
+        "shippingCountry": [
+          {
+            "id": "2714bf50-3395-4bfd-bab8-9f5c60728729",
+            "amount": "49.00",
+            "country": "NO",
+            "currencyCode": "NOK",
+            "originalData": {
+              "amount": "49.00",
+              "currencyCode": "NOK",
+              "baseAmount": null
+            },
+            "price": {
+              "amount": "49.00",
+              "currencyCode": "NOK"
+            }
+          }
+        ]
+      }
+    ],
+    "supplier": "StyleSculptors",
+    "importedProduct": null,
+    "referralFee": 10,
+    "categories": [
+      {
+        "id": 59,
+        "name": "Animals & Pet Supplies"
+      }
+    ]
+  }
+]
+```
+
+  </TabItem>
+</Tabs>
+
+### Example 2: Fetching Multiple Products
+
+To fetch multiple products, extend the array to include all the product IDs
+you're interested in:
+
+<Tabs>
+  <TabItem value="Exemple" label="Exemple" default>
+
+```js
+const productIds = [12345, 67890]; // Replace with your product IDs
+
+const products = await fetchProductsByIds(productIds);
+console.log(products);
+```
+
+  </TabItem>
+  <TabItem value="response" label="Response">
+
+```json
+[
+  {
+    "id": 26905,
+    "title": "Men's Joggers",
+    "description": "<p>The Nike Sportswear Joggers combine a classic silhouette with lightweight fabric for an elevated, versatile look ready for warmer weather.</p>",
+    "tags": "",
+    "sku": "7EZXKHL5H3SCAL4M",
+    "quantity": 90,
+    "price": {
+      "amount": "800.00",
+      "currencyCode": "NOK",
+      "baseAmount": "68.75",
+      "compareAt": "900.00"
+    },
+    "variants": [
+      {
+        "id": 34233,
+        "barcode": "",
+        "price": {
+          "amount": "800.00",
+          "baseAmount": "800.00",
+          "currencyCode": "NOK",
+          "compareAt": "900.00"
+        },
+        "quantity": 10,
+        "sku": "Yellow",
+        "title": "Yellow-Small",
+        "images": [
+          {
+            "id": 24618,
+            "url": "https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/26905-c423aa6b-eba9-43b1-a390-2f051a04cad9.jpeg",
+            "width": null,
+            "height": null,
+            "order": 0
+          }
+        ]
+      },
+      {
+        "id": 34234,
+        "barcode": "",
+        "price": {
+          "amount": "800.00",
+          "baseAmount": "800.00",
+          "currencyCode": "NOK",
+          "compareAt": "900.00"
+        },
+        "quantity": 10,
+        "sku": "Yellow-Medium",
+        "title": "Yellow-Medium",
+        "images": [
+          {
+            "id": 24619,
+            "url": "https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/26905-e4d8f93d-7b05-4dca-b28e-36810f260407.jpeg",
+            "width": null,
+            "height": null,
+            "order": 0
+          }
+        ]
+      },
+      {
+        "id": 34235,
+        "barcode": "",
+        "price": {
+          "amount": "800.00",
+          "baseAmount": "800.00",
+          "currencyCode": "NOK",
+          "compareAt": "900.00"
+        },
+        "quantity": 10,
+        "sku": "Yellow-Large",
+        "title": "Yellow-Large",
+        "images": [
+          {
+            "id": 24620,
+            "url": "https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/26905-59b5baaf-99d5-442e-8395-e34c4846c1b1.jpeg",
+            "width": null,
+            "height": null,
+            "order": 0
+          }
+        ]
+      },
+      {
+        "id": 34236,
+        "barcode": "",
+        "price": {
+          "amount": "800.00",
+          "baseAmount": "800.00",
+          "currencyCode": "NOK",
+          "compareAt": "900.00"
+        },
+        "quantity": 10,
+        "sku": "Green-Small",
+        "title": "Green-Small",
+        "images": [
+          {
+            "id": 24621,
+            "url": "https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/26905-3a587e0f-97bf-4778-93c8-fe4ce1b28bef.jpeg",
+            "width": null,
+            "height": null,
+            "order": 0
+          }
+        ]
+      },
+      {
+        "id": 34239,
+        "barcode": "",
+        "price": {
+          "amount": "800.00",
+          "baseAmount": "800.00",
+          "currencyCode": "NOK",
+          "compareAt": "900.00"
+        },
+        "quantity": 10,
+        "sku": "Green-Medium",
+        "title": "Green-Medium",
+        "images": [
+          {
+            "id": 24624,
+            "url": "https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/26905-14eec0d1-59dd-4718-9233-cf700ee24071.jpeg",
+            "width": null,
+            "height": null,
+            "order": 0
+          }
+        ]
+      },
+      {
+        "id": 34240,
+        "barcode": "",
+        "price": {
+          "amount": "800.00",
+          "baseAmount": "800.00",
+          "currencyCode": "NOK",
+          "compareAt": "900.00"
+        },
+        "quantity": 10,
+        "sku": "Green-Large",
+        "title": "Green-Large",
+        "images": [
+          {
+            "id": 24625,
+            "url": "https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/26905-1b45c887-caaa-4f2a-9183-0dd4548a19c6.jpeg",
+            "width": null,
+            "height": null,
+            "order": 0
+          }
+        ]
+      },
+      {
+        "id": 34241,
+        "barcode": "",
+        "price": {
+          "amount": "800.00",
+          "baseAmount": "800.00",
+          "currencyCode": "NOK",
+          "compareAt": "900.00"
+        },
+        "quantity": 10,
+        "sku": "Grey-Small",
+        "title": "Grey-Small",
+        "images": [
+          {
+            "id": 24626,
+            "url": "https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/26905-a01d5be5-31c0-450b-9dc0-88f508702208.jpeg",
+            "width": null,
+            "height": null,
+            "order": 0
+          }
+        ]
+      },
+      {
+        "id": 34242,
+        "barcode": "",
+        "price": {
+          "amount": "800.00",
+          "baseAmount": "800.00",
+          "currencyCode": "NOK",
+          "compareAt": "900.00"
+        },
+        "quantity": 10,
+        "sku": "Grey-Medium",
+        "title": "Grey-Medium",
+        "images": [
+          {
+            "id": 24627,
+            "url": "https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/26905-c0bc38f5-c161-4599-9369-8e315552d7c9.jpeg",
+            "width": null,
+            "height": null,
+            "order": 0
+          }
+        ]
+      },
+      {
+        "id": 34243,
+        "barcode": "",
+        "price": {
+          "amount": "800.00",
+          "baseAmount": "800.00",
+          "currencyCode": "NOK",
+          "compareAt": "900.00"
+        },
+        "quantity": 10,
+        "sku": "Grey-Large",
+        "title": "Grey-Large",
+        "images": [
+          {
+            "id": 24628,
+            "url": "https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/26905-694da51a-79d3-4db5-a232-c4f629a937a8.jpeg",
+            "width": null,
+            "height": null,
+            "order": 0
+          }
+        ]
+      }
+    ],
+    "barcode": "1234",
+    "options": [
+      {
+        "id": 5489,
+        "name": "Colour",
+        "order": 1,
+        "values": "Yellow,Green,Grey"
+      },
+      {
+        "id": 5490,
+        "name": "Size",
+        "order": 2,
+        "values": "Small,Medium,Large"
+      }
+    ],
+    "subcategories": [],
+    "images": [
+      {
+        "id": 24611,
+        "url": "https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/26905-f87dac5c-9374-424d-9de6-fe5b7430a841.jpeg",
+        "width": 1728,
+        "height": 2160,
+        "order": 0
+      },
+      {
+        "id": 24612,
+        "url": "https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/26905-9d86dcc3-ebc7-489f-bbcb-24631828c923.jpeg",
+        "width": 1620,
+        "height": 2160,
+        "order": 1
+      },
+      {
+        "id": 24613,
+        "url": "https://outshifter-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/26905-e27a8ecc-4520-4f91-8a4d-b0bd0e91b6cf.jpeg",
+        "width": 1728,
+        "height": 2160,
+        "order": 2
+      },
+      {
+        "id": 24616,
+        "url": "https://outshifter-uploads-qa.s3.amazonaws.com/product-images/26905-8e27de6c-b49a-4105-82c1-05f8159f5b82.jpeg",
+        "width": 1728,
+        "height": 2160,
+        "order": 3
+      },
+      {
+        "id": 24617,
+        "url": "https://outshifter-uploads-qa.s3.amazonaws.com/product-images/26905-b3a083d8-c9e7-417b-8818-8e3b0d9918d4.jpeg",
+        "width": 1728,
+        "height": 2160,
+        "order": 4
+      }
+    ],
+    "productShipping": [
+      {
+        "id": "473dee90-2285-49ec-9083-e67a092d54b7",
+        "name": "Standard Shipping",
+        "description": "Standard Innenlands Shipping",
+        "customPriceEnabled": false,
+        "default": false,
+        "shippingCountry": [
+          {
+            "id": "2714bf50-3395-4bfd-bab8-9f5c60728729",
+            "amount": "49.00",
+            "country": "NO",
+            "currencyCode": "NOK",
+            "originalData": {
+              "amount": "49.00",
+              "currencyCode": "NOK",
+              "baseAmount": null
+            },
+            "price": {
+              "amount": "49.00",
+              "currencyCode": "NOK"
+            }
+          }
+        ]
+      }
+    ],
+    "supplier": "StyleSculptors",
+    "importedProduct": null,
+    "referralFee": 10,
+    "categories": [
+      {
+        "id": 4387,
+        "name": "Religious & Ceremonial"
+      }
+    ]
+  },
+  {
+    "id": 26914,
+    "title": "7 Shakra Bracelet",
+    "description": "<p>7 chakra bracelet, in blue or black.</p>",
+    "tags": "",
+    "sku": "SMNMN7ZP8GZS0EJG",
+    "quantity": 200,
+    "price": {
+      "amount": "42.99",
+      "currencyCode": "NOK",
+      "baseAmount": "3.69",
+      "compareAt": "0"
+    },
+    "variants": [
+      {
+        "id": 34258,
+        "barcode": "",
+        "price": {
+          "amount": "42.99",
+          "baseAmount": "42.99",
+          "currencyCode": "NOK",
+          "compareAt": "44.99"
+        },
+        "quantity": 100,
+        "sku": "",
+        "title": "Blue",
+        "images": [
+          {
+            "id": 24665,
+            "url": "https://cdn.shopify.com/s/files/1/0830/3099/9318/products/navy-blue-chakra-bracelet_925x_02e24e33-5eee-4dd0-b61f-e262fa9e6934.jpg?v=1695289682&originId=46288434659606",
+            "width": null,
+            "height": null,
+            "order": 1
+          }
+        ]
+      },
+      {
+        "id": 34259,
+        "barcode": "",
+        "price": {
+          "amount": "42.99",
+          "baseAmount": "42.99",
+          "currencyCode": "NOK",
+          "compareAt": "44.99"
+        },
+        "quantity": 100,
+        "sku": "",
+        "title": "Black",
+        "images": [
+          {
+            "id": 24666,
+            "url": "https://cdn.shopify.com/s/files/1/0830/3099/9318/products/7-chakra-bracelet_925x_8615b27c-3566-43f5-8a37-edd30ba8a966.jpg?v=1695289682&originId=46288434692374",
+            "width": null,
+            "height": null,
+            "order": 0
+          }
+        ]
+      }
+    ],
+    "barcode": "",
+    "options": [
+      {
+        "id": 5499,
+        "name": "Color",
+        "order": 1,
+        "values": "Blue,Black"
+      }
+    ],
+    "subcategories": [],
+    "images": [
+      {
+        "id": 24667,
+        "url": "https://cdn.shopify.com/s/files/1/0830/3099/9318/products/navy-blue-chakra-bracelet_925x_02e24e33-5eee-4dd0-b61f-e262fa9e6934.jpg?v=1695289682",
+        "width": 925,
+        "height": 618,
+        "order": 1
+      },
+      {
+        "id": 24668,
+        "url": "https://cdn.shopify.com/s/files/1/0830/3099/9318/products/7-chakra-bracelet_925x_8615b27c-3566-43f5-8a37-edd30ba8a966.jpg?v=1695289682",
+        "width": 925,
+        "height": 1386,
+        "order": 0
+      }
+    ],
+    "productShipping": [
+      {
+        "id": "473dee90-2285-49ec-9083-e67a092d54b7",
+        "name": "Standard Shipping",
+        "description": "Standard Innenlands Shipping",
+        "customPriceEnabled": false,
+        "default": false,
+        "shippingCountry": [
+          {
+            "id": "2714bf50-3395-4bfd-bab8-9f5c60728729",
+            "amount": "49.00",
+            "country": "NO",
+            "currencyCode": "NOK",
+            "originalData": {
+              "amount": "49.00",
+              "currencyCode": "NOK",
+              "baseAmount": null
+            },
+            "price": {
+              "amount": "49.00",
+              "currencyCode": "NOK"
+            }
+          }
+        ]
+      }
+    ],
+    "supplier": "StyleSculptors",
+    "importedProduct": null,
+    "referralFee": 10,
+    "categories": [
+      {
+        "id": 59,
+        "name": "Animals & Pet Supplies"
+      }
+    ]
+  }
+]
+```
+
+</TabItem>
+</Tabs>
