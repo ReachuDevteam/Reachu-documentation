@@ -105,6 +105,14 @@ const CustomNavbar = () => {
 
         <div className="custom-navbar-items">
           <Link
+            href="/home"
+            className={`custom-navbar-item ${
+              isLinkActive('/home') ? 'active' : ''
+            }`}
+          >
+            Home
+          </Link>
+          <Link
             href="/sdk"
             className={`custom-navbar-item ${
               isLinkActive('/sdk') ? 'active' : ''
@@ -113,12 +121,12 @@ const CustomNavbar = () => {
             SDK
           </Link>
           <Link
-            href="/api"
+            href="/api-rest"
             className={`custom-navbar-item ${
-              isLinkActive('/api') ? 'active' : ''
+              isLinkActive('/api-rest') ? 'active' : ''
             }`}
           >
-            API Reference
+            API Rest
           </Link>
           <Link
             href="/graphql"

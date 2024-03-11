@@ -1,0 +1,461 @@
+---
+title: Shipping
+sidebar_position: 2
+---
+
+# Shipping
+
+An object with all the items added to the cart by a potential buyer. The
+frontend can interact with our API to add, update or remove items.
+
+:::info
+
+The cart is intended to handle only product interacions (addition, removal or
+update of quantity). Payment methods and shipping are handled on the
+[checkout](/sdk/documentation/checkout).
+
+:::
+
+## Create cart
+
+You can initiate the cart even before adding products to it, so you decide when
+it's more convenient for you to do it. You need to provide us though with the
+reference to the customer's session id that is created by you in the frontend.
+
+Retrieve an array of the products added to your channel.
+
+```js
+async function createCart() => {
+  const sdk = getSDK();
+  let newCart = await sdk.shopCart.cart.create({
+    currency: string, // "EUR", "USD", "NOK", "DDK", "SEK", "CHF"
+    customer_session_id: string, // We recommend an alphanumeric id
+  });
+};
+```
+
+Response:
+
+```json
+{
+  "cart_id": "b0efb6fc-ab58-4f99-8a3d-eb318c40fa82",
+  "customer_session_id": "549743",
+  "line_items": [],
+  "total_amount": 0,
+  "currency": "EUR",
+  "available_shipping_countries": [],
+  "shippingCountry": null
+}
+```
+
+:::info
+
+Heads up! A cart requirement will be to add a shipping country to it (the
+country the products are going to be shipped to). Once a product is added to the
+cart, the paramenter available_shipping_countries will automatically get the
+shipping countries from the supplier's avaibale shipping countries and return an
+array with the shipping codes.
+
+:::
+
+You may want to interact with a created cart line items in the following ways:
+
+- add an additional item o multiple items to the cart object
+- update the quantity of an added item
+- remove an item or multiple items from the cart object
+
+## Add an item
+
+From the SDKs [product operations](/sdk/documentation/product), you get all
+necessary information to complete the line_items object and add an item to the
+cart.
+
+:::info
+
+It is possible to add more than one item on this endpoint, just add additional
+objects to the line_items array.
+
+:::
+
+```js
+async function addToCart() => {
+  const sdk = getSDK();
+  await sdk.shopCart.cartItem.create({
+    cartId: string,
+    line_items: [
+      {
+        product_id: number,
+        quantity: number,
+        variant_id: string,
+        price_data: {
+          currency: string,
+          tax: number,
+          unit_price: number,
+        },
+      },
+    ],
+  });
+};
+```
+
+:::info
+
+Note that since you have added a product to the cart, the parameter
+available_shipping_countries is updated. This information is usefull when
+updating the cart shipping country, and once you do it, the
+product_available_shippings inside each line item will return an array with all
+the shipping options for that product.
+
+You should also pay attention to the shipping parameter inside each line item.
+This is null now, but when you assign a shipping to the product, this parameter
+will return an object with the assigned shipping data.
+
+:::
+
+Response:
+
+```json
+{
+  "cart_id": "b0efb6fc-ab58-4f99-8a3d-eb318c40fa82",
+  "customer_session_id": "549743",
+  "shippingCountry": null,
+  "line_items": [
+    {
+      "id": "d8064a81-2ad5-4e97-b222-934171ef60f1",
+      "supplier": "iqplustest",
+      "product_available_shippings": [],
+      "product_id": 6182,
+      "product_title": "Lacoste T-Shirt",
+      "product_image": [
+        {
+          "id": 19513,
+          "url": "https://reachu-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-5ea12d76-79c4-4861-99d9-10867add85e4.jpeg",
+          "width": 762,
+          "height": 1100
+        },
+        {
+          "id": 19514,
+          "url": "https://reachu-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-826631da-f077-424a-8ff8-140d4829513b.jpeg",
+          "width": 762,
+          "height": 1016
+        }
+      ],
+      "variant_id": 11693,
+      "variant_title": "M",
+      "variant": [
+        {
+          "option": "size",
+          "value": "M"
+        }
+      ],
+      "quantity": 1,
+      "price_data": {
+        "unit_price": 1744.65,
+        "tax": 25,
+        "currency": "NOK"
+      },
+      "shipping": null
+    }
+  ],
+  "total_amount": 1744.65,
+  "currency": "NOK",
+  "available_shipping_countries": ["NO", "SE", "US"]
+}
+```
+
+## Update cart shipping country
+
+Once you have created the cart, you can update the shipping country. If you know
+that you will be working just with one specific country, feel free to update it
+even before adding a product to the cart.
+
+If you will be working with products that have different shipping countries, you
+can get the info of the cart available shipping countries directly from the cart
+object paramenter: available_shipping_countries
+
+```js
+const updateShippingCountry = async (shipping_country) => {
+  const response = await getSDK().shopCart.cart.update(checkout.cart.cart_id, {
+    shipping_country, // examples: "NO", "SE", "DK", "US"
+  });
+  return response;
+};
+```
+
+Now that you have added a shipping country to the cart, you may see that the
+line items come with the product available shippings just for that country. This
+allows you to easily select the shipping id to assign to each product.
+
+Response:
+
+```json
+{
+    "cart_id": "b0efb6fc-ab58-4f99-8a3d-eb318c40fa82",
+    "customer_session_id": "549743",
+    "shippingCountry": "NO",
+    "line_items": [
+      {
+        ...
+        "product_available_shippings": [
+          {
+            "id": "e42e32d5-3b76-41ac-b95f-2e6655d2af76",
+            "name": "Standard",
+            "description": "Standard shipping",
+            "countryCode": "NO",
+            "price": {
+              "amount": 290.77,
+              "currencyCode": "NOK"
+            }
+          }
+        ],
+        "shipping": null
+        ...
+      },
+      {
+        ...
+        "product_available_shippings": [
+          {
+            "id": "e42e32d5-3b76-41ac-b95f-2e6655d2af76",
+            "name": "Standard",
+            "description": "Standard shipping",
+            "countryCode": "NO",
+            "price": {
+              "amount": 290.77,
+              "currencyCode": "NOK"
+            }
+          },
+          {
+            "id": "62f97254-1c18-4ba7-b98e-053b1959fabb",
+            "name": "Express Shipping",
+            "description": "Express Shipping",
+            "countryCode": "NO",
+            "price": {
+              "amount": 639.71,
+              "currencyCode": "NOK"
+            }
+          }
+        ],
+        "shipping": null,
+        ...
+      }
+    ],
+    "total_amount": 2209.89,
+    "currency": "NOK",
+    "available_shipping_countries": [
+      "NO",
+      "SE",
+      "DK"
+    ]
+}
+```
+
+## Update an item's shipping class or quantity
+
+At any point before initiating the payment you can update the quantity of a line
+item or the shipping class assigned to it.
+
+It is mandatory to assign a shipping class to a product, a payment cannot be
+initiated if the shipping class of a line item is null. You can easily do it if
+the cart has a shipping country as you have the the shipping ids information on
+the product_available_shippings parameter available in the cart items of the
+cart.
+
+```js
+async function updateCartItem(CART_ID, CART_ITEM_ID) => {
+  const sdk = getSDK();
+  const updateObj = {
+    qty: number,
+    shipping_id: string,
+  };
+  await sdk.shopCart.cartItem.update(CART_ID, CART_ITEM_ID, updateObj);
+};
+```
+
+Response:
+
+```json
+{
+  "cart_id": "b0efb6fc-ab58-4f99-8a3d-eb318c40fa82",
+  "customer_session_id": "549743",
+  "shippingCountry": "NO",
+  "line_items": [
+    {
+      "id": "21a71e99-9dd6-4956-a39e-84a7c8ee2dec",
+      "supplier": "reachu-supplier-test",
+      "product_available_shippings": [
+        {
+          "id": "e42e32d5-3b76-41ac-b95f-2e6655d2af76",
+          "name": "Standard",
+          "description": "Standard shipping",
+          "countryCode": "NO",
+          "price": {
+            "amount": 290.77,
+            "currencyCode": "NOK"
+          }
+        }
+      ],
+      "product_id": 6182,
+      "product_title": "Lacoste T-Shirt",
+      "product_image": [
+        {
+          "id": 19513,
+          "url": "https://reachu-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-5ea12d76-79c4-4861-99d9-10867add85e4.jpeg",
+          "width": 762,
+          "height": 1100
+        },
+        {
+          "id": 19514,
+          "url": "https://reachu-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-826631da-f077-424a-8ff8-140d4829513b.jpeg",
+          "width": 762,
+          "height": 1016
+        }
+      ],
+      "variant_id": 11693,
+      "variant_title": "M",
+      "variant": [
+        {
+          "option": "size",
+          "value": "M"
+        }
+      ],
+      "quantity": 1,
+      "price_data": {
+        "unit_price": 1744.65,
+        "tax": 25,
+        "currency": "NOK"
+      },
+      "shipping": {
+        "id": "e42e32d5-3b76-41ac-b95f-2e6655d2af76",
+        "name": "Standard",
+        "description": "Standard shipping",
+        "price": {
+          "amount": 290.77,
+          "currencyCode": "NOK"
+        }
+      }
+    }
+  ],
+  "total_amount": 1744.65,
+  "currency": "NOK",
+  "available_shipping_countries": ["NO"]
+}
+```
+
+## Remove an item
+
+```js
+async (CART_ID, CART_ITEM_ID) => {
+  const sdk = getSDK();
+  await sdk.shopCart.cartItem.delete(CART_ID, CART_ITEM_ID);
+};
+```
+
+As response you will get the updated cart. If there was only one product on the
+cart, the line_items parameter will return an empty array.
+
+Response:
+
+```json
+{
+  "cart_id": "b0efb6fc-ab58-4f99-8a3d-eb318c40fa82",
+  "customer_session_id": "549743",
+  "shippingCountry": "NO",
+  "line_items": [],
+  "total_amount": 0,
+  "currency": "NOK",
+  "available_shipping_countries": []
+}
+```
+
+## Get cart information
+
+At any time you can retrieve cart information with all the added items.
+
+```js
+async getCart(CART_ID) => {
+  const sdk = getSDK();
+  const cart = await sdk.shopCart.cart.getById(CART_ID);
+  return cart;
+};
+```
+
+Response:
+
+```json
+{
+  "cart_id": "b0efb6fc-ab58-4f99-8a3d-eb318c40fa82",
+  "customer_session_id": "549743",
+  "shippingCountry": "NO",
+  "line_items": [
+    {
+      "id": "21a71e99-9dd6-4956-a39e-84a7c8ee2dec",
+      "supplier": "iqplustest",
+      "product_available_shippings": [
+        {
+          "id": "e42e32d5-3b76-41ac-b95f-2e6655d2af76",
+          "name": "Standard",
+          "description": "Standard shipping",
+          "countryCode": "NO",
+          "price": {
+            "amount": 290.77,
+            "currencyCode": "NOK"
+          }
+        }
+      ],
+      "product_id": 6182,
+      "product_title": "Lacoste T-Shirt",
+      "product_image": [
+        {
+          "id": 19513,
+          "url": "https://reachu-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-5ea12d76-79c4-4861-99d9-10867add85e4.jpeg",
+          "width": 762,
+          "height": 1100
+        },
+        {
+          "id": 19514,
+          "url": "https://reachu-uploads-qa.s3.eu-central-1.amazonaws.com/product-images/6182-826631da-f077-424a-8ff8-140d4829513b.jpeg",
+          "width": 762,
+          "height": 1016
+        }
+      ],
+      "variant_id": 11693,
+      "variant_title": "M",
+      "variant": [
+        {
+          "option": "size",
+          "value": "M"
+        }
+      ],
+      "quantity": 1,
+      "price_data": {
+        "unit_price": 1744.65,
+        "tax": 25,
+        "currency": "NOK"
+      },
+      "shipping": {
+        "id": "e42e32d5-3b76-41ac-b95f-2e6655d2af76",
+        "name": "Standard",
+        "description": "Standard shipping",
+        "price": {
+          "amount": 290.77,
+          "currencyCode": "NOK"
+        }
+      }
+    }
+  ],
+  "total_amount": 1744.65,
+  "currency": "NOK",
+  "available_shipping_countries": ["NO"]
+}
+```
+
+## Delete cart
+
+In case you need to delete a cart, it is also possible via the SDK.
+
+```js
+async function deleteCart(CART_ID) => {
+  const sdk = getSDK();
+  await sdk.shopCart.cart.delete(CART_ID);
+};
+```

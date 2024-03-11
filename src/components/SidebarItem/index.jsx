@@ -13,9 +13,11 @@ import {
   EducationIcon,
   ShoppingBagIcon,
   TypesIcon,
+  KeyIcon,
 } from './sidebarIcons';
 
 const iconsMap = {
+  authentication: KeyIcon,
   guides: WelcomeIcon,
   'getting-started': PlayIcon,
   'documentation/product': ProductIcon,
