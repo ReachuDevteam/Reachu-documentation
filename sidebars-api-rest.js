@@ -26,6 +26,7 @@ module.exports = {
     },
     'getting-started',
     'authentication',
+    'keyconcepts',
     {
       type: 'html',
       value: `<div class="sidebar-item-title">Documentation</div>`,

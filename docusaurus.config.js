@@ -125,6 +125,7 @@ const config = {
           sidebarPath: require.resolve('./sidebars-home.js'),
           breadcrumbs: false,
           editUrl: 'https://github.com/reachu',
+          docItemComponent: "@theme/ApiItem", // derived from docusaurus-theme-openapi-docs
           ...defaultSettings,
         },
         blog: false,
@@ -151,10 +152,33 @@ const config = {
     posthogPlugin,
     ...SECTIONS,
     //...UIKitReferencePlugins,
+    [
+      'docusaurus-plugin-openapi-docs',
+      {
+        id: "api", // plugin id
+        docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
+        config: {
+          apirest: { // the <id> referenced when running CLI commands
+            specPath: "./examples/petstore.yaml", // path to OpenAPI spec, URLs supported
+            outputDir: "apirest/", // output directory for generated files
+            version: "1.0.0", // Current version
+            label: "v1.0.0", // Current version label
+            baseUrl: "/petstore_versioned/swagger-petstore-yaml", // Leading slash is important
+            versions: {
+              "1.0.0": {
+                specPath: "examples/petstore-1.0.0.yaml",
+                outputDir: "docs/petstore_versioned/1.0.0", // No trailing slash
+                label: "v1.0.0",
+                baseUrl: "/petstore_versioned/1.0.0/swagger-petstore-yaml", // Leading slash is important
+              },
+            },
+          },
+        }
+      },
+    ]
   ],
 
-  themes: ['@docusaurus/theme-live-codeblock'],
-
+  themes: ['@docusaurus/theme-live-codeblock', 'docusaurus-theme-openapi-docs'],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({

@@ -1,5 +1,5 @@
 {
-  "name": "dyte-docs",
+  "name": "reachu-docs",
   "version": "1.31.3",
   "private": true,
   "scripts": {
@@ -35,7 +35,9 @@
     "@radix-ui/react-select": "^0.1.1",
     "@stoplight/elements": "^7.6.0",
     "clsx": "^1.1.1",
+    "docusaurus-plugin-openapi-docs": "^2.0.4",
     "docusaurus-plugin-script-tags": "^2.0.0-beta.6",
+    "docusaurus-theme-openapi-docs": "^2.0.4",
     "param-case": "^3.0.4",
     "prism-react-renderer": "^1.3.3",
     "react": "^18.2.0",
