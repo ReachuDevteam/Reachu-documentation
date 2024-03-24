@@ -26,7 +26,7 @@ module.exports = {
     },
     'getting-started',
     'apollo-sandbox',
-    'key-concepts',
+    'keyconcepts',
     {
       type: 'html',
       value: `<div class="sidebar-item-title">API References</div>`,

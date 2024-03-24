@@ -1,0 +1,1023 @@
+openapi: 3.0.0
+info:
+  title: Reachu API
+  version: 1.0.0
+servers:
+  - url: https://api-qa.reachu.io
+    description: Test server
+  - url: https://api.reachu.io
+    description: Production server
+security:
+  - Authorization: []
+components:
+  securitySchemes:
+    Authorization:
+      type: apiKey
+      in: header
+      name: Authorization
+paths:
+  /api/channels:
+    get:
+      summary: Find all channels
+      tags:
+        - Channels
+      description: Reachu has integration with different kind of channels. This
+        endpoint provides a list of the enabled ones.
+      responses:
+        "200":
+          description: A list of channels.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The channel ID.
+                    name:
+                      type: string
+                      description: The channel name.
+                    enabled:
+                      type: boolean
+                      description: The channel status.
+              example:
+                - id: 1
+                  name: Reachu
+                  enabled: false
+                - id: 2
+                  name: Shopify
+                  enabled: true
+                - id: 3
+                  name: Facebook
+                  enabled: false
+                - id: 4
+                  name: Instagram
+                  enabled: false
+                - id: 5
+                  name: Woocommerce
+                  enabled: true
+                - id: 6
+                  name: Squarespace
+                  enabled: true
+                - id: 7
+                  name: Wordpress
+                  enabled: true
+                - id: 8
+                  name: Vev
+                  enabled: true
+                - id: 9
+                  name: Api
+                  enabled: true
+                - id: 10
+                  name: Sdk
+                  enabled: true
+                - id: 11
+                  name: Magento
+                  enabled: true
+  /api/channel/products:
+    get:
+      summary: Get products
+      tags:
+        - Channels
+      description: Get products from specific channel
+      security:
+        - Authorization: []
+      parameters:
+        - in: query
+          name: currency
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: ids
+          schema:
+            type: string
+          description: Products ids, separated by ","
+          required: false
+        - in: query
+          name: sku
+          description: Can by more than one, separated by comma
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: barcode
+          description: Can by more than one, separated by comma
+          schema:
+            type: string
+          required: false
+      responses:
+        "200":
+          description: Success
+  "/api/channel/products/category/{categoryId}":
+    get:
+      summary: Get products by category id
+      tags:
+        - Channels
+      description: Get products from specific channel by category id
+      security:
+        - Authorization: []
+      parameters:
+        - in: path
+          name: categoryId
+          schema:
+            type: integer
+          required: true
+          description: Category id
+        - in: query
+          name: currency
+          schema:
+            type: string
+          required: false
+      responses:
+        "200":
+          description: Success
+  /api/channel/products/categories:
+    get:
+      summary: Get products by multiple categories id
+      tags:
+        - Channels
+      description: Get products from specific channel by categories ids
+      security:
+        - Authorization: []
+      parameters:
+        - in: query
+          name: ids
+          schema:
+            type: string
+          description: Categories ids, separated by ","
+          required: true
+        - in: query
+          name: currency
+          schema:
+            type: string
+          required: false
+      responses:
+        "200":
+          description: Success
+  "/api/channel/products/{productId}":
+    get:
+      summary: Get products by product id
+      tags:
+        - Channels
+      description: Get products from specific channel by product id
+      security:
+        - Authorization: []
+      parameters:
+        - in: path
+          name: productId
+          description: Product id
+          required: true
+          schema:
+            type: number
+        - in: query
+          name: currency
+          description: Currency
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sku
+          description: Can by more than one, separated by comma
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: barcode
+          description: Can by more than one, separated by comma
+          schema:
+            type: string
+          required: false
+      responses:
+        "200":
+          description: Successful operation
+
+  "/api/cart/{id}":
+    get:
+      summary: Get shopping cart by ID
+      tags:
+        - Cart
+      description: Get detailed information about a shopping cart using its ID.
+      security:
+        - Authorization: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the cart to retrieve
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful retrieval of the cart
+          content:
+            application/json:
+              example:
+                cart_id: 3fad8ca8-930c-4926-9325-08bb2115bab7
+                customer_session_id: "232933"
+                shippingCountry: NO
+                line_items:
+                  - id: 7bd43bbb-f7c3-4037-9288-6b3be8d9f290
+                    supplier: Supplier name
+                    product_available_shippings:
+                      - id: 58a83a33-7783-449f-8b7a-d3d615a01fb0
+                        name: shipping norge
+                        description: shipping norge
+                        countryCode: NO
+                        price:
+                          amount: 10
+                          currencyCode: NOK
+                    product_id: 1230279
+                    product_title: My product
+                    product_image:
+                      - id: 577259
+                        url: https://container.reachu.io/my-image.png
+                        width: 5472
+                        height: 3648
+                    variant_id: null
+                    variant_title: null
+                    variant: []
+                    quantity: 1
+                    shipping:
+                      id: 58a83a33-7783-449f-8b7a-d3d615a01fb0
+                      name: shipping norge
+                      description: shipping norge
+                      price:
+                        amount: 10
+                        currencyCode: NOK
+                    price:
+                      amount: 10
+                      tax: 25
+                      currencyCode: NOK
+                      discount: 0
+                      compareAt: 0
+                total_amount: 10
+                currency: NOK
+                available_shipping_countries:
+                  - NO
+    delete:
+      summary: Delete a shopping cart by ID
+      description: Delete a shopping cart using its ID.
+      tags:
+        - Cart
+      security:
+        - Authorization: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the cart to delete
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful deletion of the cart
+          content:
+            application/json:
+              example:
+                message: The cart was deleted successfully
+    patch:
+      summary: Update a shopping cart by ID
+      description: Update a shopping cart using its ID.
+      tags:
+        - Cart
+      security:
+        - Authorization: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the cart to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                shipping_country:
+                  type: string
+                  description: The ID from the shipping country
+                  example: c07d8af8-9d37-403b-aede-427c4b5fba3c
+      responses:
+        "200":
+          description: Successful update of the cart
+          content:
+            application/json:
+              example:
+                cart_id: a0fe94b4-ef94-4c4c-90e8-d285e879ffcf
+                customer_session_id: my-session
+                shippingCountry: c07d8af8-9d37-403b-aede-427c4b5fba3c
+                line_items: []
+                total_amount: 0
+                currency: EUR
+                available_shipping_countries: []
+  "/api/cart/{id}/item/add":
+    post:
+      summary: Add item to a shopping cart
+      description: Add an item to a shopping cart using its ID.
+      tags:
+        - Cart
+      security:
+        - Authorization: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the cart to which the item will be added
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                line_items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      product_id:
+                        type: number
+                        description: ID of the product
+                        example: 1230168
+                      variant_id:
+                        type: number
+                        description: ID of the variant (optional)
+                      quantity:
+                        type: number
+                      price_data:
+                        type: object
+                        properties:
+                          unit_price:
+                            type: number
+                          tax:
+                            type: number
+                          currency:
+                            type: string
+                          compare_at:
+                            type: number
+                      shipping_id:
+                        type: string
+      responses:
+        "200":
+          description: Successful addition of item to the cart
+          content:
+            application/json:
+              example:
+                cart_id: 4c0010e7-c235-41ea-ab69-fba00be0ae6c
+                customer_session_id: test-doc
+                shippingCountry: c07d8af8-9d37-403b-aede-427c4b5fba3c
+                line_items:
+                  - id: dac2ab8c-f2c2-4e64-abd6-ad824f226612
+                    supplier: Supplier name
+                    product_available_shippings: []
+                    product_id: 1230168
+                    product_title: Test
+                    product_image:
+                      - id: 577005
+                        url: https://container.reachu.io/my-image.png
+                        width: 500
+                        height: 500
+                    variant_id: null
+                    variant_title: null
+                    variant: []
+                    quantity: 1
+                    shipping: null
+                    price:
+                      amount: 100
+                      tax: 12
+                      currencyCode: EUR
+                      discount: 0
+                      compareAt: 0
+                total_amount: 100
+                currency: EUR
+                available_shipping_countries:
+                  - NO
+  "/api/cart/{id}/item/update/{itemId}":
+    patch:
+      summary: Update a shopping cart item by ID
+      description: Update a specific item in a shopping cart using the cart ID and item ID.
+      tags:
+        - Cart
+      security:
+        - Authorization: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the cart containing the item to be updated
+          schema:
+            type: string
+        - in: path
+          name: itemId
+          required: true
+          description: The ID of the item to be updated
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                qty:
+                  type: number
+                  description: Quantity (Optional)
+                shipping_id:
+                  type: string
+                  description: The shipping country id (Optional)
+      responses:
+        "200":
+          description: Successful update of the cart item
+          content:
+            application/json:
+              example:
+                cart_id: 4c0010e7-c235-41ea-ab69-fba00be0ae6c
+                customer_session_id: test-doc
+                shippingCountry: c07d8af8-9d37-403b-aede-427c4b5fba3c
+                line_items:
+                  - id: dac2ab8c-f2c2-4e64-abd6-ad824f226612
+                    supplier: Supplier name
+                    product_available_shippings: []
+                    product_id: 1230168
+                    product_title: Test
+                    product_image:
+                      - id: 577005
+                        url: https://container.reachu.io/my-image.png
+                        width: 500
+                        height: 500
+                    variant_id: null
+                    variant_title: null
+                    variant: []
+                    quantity: 1
+                    shipping: null
+                    price:
+                      amount: 100
+                      tax: 12
+                      currencyCode: EUR
+                      discount: 0
+                      compareAt: 0
+                total_amount: 100
+                currency: EUR
+                available_shipping_countries:
+                  - NO
+  "/api/cart/{id}/item/delete/{itemId}":
+    patch:
+      summary: Delete a shopping cart item by ID
+      description: Delete a specific item from a shopping cart using the cart ID and
+        item ID.
+      tags:
+        - Cart
+      security:
+        - Authorization: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the cart containing the item to be deleted
+          schema:
+            type: string
+        - in: path
+          name: itemId
+          required: true
+          description: The ID of the item to be deleted
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful deletion of the cart item
+          content:
+            application/json:
+              example:
+                cart_id: 4c0010e7-c235-41ea-ab69-fba00be0ae6c
+                customer_session_id: test-doc
+                shippingCountry: c07d8af8-9d37-403b-aede-427c4b5fba3c
+                line_items: []
+                total_amount: 0
+                currency: EUR
+                available_shipping_countries: []
+  
+  "/api/checkout/{id}":
+    patch:
+      summary: Update a checkout
+      description: Update details of a checkout using the checkout ID.
+      tags:
+        - Checkout
+      security:
+        - Authorization: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the checkout to be updated
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success_url:
+                  type: string
+                cancel_url:
+                  type: string
+                email:
+                  type: string
+                payment_method:
+                  type: string
+                shipping_address:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    zip:
+                      type: string
+                    city:
+                      type: string
+                    phone_code:
+                      type: string
+                    phone:
+                      type: number
+                    company:
+                      type: string
+                    address1:
+                      type: string
+                    address2:
+                      type: string
+                    province:
+                      type: string
+                    province_code:
+                      type: string
+                    country:
+                      type: string
+                    country_code:
+                      type: string
+                billing_address:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    zip:
+                      type: string
+                    city:
+                      type: string
+                    phone_code:
+                      type: string
+                    phone:
+                      type: number
+                    company:
+                      type: string
+                    address1:
+                      type: string
+                    address2:
+                      type: string
+                    province:
+                      type: string
+                    province_code:
+                      type: string
+                    country:
+                      type: string
+                    country_code:
+                      type: string
+      responses:
+        "200":
+          description: Successful update of the checkout
+          content:
+            application/json:
+              example:
+                createdAt: 2024-01-03T16:07:18.375Z
+                updatedAt: 2024-01-03T16:32:55.000Z
+                id: eec93917-c2bb-4d7b-88f0-1727c2c5ed09
+                deletedAt: null
+                success_url: https://reachu.io/ok
+                cancel_url: https://reachu.io/failed
+                payment_method: Klarna
+                email: test@reachu.io
+                status: ACTIVE
+                checkout_url: null
+                origin_payment_id: null
+                total_price: "100.00"
+                total_tax: "12.00"
+                total_line_items_price: 100
+                cart:
+                  cart_id: 4c0010e7-c235-41ea-ab69-fba00be0ae6c
+                  customer_session_id: test-doc
+                  shippingCountry: c07d8af8-9d37-403b-aede-427c4b5fba3c
+                  line_items:
+                    - id: 7e426050-b3f6-40ea-9111-3bb7befc64d3
+                      supplier: alanprod
+                      product_available_shippings: []
+                      product_id: 1230168
+                      product_title: Test
+                      product_image:
+                        - id: 577005
+                          url: https://containerproduction.blob.core.windows.net/outshifter-uploads-production/product-images/1230168-fde8d5a8-ad1b-442f-8448-b8ddcf548496.jpeg
+                          width: 500
+                          height: 500
+                      variant_id: null
+                      variant_title: null
+                      variant: []
+                      quantity: 1
+                      shipping: null
+                      price:
+                        amount: 100
+                        tax: 12
+                        currencyCode: EUR
+                        discount: 0
+                        compareAt: 0
+                  total_amount: 100
+                  currency: EUR
+                  available_shipping_countries:
+                    - NO
+                billing_address:
+                  id: c03349c0-0636-435b-93c3-838e02238f16
+                  first_name: test
+                  last_name: documentation
+                  phone_code: "56"
+                  phone: 123123123
+                  company: ""
+                  address1: test 1
+                  address2: null
+                  city: oslo
+                  province: null
+                  province_code: null
+                  country: norway
+                  country_code: NO
+                  zip: "1234"
+                shipping_address:
+                  id: 278e90f5-747b-4576-80f1-4fedc55ac9ba
+                  first_name: test
+                  last_name: documentation
+                  phone_code: "56"
+                  phone: 123123123
+                  company: ""
+                  address1: test 1
+                  address2: null
+                  city: oslo
+                  province: null
+                  province_code: null
+                  country: norway
+                  country_code: NO
+                  zip: "1234"
+                total_amount_shipping: 0
+                discount_code: null
+                total_discount: null
+    get:
+      summary: Get a checkout by ID
+      description: Retrieve details of a checkout using the checkout ID.
+      tags:
+        - Checkout
+      security:
+        - Authorization: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the checkout to be retrieved
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful retrieval of the checkout
+          content:
+            application/json:
+              example:
+                createdAt: 2024-01-02T16:09:30.782Z
+                updatedAt: 2024-01-02T16:09:30.782Z
+                id: 1bf45d2b-3a5c-4aac-8e36-4a9f393ad474
+                deletedAt: null
+                success_url: null
+                cancel_url: null
+                payment_method: null
+                email: null
+                status: ACTIVE
+                checkout_url: null
+                origin_payment_id: null
+                total_price: "100.00"
+                total_tax: "12.00"
+                total_line_items_price: 100
+                cart:
+                  cart_id: 4c0010e7-c235-41ea-ab69-fba00be0ae6c
+                  customer_session_id: test-doc
+                  shippingCountry: c07d8af8-9d37-403b-aede-427c4b5fba3c
+                  line_items:
+                    - id: 7e426050-b3f6-40ea-9111-3bb7befc64d3
+                      supplier: alanprod
+                      product_available_shippings: []
+                      product_id: 1230168
+                      product_title: Test
+                      product_image:
+                        - id: 577005
+                          url: https://containerproduction.blob.core.windows.net/outshifter-uploads-production/product-images/1230168-fde8d5a8-ad1b-442f-8448-b8ddcf548496.jpeg
+                          width: 500
+                          height: 500
+                      variant_id: null
+                      variant_title: null
+                      variant: []
+                      quantity: 1
+                      shipping: null
+                      price:
+                        amount: 100
+                        tax: 12
+                        currencyCode: EUR
+                        discount: 0
+                        compareAt: 0
+                  total_amount: 100
+                  currency: EUR
+                  available_shipping_countries:
+                    - NO
+                billing_address: null
+                shipping_address: null
+                total_amount_shipping: 0
+                availablePaymentMethods:
+                  - name: Stripe
+                  - name: Klarna
+                discount_code: null
+                total_discount: null
+    delete:
+      summary: Delete a checkout by ID
+      description: Delete a checkout using the checkout ID.
+      tags:
+        - Checkout
+      security:
+        - Authorization: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the checkout to be deleted
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful deletion of the checkout
+          content:
+            application/json:
+              example:
+                message: Checkout 1bf45d2b-3a5c-4aac-8e36-4a9f393ad474 was deleted.
+                executed: true
+  "/api/checkout/{id}/payment":
+    patch:
+      summary: Initialize Payment for Checkout (Stripe)
+      description: Initialize payment for a checkout using the Stripe payment method.
+      tags:
+        - Checkout
+      security:
+        - Authorization: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the checkout for which payment is being initialized
+          schema:
+            type: string
+        - in: query
+          name: success_url
+          required: true
+          description: The URL to redirect to if payment is successful
+          schema:
+            type: string
+        - in: query
+          name: cancel_url
+          required: true
+          description: The URL to redirect to if payment is canceled or fails
+          schema:
+            type: string
+        - in: query
+          name: email
+          required: true
+          description: Email of the client
+          schema:
+            type: string
+        - in: query
+          name: return_url
+          required: true
+          description: The return URL
+          schema:
+            type: string
+        - in: query
+          name: payment_method
+          required: true
+          description: Payment method
+          schema:
+            type: string
+        - in: query
+          name: first_name
+          required: true
+          description: First name
+          schema:
+            type: string
+        - in: query
+          name: last_name
+          required: true
+          description: Last name
+          schema:
+            type: string
+        - in: query
+          name: phone_code
+          required: true
+          description: Phone code
+          schema:
+            type: string
+        - in: query
+          name: phone
+          required: true
+          description: Phone number
+          schema:
+            type: string
+        - in: query
+          name: company
+          required: true
+          description: Company name
+          schema:
+            type: string
+        - in: query
+          name: address1
+          required: true
+          description: Address line 1
+          schema:
+            type: string
+        - in: query
+          name: address2
+          required: true
+          description: Address line 2
+          schema:
+            type: string
+        - in: query
+          name: city
+          required: true
+          description: City
+          schema:
+            type: string
+        - in: query
+          name: country
+          required: true
+          description: Country
+          schema:
+            type: string
+        - in: query
+          name: country_code
+          required: true
+          description: Country code
+          schema:
+            type: string
+        - in: query
+          name: zip
+          required: true
+          description: ZIP code
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful initialization of payment
+          content:
+            application/json:
+              example:
+                checkout_url: https://buy.stripe.com/3csfZKgUC8foeyc001?prefilled_email=test@reachu.io
+                order_id: 1347
+  "/api/checkout/{id}/payment-intent":
+    patch:
+      summary: Initialize Payment for Checkout (Stripe to use Embebed)
+      description: Initialize payment for a checkout using the Stripe embebed payment
+        method.
+      tags:
+        - Checkout
+      security:
+        - Authorization: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the checkout for which payment is being initialized
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful initialization of payment
+          content:
+            application/json:
+              example:
+                client_secret: pi_3OpCG7BjfRnXLEB402ewEc8E
+  "/api/checkout/{id}/init-payment-klarna":
+    post:
+      summary: Initialize Payment for Checkout (Klarna)
+      description: Initialize payment using Klarna for a specific checkout.
+      tags:
+        - Checkout
+      security:
+        - Authorization: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the checkout for which payment is being initialized
+          schema:
+            type: string
+        - in: query
+          name: country_code
+          required: true
+          description: The country code
+          schema:
+            type: string
+        - in: query
+          name: email
+          required: true
+          description: The client email
+          schema:
+            type: string
+        - in: query
+          name: href
+          required: true
+          description: The URL of the ecommerce after payment
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful initialization of payment using Klarna
+          content:
+            application/json:
+              example:
+                order_id: f8a513f6-eb9d-4655-94b0-45a00882a0a8
+                status: checkout_incomplete
+                purchase_country: no
+                purchase_currency: EUR
+                locale: nb-NO
+                billing_address:
+                  given_name: First
+                  family_name: Last
+                  email: test@test.no
+                  street_address: test 1234
+                  postal_code: "0000"
+                  city: Oslo
+                  phone: +47 40 12 34 56
+                  country: no
+                customer: {}
+                shipping_address:
+                  given_name: First
+                  family_name: Last
+                  email: test@test.no
+                  street_address: test 1234
+                  postal_code: "0000"
+                  city: Oslo
+                  phone: +47 40 12 34 56
+                  country: no
+                order_amount: 100000
+                order_tax_amount: 0
+                order_lines:
+                  - type: physical
+                    name: p1
+                    quantity: 1
+                    unit_price: 100000
+                    tax_rate: 0
+                    total_amount: 100000
+                    total_discount_amount: 0
+                    total_tax_amount: 0
+                    merchant_data: '{"productId":65416}'
+                merchant_urls:
+                  terms: https://outshifter.com/terms
+                  checkout: https://test.reachu.io/success?order_id={checkout.order.id}
+                  confirmation: https://test.reachu.io/success?order_id={checkout.order.id}&payment_processor=KLARNA
+                  push: https://api-qa.reachu.io/klarna/webhooks?order_id={checkout.order.id}
+                html_snippet: htlm provided by klarna
+                started_at: 2024-01-03T17:07:09Z
+                last_modified_at: 2024-01-03T17:07:09Z
+                options:
+                  allow_separate_shipping_address: true
+                  date_of_birth_mandatory: false
+                  require_validate_callback_success: false
+                  phone_mandatory: true
+                  auto_capture: true
+                external_payment_methods: []
+                external_checkouts: []
+                shipping_options:
+                  - id: 47fcc60c-34e5-4882-9293-012a5d22b068
+                    name: Shopping 1
+                    price: 1000
+                    tax_amount: 0
+                    tax_rate: 0
+                    preselected: true
+                    delivery_details: {}
+                merchant_data: '{"sellerId":"1116","flatRates":[{"service_name":"47fcc60c-34e5-4882-9293-012a5d22b068","service_code":"","total_price":"10.00"}]}'
+                selected_shipping_option:
+                  id: 47fcc60c-34e5-4882-9293-012a5d22b068
+                  name: Shopping 1
+                  price: 1000
+                  tax_amount: 0
+                  tax_rate: 0
+                  preselected: true
+                  delivery_details: {}
+tags: []

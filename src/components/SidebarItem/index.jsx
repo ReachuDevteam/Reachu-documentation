@@ -17,6 +17,7 @@ import {
 } from './sidebarIcons';
 
 const iconsMap = {
+  keyconcepts: KeyIcon,
   authentication: KeyIcon,
   guides: WelcomeIcon,
   'getting-started': PlayIcon,
