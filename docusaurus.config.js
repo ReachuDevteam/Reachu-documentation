@@ -33,7 +33,7 @@ function defineSection(
       lastVersion: 'current',
       routeBasePath: section,
       id: section,
-      sidebarPath: require.resolve('./sidebars-default.js'),
+      sidebarPath: require.resolve('./sidebars-home.js'),
       breadcrumbs: true,
       editUrl: 'https://gitlab.com/outshifterdev/docs.gitlab.io/-/edit/main/',
       versions: version && {
@@ -48,6 +48,11 @@ function defineSection(
 }
 
 const SECTIONS = [
+  defineSection(
+    'home',
+    {},
+    { sidebarPath: require.resolve('./sidebars-default.js') }
+  ),
   defineSection(
     'api-rest',
     {},
